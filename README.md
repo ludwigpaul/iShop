@@ -144,16 +144,6 @@ CREATE TABLE Users (
 );
 ```
 
-=======
-``` sql
-CREATE TABLE Users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
 >>>>>>> e42de880e5329b1422c952e6e47abfdf7ca48169
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
