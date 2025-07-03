@@ -991,3 +991,20 @@
 {"email":"james.doe@yahoo.com","level":"info","message":"Updating user with ID: 3","password":"password123","timestamp":"2025-07-03T17:30:01.126Z","username":"james.doe"}
 {"level":"info","message":"PUT - /api/v1/users/id/4 = 2025-07-03T17:30:10.490Z","timestamp":"2025-07-03T17:30:10.490Z"}
 {"email":"james.doe@yahoo.com","level":"info","message":"Updating user with ID: 4","password":"password123","timestamp":"2025-07-03T17:30:10.491Z","username":"james.doe"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T17:32:44.659Z","timestamp":"2025-07-03T17:32:44.659Z"}
+{"level":"info","message":"$2b$10$qFoA1905j0G41GQbGBTmz.mCUf7/QcJvvG3tv8wouhgwBDYEb7Wsa","timestamp":"2025-07-03T17:32:44.747Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:33:12.448Z","timestamp":"2025-07-03T17:33:12.448Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:33:13.604Z","timestamp":"2025-07-03T17:33:13.604Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:33:23.815Z","timestamp":"2025-07-03T17:33:23.815Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:33:24.345Z","timestamp":"2025-07-03T17:33:24.345Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:33:54.845Z","timestamp":"2025-07-03T17:33:54.845Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:34:14.734Z","timestamp":"2025-07-03T17:34:14.734Z"}
+{"level":"info","message":"GET - /api/v1/products = 2025-07-03T17:34:14.808Z","timestamp":"2025-07-03T17:34:14.808Z"}
+{"level":"info","message":"Getting all products","timestamp":"2025-07-03T17:34:14.808Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T17:34:24.869Z","timestamp":"2025-07-03T17:34:24.869Z"}
+{"level":"info","message":"$2b$10$qlDKZFHZazkWmyRdhMk6rOzd1YrOWeWct61A9/A5sCKuUSXEU/R1.","timestamp":"2025-07-03T17:34:24.961Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T17:34:56.297Z","timestamp":"2025-07-03T17:34:56.297Z"}
+{"level":"info","message":"$2b$10$vaCTIter/8zWPjHOG7XJ.eDd5k1R4JbsZkk0MK4Kds7RW4dC7PrrG","timestamp":"2025-07-03T17:34:56.379Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:35:11.854Z","timestamp":"2025-07-03T17:35:11.854Z"}
+{"level":"info","message":"GET - /api/v1/products = 2025-07-03T17:35:11.953Z","timestamp":"2025-07-03T17:35:11.953Z"}
+{"level":"info","message":"Getting all products","timestamp":"2025-07-03T17:35:11.954Z"}

@@ -86,6 +86,15 @@ The iShop system provides a RESTful API to interact with its components.
 - `GET /categories/search?query={query}`: Search for categories by a 
   query string (Search category by name).
 
+### User Management Endpoints
+- `POST /users/register`: Register a new user.
+- `POST /users/login`: Authenticate a user and return a JWT token.
+- `GET /users/profile`: Retrieve the profile of the authenticated user.
+- `PUT /users/profile`: Update the profile of the authenticated user.
+- `GET /users/orders`: Retrieve the order history of the authenticated user.
+- `GET /users/orders/{id}`: Retrieve details of a specific order for the authenticated user.
+- `PUT /users/orders/{id}`: Update the status of an order for the authenticated user (only if the user is admin).
+
 ## Database Schema Design
 
 ### Categories Table
@@ -122,6 +131,17 @@ CREATE TABLE Orders (
     status VARCHAR(10) DEFAULT 'PENDING',
     status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES Products(id)
+);
+```
+
+### Users Table
+```sql
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
