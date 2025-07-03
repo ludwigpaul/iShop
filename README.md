@@ -26,7 +26,9 @@ seamless shopping experience.
 - **Order History**: Stores past orders for users to view and manage.
 - **Order Tracking**: Allows users to track the status of their orders.
 
-[//]: # (### 4. User Management - This component handles user accounts.)
+### 4. User Management - This component handles user accounts.
+- **User Registration**: Allows users to create accounts.
+- **User Authentication**: Manages user login and logout process.
 
 [//]: # (- **User Registration**: Allows new users to create accounts.)
 

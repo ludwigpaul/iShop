@@ -14,6 +14,7 @@ const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT) || 3306, // Default MySQL port is 3306
     user: 'root',
+    password: 'J0n454848(((',
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10, // Adjust based on your application's needs

@@ -1,16 +1,20 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cors from 'cors';
 
 import logger from "./logger/logger.js";
-import categoryRouter from './routes/categoryRoutes.js'; // Import the category
-// routes
+import categoryRouter from './routes/categoryRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
+import userRouter from './routes/userRoutes.js';
+
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 const logRequest = (req, res, next) => {
     logger.info(`${req.method} - ${req.url} = ${new Date().toISOString()}`);
@@ -25,6 +29,7 @@ app.use(logRequest); // Custom logging middleware
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/users', userRouter);
 
 app.get('/', (req, res) => {
    logger.info('Root route');

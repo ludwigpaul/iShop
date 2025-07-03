@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="/ishop_frontend/styles/index.css">
+</head>
+<body>
+<div class="login-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+        <input type="text" id="regUsername" placeholder="Username" required>
+        <input type="email" id="regEmail" placeholder="Email" required>
+        <input type="password" id="regPassword" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+    <div id="registerResponse"></div>
+    <hr>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <div id="loginResponse"></div>
+
+    <div id="productsSection" style="display:none;">
+        <h2>Products</h2>
+        <ul id="productsList"></ul>
+    </div>
+</div>
+<script>
+    // Registration
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('regUsername').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const responseDiv = document.getElementById('registerResponse');
+        responseDiv.textContent = 'Registering...';
+        try {
+            const res = await fetch('http://localhost:3000/api/v1/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            });
+            const data = await res.json();
+            responseDiv.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+            responseDiv.textContent = 'Error: ' + err.message;
+        }
+    });
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const responseDiv = document.getElementById('loginResponse');
+        responseDiv.textContent = 'Logging in...';
+        try {
+            const res = await fetch('http://localhost:3000/api/v1/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                responseDiv.textContent = 'Login successful!';
+                showProducts();
+            } else {
+                responseDiv.textContent = data.message || 'Login failed';
+            }
+        } catch (err) {
+            responseDiv.textContent = 'Error: ' + err.message;
+        }
+    });
+
+    // Show products after login
+    async function showProducts() {
+        document.getElementById('productsSection').style.display = 'block';
+        const productsList = document.getElementById('productsList');
+        productsList.innerHTML = 'Loading...';
+        try {
+            const res = await fetch('http://localhost:3000/api/v1/products');
+            const products = await res.json();
+            productsList.innerHTML = '';
+            products.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = product.name + ' - $' + product.price;
+                productsList.appendChild(li);
+            });
+        } catch (err) {
+            productsList.innerHTML = 'Error loading products';
+        }
+    }
+</script>
+</body>
+</html>

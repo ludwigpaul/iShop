@@ -510,3 +510,484 @@
 {"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:19:35.685Z"}
 {"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:19:35.685Z"}
 {"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:19:35.711Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:33:41.770Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:33:59.304Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:33:59.306Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:33:59.307Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:33:59.308Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:33:59.345Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:36:40.286Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:36:40.288Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:36:40.288Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:36:40.289Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:36:40.349Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:37:11.938Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:37:11.940Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:37:11.941Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:37:11.941Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:37:12.011Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T16:37:12.031Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-02T16:38:33.322Z","timestamp":"2025-07-02T16:38:33.322Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T16:39:17.649Z","timestamp":"2025-07-02T16:39:17.649Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:41:54.527Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:41:54.531Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:41:54.531Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:41:54.532Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:41:54.619Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T16:41:54.639Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:42:08.138Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:42:08.140Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:42:08.141Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:42:08.141Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:42:08.238Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T16:42:08.264Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T16:51:48.082Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T16:51:48.085Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T16:51:48.085Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T16:51:48.086Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T16:51:48.107Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T16:51:48.126Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T16:52:09.651Z","timestamp":"2025-07-02T16:52:09.651Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-02T17:06:25.013Z","timestamp":"2025-07-02T17:06:25.013Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-02T17:06:37.700Z","timestamp":"2025-07-02T17:06:37.700Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T17:08:23.768Z","timestamp":"2025-07-02T17:08:23.768Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T17:13:11.764Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T17:13:11.770Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T17:13:11.781Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T17:13:11.782Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T17:13:11.865Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T17:13:46.588Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T17:13:46.590Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T17:13:46.590Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T17:13:46.591Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T17:13:46.638Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T17:13:46.649Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T17:13:54.906Z","timestamp":"2025-07-02T17:13:54.906Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T17:16:58.088Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T17:16:58.090Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T17:16:58.091Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T17:16:58.091Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T17:16:58.117Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T17:16:58.137Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T17:17:03.370Z","timestamp":"2025-07-02T17:17:03.370Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-02T17:17:13.377Z","timestamp":"2025-07-02T17:17:13.377Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-02T17:17:29.037Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-02T17:17:29.039Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-02T17:17:29.040Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-02T17:17:29.040Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-02T17:17:29.070Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-02T17:17:29.090Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-02T17:17:47.918Z","timestamp":"2025-07-02T17:17:47.918Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-02T17:17:54.951Z","timestamp":"2025-07-02T17:17:54.951Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:05:19.143Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:06:20.317Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:06:20.319Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:06:20.320Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:06:20.320Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:06:20.347Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:06:20.384Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:08:08.857Z","timestamp":"2025-07-03T14:08:08.857Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:11:31.274Z","timestamp":"2025-07-03T14:11:31.274Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:11:31.966Z","timestamp":"2025-07-03T14:11:31.966Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:11:33.296Z","timestamp":"2025-07-03T14:11:33.296Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:51.686Z","timestamp":"2025-07-03T14:13:51.686Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:52.382Z","timestamp":"2025-07-03T14:13:52.382Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:52.535Z","timestamp":"2025-07-03T14:13:52.535Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:52.904Z","timestamp":"2025-07-03T14:13:52.904Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:53.076Z","timestamp":"2025-07-03T14:13:53.076Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:53.190Z","timestamp":"2025-07-03T14:13:53.190Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:53.636Z","timestamp":"2025-07-03T14:13:53.636Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:53.803Z","timestamp":"2025-07-03T14:13:53.803Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:13:53.942Z","timestamp":"2025-07-03T14:13:53.942Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:20.384Z","timestamp":"2025-07-03T14:14:20.384Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:21.230Z","timestamp":"2025-07-03T14:14:21.230Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:21.417Z","timestamp":"2025-07-03T14:14:21.417Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:21.587Z","timestamp":"2025-07-03T14:14:21.587Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:21.725Z","timestamp":"2025-07-03T14:14:21.725Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:33.305Z","timestamp":"2025-07-03T14:14:33.305Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:33.674Z","timestamp":"2025-07-03T14:14:33.674Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:35.517Z","timestamp":"2025-07-03T14:14:35.517Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:36.136Z","timestamp":"2025-07-03T14:14:36.136Z"}
+{"level":"info","message":"OPTIONS - /api/v1/users/login = 2025-07-03T14:14:37.647Z","timestamp":"2025-07-03T14:14:37.647Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:17:57.922Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:17:57.925Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:17:57.925Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:17:57.926Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:17:57.948Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:17:57.967Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:15.476Z","timestamp":"2025-07-03T14:18:15.476Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:20.196Z","timestamp":"2025-07-03T14:18:20.196Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:20.708Z","timestamp":"2025-07-03T14:18:20.708Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:24.758Z","timestamp":"2025-07-03T14:18:24.758Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:25.292Z","timestamp":"2025-07-03T14:18:25.292Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:27.153Z","timestamp":"2025-07-03T14:18:27.153Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:27.522Z","timestamp":"2025-07-03T14:18:27.522Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:27.661Z","timestamp":"2025-07-03T14:18:27.661Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:33.470Z","timestamp":"2025-07-03T14:18:33.470Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:18:36.374Z","timestamp":"2025-07-03T14:18:36.374Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:19:55.387Z","timestamp":"2025-07-03T14:19:55.387Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:19:56.480Z","timestamp":"2025-07-03T14:19:56.480Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:19:58.543Z","timestamp":"2025-07-03T14:19:58.543Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:20:27.671Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:20:27.673Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:20:27.673Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:20:27.673Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:20:27.697Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:20:27.722Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:23:45.912Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:23:45.914Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:23:45.914Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:23:45.914Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:23:45.942Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:23:45.965Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:23:51.642Z","timestamp":"2025-07-03T14:23:51.642Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:23:56.503Z","timestamp":"2025-07-03T14:23:56.503Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:24:04.168Z","timestamp":"2025-07-03T14:24:04.168Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:24:06.834Z","timestamp":"2025-07-03T14:24:06.834Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:25:25.265Z","timestamp":"2025-07-03T14:25:25.265Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:26:35.995Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:26:35.997Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:26:35.997Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:26:35.997Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:26:36.024Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:26:36.040Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:26:41.866Z","timestamp":"2025-07-03T14:26:41.866Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:26:44.793Z","timestamp":"2025-07-03T14:26:44.793Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:26:47.626Z","timestamp":"2025-07-03T14:26:47.626Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:26:50.279Z","timestamp":"2025-07-03T14:26:50.279Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:26:54.186Z","timestamp":"2025-07-03T14:26:54.186Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:26:55.072Z","timestamp":"2025-07-03T14:26:55.072Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:31:17.245Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:31:17.248Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:31:17.248Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:31:17.249Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:31:17.273Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:31:17.293Z"}
+{"level":"info","message":"POST - /api/v1/users/login/ = 2025-07-03T14:31:26.891Z","timestamp":"2025-07-03T14:31:26.892Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:41:25.098Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:41:25.103Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:41:25.104Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:41:25.104Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:41:25.147Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:41:25.190Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:43:33.497Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:43:33.505Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:43:33.508Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:43:33.509Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:43:33.578Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:43:33.625Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T14:44:07.784Z","timestamp":"2025-07-03T14:44:07.784Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T14:44:31.724Z","timestamp":"2025-07-03T14:44:31.724Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:54:41.236Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:54:41.239Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:54:41.240Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:54:41.240Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:54:41.298Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:54:41.340Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:55:27.999Z","timestamp":"2025-07-03T14:55:28.000Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:55:32.380Z","timestamp":"2025-07-03T14:55:32.380Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:55:49.943Z","timestamp":"2025-07-03T14:55:49.943Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:55:54.768Z","timestamp":"2025-07-03T14:55:54.768Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:57:15.573Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:57:15.576Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:57:15.576Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:57:15.577Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:57:15.620Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:57:15.667Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:57:19.850Z","timestamp":"2025-07-03T14:57:19.850Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:57:39.313Z","timestamp":"2025-07-03T14:57:39.313Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:57:49.929Z","timestamp":"2025-07-03T14:57:49.929Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T14:59:13.764Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T14:59:13.767Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T14:59:13.768Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T14:59:13.771Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T14:59:13.817Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T14:59:13.858Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:59:24.436Z","timestamp":"2025-07-03T14:59:24.436Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T14:59:30.158Z","timestamp":"2025-07-03T14:59:30.158Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:00:11.687Z","timestamp":"2025-07-03T15:00:11.687Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:02:09.522Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:02:09.528Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:02:09.529Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:02:09.529Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:02:09.589Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:02:09.651Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:02:22.488Z","timestamp":"2025-07-03T15:02:22.488Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:09:28.736Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:09:28.739Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:09:28.740Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:09:28.741Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:09:28.783Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:09:28.835Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:10:34.844Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:10:34.847Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:10:34.848Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:10:34.848Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:10:34.880Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:10:34.909Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:10:49.285Z","timestamp":"2025-07-03T15:10:49.285Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:11:08.314Z","timestamp":"2025-07-03T15:11:08.314Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:13:27.315Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:13:27.319Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:13:27.319Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:13:27.320Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:13:27.354Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:13:27.391Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:14:49.369Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:14:49.374Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:14:49.375Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:14:49.376Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:14:49.457Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:14:49.499Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:14:55.000Z","timestamp":"2025-07-03T15:14:55.000Z"}
+{"level":"info","message":"Login attempt","password":"password","timestamp":"2025-07-03T15:14:55.001Z","username":"john.doe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:14:59.412Z","timestamp":"2025-07-03T15:14:59.412Z"}
+{"level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:14:59.413Z","username":"john.doe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:01.399Z","timestamp":"2025-07-03T15:15:01.399Z"}
+{"level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:01.399Z","username":"john.doe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:02.693Z","timestamp":"2025-07-03T15:15:02.693Z"}
+{"level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:02.693Z","username":"john.doe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:04.554Z","timestamp":"2025-07-03T15:15:04.554Z"}
+{"level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:04.555Z","username":"john.doe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:19.022Z","timestamp":"2025-07-03T15:15:19.022Z"}
+{"level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:19.022Z","username":"jdoe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:33.476Z","timestamp":"2025-07-03T15:15:33.476Z"}
+{"email":"john.doe@yahoo.com","level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:33.477Z","username":"jdoe"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:40.607Z","timestamp":"2025-07-03T15:15:40.607Z"}
+{"email":"john.doe@yahoo.com","level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:40.607Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:46.329Z","timestamp":"2025-07-03T15:15:46.329Z"}
+{"email":"john.doe@yahoo.com","level":"info","message":"Login attempt","password":"password1231","timestamp":"2025-07-03T15:15:46.330Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:15:49.900Z","timestamp":"2025-07-03T15:15:49.900Z"}
+{"email":"john.doe@yahoo.com","level":"info","message":"Login attempt","password":"password123","timestamp":"2025-07-03T15:15:49.900Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:16:36.931Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:16:36.936Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:16:36.937Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:16:36.937Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:16:37.013Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:16:37.055Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-03T15:17:53.406Z","timestamp":"2025-07-03T15:17:53.406Z"}
+{"level":"info","message":"GET - /api/v1/users/login = 2025-07-03T15:18:19.034Z","timestamp":"2025-07-03T15:18:19.034Z"}
+{"level":"info","message":"GET - /api/v1/users = 2025-07-03T15:18:25.010Z","timestamp":"2025-07-03T15:18:25.010Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T15:19:27.248Z","timestamp":"2025-07-03T15:19:27.248Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-03T15:19:43.446Z","timestamp":"2025-07-03T15:19:43.446Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:21:49.091Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:21:49.097Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:21:49.098Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:21:49.099Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:21:49.143Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:21:49.191Z"}
+{"level":"info","message":"GET - /api/v1/users = 2025-07-03T15:21:59.877Z","timestamp":"2025-07-03T15:21:59.878Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:22:56.083Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:22:56.087Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:22:56.088Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:22:56.089Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:22:56.129Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:22:56.172Z"}
+{"level":"info","message":"GET - /api/v1/users = 2025-07-03T15:22:59.262Z","timestamp":"2025-07-03T15:22:59.262Z"}
+{"level":"info","message":"Getting all users","timestamp":"2025-07-03T15:22:59.264Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:24:28.724Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:24:28.727Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:24:28.728Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:24:28.729Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:24:28.783Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:24:28.820Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:25:13.169Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:25:13.174Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:25:13.174Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:25:13.175Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:25:13.211Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:25:13.253Z"}
+{"level":"info","message":"GET - /api/v1/users = 2025-07-03T15:25:26.362Z","timestamp":"2025-07-03T15:25:26.362Z"}
+{"level":"info","message":"Getting all users","timestamp":"2025-07-03T15:25:26.363Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:26:03.434Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:26:03.438Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:26:03.438Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:26:03.439Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:26:03.478Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:26:03.507Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:36:13.276Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:36:13.300Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:36:13.302Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:36:13.305Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:36:13.394Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:36:13.466Z"}
+{"level":"info","message":"GET - /api/v1/users = 2025-07-03T15:36:16.236Z","timestamp":"2025-07-03T15:36:16.237Z"}
+{"level":"info","message":"Getting all users","timestamp":"2025-07-03T15:36:16.238Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:38:33.938Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:38:33.942Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:38:33.942Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:38:33.943Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:38:33.981Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:38:34.009Z"}
+{"level":"info","message":"GET - /users/search?searchTerm=jdoe = 2025-07-03T15:39:23.551Z","timestamp":"2025-07-03T15:39:23.551Z"}
+{"level":"info","message":"GET - /users/search?searchTerm=john = 2025-07-03T15:39:29.380Z","timestamp":"2025-07-03T15:39:29.380Z"}
+{"level":"info","message":"GET - /users/search?searchTerm=john.doe@yahoo.com = 2025-07-03T15:39:38.120Z","timestamp":"2025-07-03T15:39:38.120Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:41:20.066Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:41:20.074Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:41:20.075Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:41:20.076Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:41:20.172Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:41:20.227Z"}
+{"level":"info","message":"GET - /users/john.doe@yahoo.com = 2025-07-03T15:41:36.653Z","timestamp":"2025-07-03T15:41:36.653Z"}
+{"level":"info","message":"GET - /users/email/john.doe@yahoo.com = 2025-07-03T15:42:17.143Z","timestamp":"2025-07-03T15:42:17.143Z"}
+{"level":"info","message":"GET - /users/id/1 = 2025-07-03T15:42:30.997Z","timestamp":"2025-07-03T15:42:30.997Z"}
+{"level":"info","message":"PUT - /users/id/1 = 2025-07-03T15:46:43.995Z","timestamp":"2025-07-03T15:46:43.995Z"}
+{"level":"info","message":"GET - /users/id/1 = 2025-07-03T15:47:10.001Z","timestamp":"2025-07-03T15:47:10.001Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:49:18.748Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:49:18.752Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:49:18.752Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:49:18.752Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:49:18.796Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:49:18.834Z"}
+{"level":"info","message":"GET - /users/email/john.doe@yahoo.com = 2025-07-03T15:49:37.947Z","timestamp":"2025-07-03T15:49:37.947Z"}
+{"level":"info","message":"GET - /users/id/1 = 2025-07-03T15:52:26.819Z","timestamp":"2025-07-03T15:52:26.819Z"}
+{"level":"info","message":"GET - /api/v1/users/ = 2025-07-03T15:53:47.572Z","timestamp":"2025-07-03T15:53:47.572Z"}
+{"level":"info","message":"Getting all users","timestamp":"2025-07-03T15:53:47.574Z"}
+{"level":"info","message":"GET - /api/v1/users/id/1 = 2025-07-03T15:53:52.935Z","timestamp":"2025-07-03T15:53:52.935Z"}
+{"level":"info","message":"Getting user with ID: 1","timestamp":"2025-07-03T15:53:52.936Z"}
+{"level":"info","message":"GET - /api/v1/users/email/john.doe@yahoo.com = 2025-07-03T15:54:14.758Z","timestamp":"2025-07-03T15:54:14.758Z"}
+{"level":"info","message":"Getting user with email: john.doe@yahoo.com","timestamp":"2025-07-03T15:54:14.759Z"}
+{"level":"info","message":"GET - /api/v1/users/id/1 = 2025-07-03T15:55:07.831Z","timestamp":"2025-07-03T15:55:07.831Z"}
+{"level":"info","message":"Getting user with ID: 1","timestamp":"2025-07-03T15:55:07.833Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:55:45.191Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:55:45.195Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:55:45.196Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:55:45.196Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:55:45.242Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:55:45.291Z"}
+{"level":"info","message":"GET - /api/v1/users/id/1 = 2025-07-03T15:55:46.987Z","timestamp":"2025-07-03T15:55:46.987Z"}
+{"level":"info","message":"Getting user with ID: 1","timestamp":"2025-07-03T15:55:46.990Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:59:32.821Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:59:32.824Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:59:32.824Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:59:32.825Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:59:32.856Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:59:32.884Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T15:59:59.790Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T15:59:59.793Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T15:59:59.794Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T15:59:59.794Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T15:59:59.832Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T15:59:59.868Z"}
+{"level":"info","message":"GET - /api/v1/users/email/john.doe@yahoo.com = 2025-07-03T16:00:16.442Z","timestamp":"2025-07-03T16:00:16.442Z"}
+{"level":"info","message":"Getting user with email: john.doe@yahoo.com","timestamp":"2025-07-03T16:00:16.444Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:00:34.785Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:00:34.790Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:00:34.791Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:00:34.791Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:00:34.845Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:00:34.934Z"}
+{"level":"info","message":"GET - /api/v1/users/email/john.doe@yahoo.com = 2025-07-03T16:00:53.493Z","timestamp":"2025-07-03T16:00:53.493Z"}
+{"level":"info","message":"Getting user with email: john.doe@yahoo.com","timestamp":"2025-07-03T16:00:53.496Z"}
+{"level":"info","message":"PUT - /api/v1/users/id/1 = 2025-07-03T16:04:38.574Z","timestamp":"2025-07-03T16:04:38.574Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:05:50.055Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:05:50.059Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:05:50.060Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:05:50.060Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:05:50.096Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:05:50.127Z"}
+{"level":"info","message":"PUT - /api/v1/users/id/1 = 2025-07-03T16:06:17.370Z","timestamp":"2025-07-03T16:06:17.370Z"}
+{"email":"john.doe123@yahoo.com","level":"info","message":"Updating user with ID: 1","password":"password12345","timestamp":"2025-07-03T16:06:17.372Z","username":"john.doe"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:07:23.748Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:07:23.756Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:07:23.757Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:07:23.759Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:07:23.816Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:07:23.871Z"}
+{"level":"info","message":"GET - /api/v1/users/id/1 = 2025-07-03T16:07:45.227Z","timestamp":"2025-07-03T16:07:45.227Z"}
+{"level":"info","message":"Getting user with ID: 1","timestamp":"2025-07-03T16:07:45.229Z"}
+{"level":"info","message":"PUT - /api/v1/users/id/1 = 2025-07-03T16:07:55.529Z","timestamp":"2025-07-03T16:07:55.529Z"}
+{"email":"john.doe1234@yahoo.com","level":"info","message":"Updating user with ID: 1","password":"password123456","timestamp":"2025-07-03T16:07:55.531Z","username":"john.doe1"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:08:57.392Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:08:57.395Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:08:57.396Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:08:57.396Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:08:57.433Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:08:57.469Z"}
+{"level":"info","message":"DELETE - /api/v1/users/id/1 = 2025-07-03T16:09:21.480Z","timestamp":"2025-07-03T16:09:21.480Z"}
+{"level":"info","message":"DELETE - /api/v1/users/id/1 = 2025-07-03T16:10:19.473Z","timestamp":"2025-07-03T16:10:19.473Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:11:30.550Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:11:30.554Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:11:30.556Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:11:30.557Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:11:30.605Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:11:30.641Z"}
+{"level":"info","message":"DELETE - /api/v1/users/id/1 = 2025-07-03T16:11:38.796Z","timestamp":"2025-07-03T16:11:38.796Z"}
+{"level":"info","message":"Deleting user with ID: 1","timestamp":"2025-07-03T16:11:38.799Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:18:47.141Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:18:47.148Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:18:47.150Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:18:47.150Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:18:47.204Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:18:47.245Z"}
+{"level":"info","message":"POST - /api/v1/users/register = 2025-07-03T16:19:15.885Z","timestamp":"2025-07-03T16:19:15.885Z"}
+{"level":"info","message":"$2b$10$f611fQdVuNmtfQurXMyR3Ohr.8V84.TphkTLbleQv7mf/M4heyCd2","timestamp":"2025-07-03T16:19:15.991Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T16:20:20.830Z","timestamp":"2025-07-03T16:20:20.831Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:27:22.040Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:27:22.068Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:27:22.069Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:27:22.070Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:27:22.158Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:27:22.227Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:27:34.308Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:27:34.311Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:27:34.312Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:27:34.312Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:27:34.361Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:27:34.401Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:28:46.169Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:28:46.172Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:28:46.173Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:28:46.173Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:28:46.214Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:28:46.247Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T16:28:52.217Z","timestamp":"2025-07-03T16:28:52.217Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T16:30:51.176Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T16:30:51.181Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T16:30:51.182Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T16:30:51.182Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T16:30:51.222Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T16:30:51.273Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T16:30:52.785Z","timestamp":"2025-07-03T16:30:52.785Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T16:31:21.918Z","timestamp":"2025-07-03T16:31:21.918Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T17:16:35.468Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T17:16:35.471Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T17:16:35.472Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T17:16:35.472Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T17:16:35.537Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T17:17:09.593Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T17:17:09.595Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T17:17:09.596Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T17:17:09.596Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T17:17:09.629Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T17:17:09.670Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T17:20:12.841Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T17:20:12.845Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T17:20:12.846Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T17:20:12.846Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T17:20:12.875Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T17:20:12.904Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:20:15.249Z","timestamp":"2025-07-03T17:20:15.249Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:20:22.042Z","timestamp":"2025-07-03T17:20:22.042Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:20:24.992Z","timestamp":"2025-07-03T17:20:24.992Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:20:28.425Z","timestamp":"2025-07-03T17:20:28.425Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:21:03.832Z","timestamp":"2025-07-03T17:21:03.832Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:22:04.901Z","timestamp":"2025-07-03T17:22:04.901Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:22:06.118Z","timestamp":"2025-07-03T17:22:06.118Z"}
+{"level":"info","message":"POST - /api/v1/users/login = 2025-07-03T17:22:18.453Z","timestamp":"2025-07-03T17:22:18.453Z"}
+{"level":"info","message":"PUT - /api/v1/users/id/3 = 2025-07-03T17:23:03.469Z","timestamp":"2025-07-03T17:23:03.469Z"}
+{"email":"jane.doe@yahoo.com","level":"info","message":"Updating user with ID: 3","password":"password123","timestamp":"2025-07-03T17:23:03.470Z","username":"janedoe"}
+{"level":"info","message":"PUT - /api/v1/users/id/3 = 2025-07-03T17:23:56.167Z","timestamp":"2025-07-03T17:23:56.167Z"}
+{"email":"jane.doe@yahoo.com","level":"info","message":"Updating user with ID: 3","password":"password123","timestamp":"2025-07-03T17:23:56.168Z"}
+{"level":"info","message":"Connecting to MySQL database at localhost:3306...","timestamp":"2025-07-03T17:29:35.460Z"}
+{"level":"info","message":"User: ishop-api-user","timestamp":"2025-07-03T17:29:35.464Z"}
+{"level":"info","message":"Password: N0crea$2025@","timestamp":"2025-07-03T17:29:35.464Z"}
+{"level":"info","message":"Database: ishop","timestamp":"2025-07-03T17:29:35.464Z"}
+{"level":"info","message":"iShop Server is running on port 3000","timestamp":"2025-07-03T17:29:35.490Z"}
+{"level":"info","message":"Connected to the database successfully","timestamp":"2025-07-03T17:29:35.511Z"}
+{"level":"info","message":"PUT - /api/v1/users/id/3 = 2025-07-03T17:29:39.780Z","timestamp":"2025-07-03T17:29:39.780Z"}
+{"email":"jane.doe@yahoo.com","level":"info","message":"Updating user with ID: 3","password":"password123","timestamp":"2025-07-03T17:29:39.788Z","username":"janedoe"}
+{"level":"info","message":"PUT - /api/v1/users/id/3 = 2025-07-03T17:30:01.125Z","timestamp":"2025-07-03T17:30:01.125Z"}
+{"email":"james.doe@yahoo.com","level":"info","message":"Updating user with ID: 3","password":"password123","timestamp":"2025-07-03T17:30:01.126Z","username":"james.doe"}
+{"level":"info","message":"PUT - /api/v1/users/id/4 = 2025-07-03T17:30:10.490Z","timestamp":"2025-07-03T17:30:10.490Z"}
+{"email":"james.doe@yahoo.com","level":"info","message":"Updating user with ID: 4","password":"password123","timestamp":"2025-07-03T17:30:10.491Z","username":"james.doe"}
