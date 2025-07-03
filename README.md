@@ -28,9 +28,7 @@ seamless shopping experience.
 
 ### 4. User Management - This component handles user accounts.
 - **User Registration**: Allows users to create accounts.
-- **User Authentication**: Manages user login and logout process.
-
-[//]: # (- **User Registration**: Allows new users to create accounts.)
+- **User Authentication**: Manages user login.
 
 [//]: # (- **User Authentication**: Manages user login and logout processes.)
 
@@ -125,6 +123,16 @@ CREATE TABLE Orders (
 );
 ```
 
+### Users Table
+``` sql
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js
