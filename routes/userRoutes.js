@@ -1,22 +1,20 @@
 import express from 'express';
 import {
-    registerUser,
-    loginUser,
     getAllUsers,
     getUserByEmail,
     getUserById,
     updateUser, deleteUser
 } from '../controllers/userController.js';
 
+import {verifyToken, requireRole} from "../middleware/authMiddleware.js"; // Import
+// authentication middleware
 
 const router = express.Router();
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
-router.get('/' , getAllUsers);
-router.get('/email/:email', getUserByEmail);
-router.get('/id/:id', getUserById);
-router.put('/id/:id', updateUser);
-router.delete('/id/:id', deleteUser);
+router.get('/' ,verifyToken, requireRole('ADMIN') ,getAllUsers);
+router.get('/email/:email', verifyToken, getUserByEmail);
+router.get('/id/:id', verifyToken, getUserById);
+router.put('/id/:id', verifyToken, updateUser);
+router.delete('/id/:id', verifyToken, deleteUser);
 
 export default router;

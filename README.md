@@ -130,6 +130,8 @@ CREATE TABLE Orders (
     status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES Products(id)
 );
+
+ALTER TABLE Orders ADD COLUMN `user_id` INT REFERENCES Users(id);
 ```
 
 ### Users Table
@@ -141,6 +143,8 @@ CREATE TABLE Users (
     email VARCHAR(255) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE Users ADD COLUMN `role` ENUM('USER', 'ADMIN') DEFAULT 'USER';
 ```
 
 
@@ -169,18 +173,26 @@ ishop/
 ├── ├── productRoutes.js
 ├── ├── orderRoutes.js
 ├── ├── categoryRoutes.js
+├── ├── userRoutes.js
+├── ├── authRoutes.js
+├── middleware/
+├── ├── authMiddleware.js
 ├── controllers/
 ├── ├── productController.js
 ├── ├── orderController.js
 ├── ├── categoryController.js
+├── ├── userController.js
+├── ├── authController.js
 ├── services/
 ├── ├── productRoutes.js
 ├── ├── orderService.js
 ├── ├── categoryService.js
+├── ├── userService.js
 ├── repositories/
 ├── ├── productRepository.js
 ├── ├── orderRepository.js
 ├── ├── categoryRepository.js
+├── ├── userRepository.js
 
 
 ```
@@ -193,6 +205,10 @@ ishop/
 - **dotenv**: Module to load environment variables from a `.env` file.
 - **mysql2**: MySQL client for Node.js to interact with the database.
 - **express**: Web framework for building APIs.
+- **jsonwebtoken**: Library for handling JSON Web Tokens for user authentication.
+- **bcryptjs**: Library for hashing passwords securely.
+- **cors**: Middleware for enabling Cross-Origin Resource Sharing.
+
 
 ## How to Run the Project
 1. Install Node.js and MySQL on your machine.

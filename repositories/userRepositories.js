@@ -11,14 +11,22 @@ const getAllUsers = async () => {
 
 // Function to get a user by ID
 const getUserById = async (id) => {
-    const [rows] = await db.query('SELECT id, username , email FROM ishop.Users WHERE id = ?', [id]);
+    const [rows] = await db.query('SELECT id, username, email FROM' +
+        ' ishop.Users WHERE id = ?', [id]);
     return rows[0]; // Return the first row if found
 };
 
 // Function to create a new user
 const createUser = async (user) => {
-    const {username, email, password} = user;
-    const [result] = await db.query('INSERT INTO ishop.Users (username, email, password) VALUES (?, ?, ?)', [username, email, password]);
+    const {username, email, password, role} = user;
+
+    //check if role is provided, if not set it to 'USER'
+    if (!role) {
+        user.role = 'USER';
+    }
+
+    const [result] = await db.query('INSERT INTO ishop.Users (username,' +
+        ' email, password, role) VALUES (?, ?, ?, ?)', [username, email, password, user.role]);
     return {id: result.insertId, username, email, password};
 };
 
@@ -31,13 +39,17 @@ const getUserByUserNameAndPassword = async (username, password) => {
 
 // Function to get user by email
 const getUserByEmail = async (email) => {
-    const [rows] = await db.query('SELECT id, username , email , password FROM ishop.Users WHERE email = ?', [email]);
+    const [rows] = await db.query('SELECT id, username , email , password,' +
+        ' role' +
+        ' FROM ishop.Users WHERE email = ?', [email]);
     return rows[0]; // Return the first row if found
 };
 
 // Function to get user by username
 const getUserByUserName = async (username) => {
-    const [rows] = await db.query('SELECT id, username , email , password FROM ishop.Users WHERE username = ?', [username]);
+    const [rows] = await db.query('SELECT id, username , email , password,' +
+        ' role' +
+        ' FROM ishop.Users WHERE username = ?', [username]);
     return rows[0]; // Return the first row if found
 };
 
