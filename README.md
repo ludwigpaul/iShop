@@ -133,7 +133,6 @@ CREATE TABLE Orders (
 ```
 
 ### Users Table
-<<<<<<< HEAD
 ```sql
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -144,7 +143,7 @@ CREATE TABLE Users (
 );
 ```
 
->>>>>>> e42de880e5329b1422c952e6e47abfdf7ca48169
+
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js
