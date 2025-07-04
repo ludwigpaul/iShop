@@ -6,15 +6,13 @@ dotenv.config();
 
 logger.info(`Connecting to MySQL database at ${process.env.DB_HOST}:${process.env.DB_PORT}...`);
 logger.info(`User: ${process.env.DB_USER}`);
-logger.info(`Password: ${process.env.DB_PASSWORD}`);
-logger.info(`Database: ${process.env.DB_NAME}`);
+
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT) || 3306, // Default MySQL port is 3306
     user: 'root',
-    password: 'J0n454848(((',
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10, // Adjust based on your application's needs
