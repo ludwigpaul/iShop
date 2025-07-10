@@ -130,10 +130,11 @@ CREATE TABLE Orders (
     status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES Products(id)
 );
+
+ALTER TABLE Orders ADD COLUMN `user_id` INT REFERENCES Users(id);
 ```
 
 ### Users Table
-<<<<<<< HEAD
 ```sql
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -142,19 +143,11 @@ CREATE TABLE Users (
     email VARCHAR(255) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE Users ADD COLUMN `role` ENUM('USER', 'ADMIN') DEFAULT 'USER';
 ```
 
-=======
-``` sql
-CREATE TABLE Users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
->>>>>>> e42de880e5329b1422c952e6e47abfdf7ca48169
+
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js
@@ -180,18 +173,26 @@ ishop/
 ├── ├── productRoutes.js
 ├── ├── orderRoutes.js
 ├── ├── categoryRoutes.js
+├── ├── userRoutes.js
+├── ├── authRoutes.js
+├── middleware/
+├── ├── authMiddleware.js
 ├── controllers/
 ├── ├── productController.js
 ├── ├── orderController.js
 ├── ├── categoryController.js
+├── ├── userController.js
+├── ├── authController.js
 ├── services/
 ├── ├── productRoutes.js
 ├── ├── orderService.js
 ├── ├── categoryService.js
+├── ├── userService.js
 ├── repositories/
 ├── ├── productRepository.js
 ├── ├── orderRepository.js
 ├── ├── categoryRepository.js
+├── ├── userRepository.js
 
 ishop-frontend/
 ├── node_modules/
@@ -235,6 +236,10 @@ ishop-frontend/
 - **dotenv**: Module to load environment variables from a `.env` file.
 - **mysql2**: MySQL client for Node.js to interact with the database.
 - **express**: Web framework for building APIs.
+- **jsonwebtoken**: Library for handling JSON Web Tokens for user authentication.
+- **bcryptjs**: Library for hashing passwords securely.
+- **cors**: Middleware for enabling Cross-Origin Resource Sharing.
+
 
 ## How to Run the Project
 1. Install Node.js and MySQL on your machine.

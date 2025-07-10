@@ -16,6 +16,7 @@ const getUserById = async (id) => {
     const [rows] = await db.query('SELECT id, username, email, verified FROM ishop.users WHERE id = ?', [id]);
     return rows[0];
 };
+
 // Function to create a new user
 const createUser = async (user) => {
     const { username, email, password, verified = false, verificationToken = null } = user;
@@ -25,13 +26,6 @@ const createUser = async (user) => {
     );
     return { id: result.insertId, username, email, password, verified, verificationToken };
 };
-
-//Function to login a user
-const loginUser = async (username, password) => {
-    const [rows] = await db.query('SELECT id, username, email FROM ishop.users WHERE username = ? AND password = ?', [username, password]);
-    return rows[0]; // Return the first row if found
-};
-
 
 // Function to get user by username and password
 const getUserByUserNameAndPassword = async (username, password) => {
@@ -103,8 +97,11 @@ const getAllWorkers = async () => {
 };
 
 const assignOrderToWorker = async (orderId, workerId) => {
+    logger.info(`Assigning order ${orderId} to worker ${workerId}`);
     await db.query('UPDATE ishop.orders SET worker_id = ? WHERE id = ?', [workerId, orderId]);
+    logger.info(`Assigned order ${orderId} to worker ${workerId}`);
     await db.query('UPDATE ishop.workers SET assigned_order_id = ? WHERE id = ?', [orderId, workerId]);
+    logger.info(`Assigned order ${orderId} to worker ${workerId}`);
 };
 
 const getOrdersByWorker = async (workerId) => {
@@ -123,7 +120,6 @@ export default {
     getUserByEmail,
     getUserById,
     createUser,
-    loginUser,
     updateUser,
     deleteUser,
     findUsers,

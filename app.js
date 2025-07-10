@@ -11,9 +11,6 @@ import userRouter from './routes/userRoutes.js';
 import profileRouter from './routes/profileRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import authRouter from './routes/authRoutes.js';
-import {loginUser} from "./controllers/userController.js";
-
-
 dotenv.config();
 
 const app = express();
@@ -31,6 +28,7 @@ const logRequest = (req, res, next) => {
 };
 
 app.use(express.json()); // This middleware parses JSON request bodies
+app.use(express.text()); // This middleware parses text request bodies
 app.use(express.urlencoded({ extended: true })); // This middleware parses URL-encoded request bodies
 app.use(morgan('dev')); // Use morgan for logging HTTP requests
 app.use(logRequest); // Custom logging middleware
@@ -40,8 +38,8 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/orders', orderRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/profile', profileRouter);
-app.use('/api/v1/login', authRouter);
 app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/auth', authRouter);
 
 app.get('/', (req, res) => {
    logger.info('Root route');
