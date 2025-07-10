@@ -1,5 +1,7 @@
 import userRepository from '../repositories/userRepositories.js';
 import jwt from 'jsonwebtoken';
+import userService from '../services/userService.js';
+import logger from "../logger/logger.js";
 
 export async function loginAdmin(req, res) {
     try {
@@ -18,7 +20,8 @@ export async function loginAdmin(req, res) {
 export async function assignOrder(req, res) {
     try {
         const { orderId, workerId } = req.body;
-        await userService.assignOrderToWorker(orderId, workerId);
+        logger.info (`Assigning order ${orderId} to worker ${workerId}`);
+        await userService.assignOrderToWorker(parseInt(orderId), parseInt(workerId));
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: 'Failed to assign order' });
