@@ -15,6 +15,10 @@ const createUser = async (user) => {
     return await userRepositories.createUser(user);
 }
 
+const loginUser = async (username, password) => {
+    return await userRepositories.getUserByUserName(username, password);
+}
+
 //Gets user by username
 const getUserByUserName = async (username) => {
     return await userRepositories.getUserByUserName(username);
@@ -36,15 +40,41 @@ const findUsers = async (searchTerm) => {
     return await userRepositories.findUsers(searchTerm);
 }
 
+const findByVerificationToken = async (token) => {
+    return await userRepositories.findByVerificationToken(token);
+};
+
+const verifyUser = async (id) => {
+    return await userRepositories.verifyUser(id);
+};
+
+const getAllWorkers = async () => {
+    return await userRepositories.getAllWorkers();
+};
+
+const assignOrderToWorker = async (orderId, workerId) => {
+    return await userRepositories.assignOrderToWorker(orderId, workerId);
+};
+
+const getOrdersByWorker = async (workerId) => {
+    return await userRepositories.getOrdersByWorker(workerId);
+};
+
 export default {
     getAllUsers,
     getUserById,
     createUser,
+    loginUser,
     getUserByUserName,
     getUserByEmail,
     updateUser,
     deleteUser,
-    findUsers
+    findUsers,
+    findByVerificationToken,
+    verifyUser,
+    getAllWorkers,
+    assignOrderToWorker,
+    getOrdersByWorker
 };
 
 

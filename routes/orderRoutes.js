@@ -1,5 +1,7 @@
 import express from "express";
 import orderController from "../controllers/orderController.js";
+import { checkoutOrder } from "../controllers/orderController.js";
+import { completeOrder } from '../controllers/orderController.js';
 
 const router = express.Router();
 // CRUD operations for orders
@@ -7,7 +9,8 @@ const router = express.Router();
 
 router.get("/", orderController.getAllOrders);
 router.get("/id/:id", orderController.getOrderById);
-router.post("/", orderController.createOrder);
+router.post("/checkout", orderController.createOrder);
+router.post('/complete/:orderId', completeOrder);
 router.put("/id/:id", orderController.updateOrder);
 router.delete("/id/:id", orderController.deleteOrder);
 

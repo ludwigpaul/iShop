@@ -50,3 +50,36 @@ CREATE TABLE Users (
     email VARCHAR(100) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Add role column to Users table
+ALTER TABLE Users ADD COLUMN `role` ENUM('USER', 'ADMIN') DEFAULT 'USER';
+
+-- Added user_id, completed_at, and estimated_arrival columns to Orders table
+ALTER TABLE orders
+    ADD COLUMN user_id INT NOT NULL AFTER id,
+    ADD COLUMN completed_at DATETIME NULL,
+    ADD COLUMN estimated_arrival DATETIME NULL;
+
+ALTER TABLE orders
+    ADD CONSTRAINT fk_user
+        FOREIGN KEY (user_id) REFERENCES users(id);
+
+-- Added verification columns to Users table
+ALTER TABLE ishop.users ADD COLUMN verified BOOLEAN DEFAULT FALSE;
+ALTER TABLE ishop.users ADD COLUMN verificationToken VARCHAR(255);
+
+-- Create the Workers table
+CREATE TABLE workers (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         name VARCHAR(100) NOT NULL,
+                         email VARCHAR(100) UNIQUE
+);
+
+ALTER TABLE orders ADD COLUMN worker_id INT;
+ALTER TABLE orders ADD CONSTRAINT fk_worker FOREIGN KEY (worker_id) REFERENCES workers(id);
+
+ALTER TABLE ishop.users MODIFY COLUMN role ENUM('USER', 'ADMIN', 'WORKER') DEFAULT 'USER';
+
+ALTER TABLE ishop.workers
+    ADD COLUMN assigned_order_id INT DEFAULT NULL;
+

@@ -16,6 +16,7 @@ const pool = mysql.createPool({
     user: 'root',
     password: 'J0n454848(((',
     database: process.env.DB_NAME,
+    charset: 'utf8mb4',
     waitForConnections: true,
     connectionLimit: 10, // Adjust based on your application's needs
     queueLimit: 0, // No limit on the queue length

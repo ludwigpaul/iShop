@@ -193,6 +193,37 @@ ishop/
 ├── ├── orderRepository.js
 ├── ├── categoryRepository.js
 
+ishop-frontend/
+├── node_modules/
+├── public/
+├── src/
+│   ├── components/
+│   │   └── layout/
+│   │       └── Navbar.js
+│   ├── pages/
+│   │   ├── Cart.js
+│   │   ├── Home.js
+│   │   ├── Login.js
+│   │   ├── Order.js
+│   │   ├── ProductDetails.js
+│   │   ├── Products.js
+│   │   ├── Profile.js
+│   │   └── Register.js
+│   ├── services/
+│   │   └── api.js
+│   ├── store/
+│   │   ├── index.js
+│   │   └── slices/
+│   │       └── cartSlice.js
+│   ├── utils/
+│       └── encryption.js
+│   ├── App.js
+│   ├── index.js
+│   └── theme.js
+├── .env
+├── package.json
+└── README.md
+
 
 ```
 
