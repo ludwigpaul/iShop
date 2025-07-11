@@ -100,8 +100,6 @@ const assignOrderToWorker = async (orderId, workerId) => {
     logger.info(`Assigning order ${orderId} to worker ${workerId}`);
     await db.query('UPDATE ishop.orders SET worker_id = ? WHERE id = ?', [workerId, orderId]);
     logger.info(`Assigned order ${orderId} to worker ${workerId}`);
-    await db.query('UPDATE ishop.workers SET assigned_order_id = ? WHERE id = ?', [orderId, workerId]);
-    logger.info(`Assigned order ${orderId} to worker ${workerId}`);
 };
 
 const getOrdersByWorker = async (workerId) => {

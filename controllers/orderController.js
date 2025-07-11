@@ -7,16 +7,16 @@ import orderRepository from "../repositories/orderRepository.js";
 // The controller for managing orders in the ishop database.
 // The purpose of this controller is to handle HTTP requests related to orders.
 // The controller layer is responsible for handling HTTP requests, validating input, and calling the service layer to perform business logic.
-
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     }
 });
 
-const getAllOrders = async (req, res) => {
+export const getAllOrders = async (req, res) => {
     try {
         logger.info('Getting all orders');
         const orders = await orderService.getAllOrders();
@@ -27,7 +27,7 @@ const getAllOrders = async (req, res) => {
 }
 
 // Retrieves an order by its ID
-const getOrderById = async (req, res) => {
+export const getOrderById = async (req, res) => {
     try {
         const {id} = req.params;
         logger.info(`Getting order with ID: ${id}`);
@@ -42,7 +42,6 @@ const getOrderById = async (req, res) => {
 };
 
 // Creates a new order
-// controllers/orderController.js
 export const createOrder = async (req, res) => {
     try {
         const { userId, items, email } = req.body;
@@ -71,7 +70,7 @@ export const createOrder = async (req, res) => {
 };
 
 // Updates an existing order
-const updateOrder = async (req, res) => {
+export const updateOrder = async (req, res) => {
     try {
         const {id} = req.params;
         const order = req.body;
@@ -92,28 +91,23 @@ const updateOrder = async (req, res) => {
 export const completeOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
-
-        await db.query(
-            'UPDATE ishop.orders SET status = "completed", completed_at = NOW() WHERE id = ?',
-            [orderId]
-        );
-
-        const [[order]] = await db.query('SELECT user_id FROM ishop.orders WHERE id = ?', [orderId]);
-        const [[user]] = await db.query('SELECT email FROM ishop.users WHERE id = ?', [order.user_id]);
+        const { order, user } = await orderRepository.completeOrder(orderId);
 
         await transporter.sendMail({
             to: user.email,
-            subject: 'Order Arrived',
-            text: 'Your order has arrived! Thank you for shopping with us.'
+            subject: 'Your package is on the way!',
+            text: `Your order has been completed and is on its way! Thank you for shopping with us. Estimated arrival: ${order.estimated_arrival}`,
         });
 
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: 'Order completion failed' });
+        logger.error('Order completion error:', err); // Add this for better debugging
+        res.status(500).json({ error: 'Order completion failed', details: err.message });
     }
 };
+
 // Deletes an order by ID
-const deleteOrder = async (req, res) => {
+export const deleteOrder = async (req, res) => {
     try {
         const {id} = req.params;
         logger.info(`Deleting order with ID: ${id}`);

@@ -32,7 +32,7 @@ seamless shopping experience.
 
 [//]: # (- **User Authentication**: Manages user login and logout processes.)
 
-[//]: # (- **User Profiles**: Stores user information such as name, email, and address.)
+- **User Profiles**: Stores user information such as name, email, and address.)
 
 [//]: # (- **User Preferences**: Allows users to set preferences for notifications, language, and other settings.)
 
@@ -92,6 +92,14 @@ The iShop system provides a RESTful API to interact with its components.
 - `GET /users/orders`: Retrieve the order history of the authenticated user.
 - `GET /users/orders/{id}`: Retrieve details of a specific order for the authenticated user.
 - `PUT /users/orders/{id}`: Update the status of an order for the authenticated user (only if the user is admin).
+
+### Authentication Endpoints
+- `POST /auth/login`: Authenticate a user and return a JWT token.
+- `POST /auth/logout`: Log out a user (invalidate the JWT token).
+
+#Payment Endpoints
+- `POST /payment/checkout`: Process payment for an order.
+
 
 ## Database Schema Design
 
@@ -239,6 +247,8 @@ ishop-frontend/
 - **jsonwebtoken**: Library for handling JSON Web Tokens for user authentication.
 - **bcryptjs**: Library for hashing passwords securely.
 - **cors**: Middleware for enabling Cross-Origin Resource Sharing.
+- **body-parser**: Middleware for parsing incoming request bodies in a middleware before your handlers, available under the `req.body` property.
+- **
 
 
 ## How to Run the Project
