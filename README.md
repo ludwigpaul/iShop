@@ -1,160 +1,143 @@
-# SYSTEM OVERVIEW OF I-SHOP E-COMMERCE SYSTEM
+# iShop E-Commerce System
 
 ## Introduction
-This document provides a high-level overview of the iShop e-commerce system, 
-detailing its architecture, components, and interactions. 
-The iShop system is designed to facilitate online shopping, 
-allowing users to browse products, and complete purchases.
+iShop is a full-stack e-commerce platform built with React.js (frontend), Node.js/Express.js (backend), and MySQL (database). It supports user registration, product browsing, order management, admin and worker dashboards, and secure authentication.
+
+---
 
 ## System Architecture
-The iShop application is built as a monolithic web application.
-It consists of several key components that work together to provide a 
-seamless shopping experience.
 
-## Key Components
+- **Frontend:** React.js (Material UI, React Router)
+- **Backend:** Node.js, Express.js (REST API)
+- **Database:** MySQL
+- **Authentication:** JWT (JSON Web Tokens)
+- **Email:** Nodemailer for email verification and notifications
 
-### 1. User Interface (UI) - This will be handled by the frontend application
+---
 
-### 2. Product Management - This component handles product listings.
-- **Product Catalog**: Stores product details such as name, description, price, and images.
-- **Product Search**: Allows users to search for products based on various criteria.
-- **Product Categories**: Organizes products into categories for easier navigation.
+## Features
 
-### 3. Make Order - This component manages the order process.
-- **Shopping Cart**: Allows users to add products to their cart, and make order.
-- **Order Processing**: Handles the creation of orders, including payment processing and order confirmation.
-- **Order History**: Stores past orders for users to view and manage.
-- **Order Tracking**: Allows users to track the status of their orders.
+### User Features
+- Register, verify email, and login
+- Browse products and categories
+- Add products to cart and place orders
+- View and update profile
+- View order history and order details
 
-### 4. User Management - This component handles user accounts.
-- **User Registration**: Allows users to create accounts.
-- **User Authentication**: Manages user login.
+### Admin Features
+- Admin login (JWT protected)
+- View all users
+- View all orders (with assigned worker name or "Not assigned yet")
+- Assign orders to workers
+- View all workers
+- View orders assigned to a specific worker
 
-[//]: # (- **User Authentication**: Manages user login and logout processes.)
+### Worker Features
+- Worker login (JWT protected)
+- View assigned orders
+- Mark orders as completed (triggers email notification to user)
 
-- **User Profiles**: Stores user information such as name, email, and address.)
+---
 
-[//]: # (- **User Preferences**: Allows users to set preferences for notifications, language, and other settings.)
+## Repository Pattern
 
-[//]: # (- **User Roles**: Manages different user roles such as admin, customer, and guest.)
+- All database queries are handled in the `repositories/` directory.
+- Controllers handle HTTP requests and call service/repository functions.
+- Routes are clean and only call controller or repository functions.
 
-
-## Database Design
-The iShop system uses a relational database to store its data.
-### Key Tables
-- **Products**: Contains product details including productID, name, 
-  description, price, and stock quantity.
-- **Orders**: Contains order details including orderID, productID, quantities,
-  orderDate, statusDate and order status (PENDING, PROCESSING, SHIPPED, 
-  DELIVERED).
-- **Categories**: Contains identifiers and names for product categories. 
-  Many products can belong to a single category.
-
+---
 
 ## REST API Endpoints
-The iShop system provides a RESTful API to interact with its components.
-### Product Management Endpoints
-- `GET /products`: Retrieve a list of ALL products.
-- `GET /products/id/{id}`: Retrieve details of a specific product with a given 
-  productID.
-- `GET /products/name/{name}`: Retrieve products by name.
-- `GET /products/category/{category}`: Retrieve products by category.
-- `POST /products`: Add a new product to the catalog.
-- `PUT /products/{id}`: Update an existing product.
-- `DELETE /products/{id}`: Delete a product from the catalog.
-- `GET /products/search?query={query}`: Search for products by a query 
-  string (Search product by name or description).
-- `GET /products/categories`: Retrieve a list of ALL product categories.
 
-### Order Management Endpoints
-- `GET /orders`: Retrieve a list of ALL orders.
-- `GET /orders/id/{id}`: Retrieve details of a specific order with a given 
-  orderID.
-- `POST /orders`: Create a new order.
-- `PUT /orders/{id}`: Update an existing order. (Only admin should do this 
-  to update the status of the order)
+### Authentication
+- `POST /api/v1/auth/login` - User login
+- `POST /api/v1/auth/login/worker` - Worker login
+- `POST /api/v1/auth/register` - User registration
+- `GET /api/v1/auth/verify-email` - Email verification
 
-### Category Management Endpoints
-- `GET /categories`: Retrieve a list of ALL categories.
-- `GET /categories/id/{id}`: Retrieve details of a specific category 
-  with a given categoryID.
-- `POST /categories`: Add a new category (name, description).
-- `PUT /categories/id/{id}`: Update an existing category.
-- `DELETE /categories/{id}`: Delete a category from the catalog.
-- `GET /categories/search?query={query}`: Search for categories by a 
-  query string (Search category by name).
+### User
+- `GET /api/v1/users` - List all users (admin only)
+- `GET /api/v1/users/id/:id` - Get user by ID
+- `PUT /api/v1/users/id/:id` - Update user profile
 
-### User Management Endpoints
-- `POST /users/register`: Register a new user.
-- `POST /users/login`: Authenticate a user and return a JWT token.
-- `GET /users/profile`: Retrieve the profile of the authenticated user.
-- `PUT /users/profile`: Update the profile of the authenticated user.
-- `GET /users/orders`: Retrieve the order history of the authenticated user.
-- `GET /users/orders/{id}`: Retrieve details of a specific order for the authenticated user.
-- `PUT /users/orders/{id}`: Update the status of an order for the authenticated user (only if the user is admin).
+### Products & Categories
+- `GET /api/v1/products` - List all products
+- `GET /api/v1/products/id/:id` - Get product by ID
+- `GET /api/v1/categories` - List all categories
 
-### Authentication Endpoints
-- `POST /auth/login`: Authenticate a user and return a JWT token.
-- `POST /auth/logout`: Log out a user (invalidate the JWT token).
+### Orders
+- `GET /api/v1/orders` - List all orders (admin only)
+- `POST /api/v1/orders/checkout` - Create new order
+- `POST /api/v1/orders/complete/:orderId` - Mark order as completed (worker only)
+- `GET /api/v1/worker/:workerId/orders` - Get orders assigned to a worker
 
-#Payment Endpoints
-- `POST /payment/checkout`: Process payment for an order.
+### Admin
+- `POST /api/v1/admin/login` - Admin login
+- `GET /api/v1/admin/users` - Get all users
+- `GET /api/v1/admin/orders` - Get all orders with worker name
+- `POST /api/v1/admin/assign-order` - Assign order to worker
+- `GET /api/v1/admin/workers` - Get all workers
+- `GET /api/v1/admin/worker/:workerId/orders` - Get orders for a worker
 
+---
 
-## Database Schema Design
+## Database Schema (Key Tables)
 
-### Categories Table
-```sql
-CREATE TABLE Categories (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL UNIQUE
-);
-
-ALTER TABLE Categories ADD COLUMN `description` TEXT;
-
-```
-
-### Products Table
-```sql
-CREATE TABLE Products (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10, 2) NOT NULL,
-    stockQuantity INT DEFAULT 0,
-    category_id INT,
-    FOREIGN KEY (category_id) REFERENCES Categories(id)
-);
-```
-
-### Orders Table
-```sql
-CREATE TABLE Orders (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(10) DEFAULT 'PENDING',
-    status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES Products(id)
-);
-
-ALTER TABLE Orders ADD COLUMN `user_id` INT REFERENCES Users(id);
-```
-
-### Users Table
+### Users
 ```sql
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
+    role ENUM('USER', 'ADMIN', 'WORKER') DEFAULT 'USER',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-ALTER TABLE Users ADD COLUMN `role` ENUM('USER', 'ADMIN') DEFAULT 'USER';
-```
+### Workers
+```sql
+CREATE TABLE Workers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
 
+### Products
+```sql
+
+CREATE TABLE Products (
+                        id INT PRIMARY KEY AUTO_INCREMENT,
+                        name VARCHAR(255) NOT NULL,
+                        description TEXT,
+                        price DECIMAL(10, 2) NOT NULL,
+                        stockQuantity INT DEFAULT 0,
+                        category_id INT,
+                        FOREIGN KEY (category_id) REFERENCES Categories(id)
+);
+
+### Orders
+```sql
+CREATE TABLE Orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    worker_id INT,
+    status VARCHAR(20) DEFAULT 'pending',
+    estimated_arrival DATETIME,
+    completed_at DATETIME,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (product_id) REFERENCES Products(id),
+    FOREIGN KEY (worker_id) REFERENCES Workers(id)
+);
+
+### Categories
+```sql
+CREATE TABLE Categories (
+                          id INT PRIMARY KEY AUTO_INCREMENT,
+                          name VARCHAR(255) NOT NULL UNIQUE,
+                          description TEXT
+);
 
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
