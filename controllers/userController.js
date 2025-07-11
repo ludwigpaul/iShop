@@ -1,7 +1,5 @@
 import logger from "../logger/logger.js";
 import userService from "../services/userService.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import passwordUtil from "../security/passwordUtil.js";
 
 // Gets all users
@@ -60,8 +58,7 @@ export const updateUser = async (req, res) => {
         }
 
         if (user.password) {
-            const hashedPassword = await bcrypt.hash(user.password, 10);
-            user.password = hashedPassword;
+            user.password = await passwordUtil.hashPassword(user.password);
         }
 
         if (!user.username && !user.email) {

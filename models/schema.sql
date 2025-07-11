@@ -101,3 +101,9 @@ ALTER TABLE ishop.orders ADD COLUMN worker_id INT;
 ALTER TABLE ishop.orders
     ADD CONSTRAINT fk_worker
         FOREIGN KEY (worker_id) REFERENCES ishop.workers(id);
+
+
+ALTER TABLE ishop.users ADD COLUMN `verification_token` VARCHAR(255);
+ALTER TABLE ishop.users ADD COLUMN `verification_expiry` DATETIME;
+
+ALTER TABLE ishop.users ADD COLUMN `verification_date` DATETIME;

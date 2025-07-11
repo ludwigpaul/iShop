@@ -1,4 +1,3 @@
-// controllers/workerController.js
 import orderRepository from '../repositories/orderRepository.js';
 
 // Complete a worker's assigned order (no email)
