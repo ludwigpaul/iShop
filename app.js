@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
-
 import logger from "./logger/logger.js";
 import categoryRouter from './routes/categoryRoutes.js';
 import productRouter from './routes/productRoutes.js';
@@ -11,6 +10,10 @@ import userRouter from './routes/userRoutes.js';
 import profileRouter from './routes/profileRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import authRouter from './routes/authRoutes.js';
+import paymentRouter from './routes/paymentRoutes.js';
+import workerRouter from './routes/workerRoutes.js';
+import orderController from './controllers/orderController.js';
+
 dotenv.config();
 
 const app = express();
@@ -40,6 +43,8 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/profile', profileRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/payments', paymentRouter);
+app.use('/api/v1/worker', workerRouter);
 
 app.get('/', (req, res) => {
    logger.info('Root route');

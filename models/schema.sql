@@ -93,3 +93,11 @@ ALTER TABLE ishop.users MODIFY COLUMN role ENUM('USER', 'ADMIN', 'WORKER') DEFAU
 
 ALTER TABLE ishop.workers
     ADD COLUMN assigned_order_id INT DEFAULT NULL;
+
+ALTER TABLE ishop.workers DROP COLUMN assigned_order_id;
+
+ALTER TABLE ishop.orders ADD COLUMN worker_id INT;
+
+ALTER TABLE ishop.orders
+    ADD CONSTRAINT fk_worker
+        FOREIGN KEY (worker_id) REFERENCES ishop.workers(id);
