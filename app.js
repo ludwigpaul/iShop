@@ -12,6 +12,7 @@ import adminRouter from './routes/adminRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
 import workerRouter from './routes/workerRoutes.js';
+import db from './models/index.js';
 
 
 dotenv.config();
@@ -53,6 +54,12 @@ app.get('/', (req, res) => {
 
 const PORT = parseInt(process.env.PORT) || 3001;
 const APP_NAME = process.env.APP_NAME;
-app.listen(PORT, () => logger.info(`${APP_NAME} Server is running on port ${PORT}`));
+
+// Sync database and start the server
+db.sequelize.sync({force: false})
+    .then(() => {
+        logger.info(`Database connection is successful!`);
+        app.listen(PORT, () => logger.info(`${APP_NAME} Server is running on port ${PORT}`));
+    });
 
 export default app;

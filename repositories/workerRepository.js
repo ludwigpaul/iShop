@@ -1,33 +1,35 @@
-import { db } from "../config/dbConfig.js";
+import db from "../models/index.js";
 import logger from "../logger/logger.js";
-import bcrypt from 'bcryptjs';
+
+
+const Workers = db.Workers;
 
 const getAllWorkers = async (page = 1, limit = 10) => {
     const offset = (page - 1) * limit;
-    const [workers] = await db.query(
-        'SELECT * FROM ishop.workers LIMIT ? OFFSET ?',
-        [Number(limit), Number(offset)]
-    );
-    const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM ishop.workers');
+    const workers = await Workers.findAll({
+        offset: offset,
+        limit: limit
+    });
+    const total = await Workers.count();
     return { workers, total };
 };
 
-const assignOrderToWorker = async (orderId, workerId) => {
-    logger.info(`Assigning order ${orderId} to worker ${workerId}`);
-    await db.query('UPDATE ishop.orders SET worker_id = ? WHERE id = ?', [workerId, orderId]);
-    logger.info(`Assigned order ${orderId} to worker ${workerId}`);
+const getOrdersByWorkerId = async (workerId, page = 1, limit = 10) => {
+    const workerOrders = await db.Workers.findAll({
+        where: { id: workerId },
+        include: [{
+            model: db.Orders,
+            as: 'orders'
+        }],
+        offset: (page - 1) * limit,
+        limit: limit
+    });
+    logger.info(`Getting orders for worker with ID: ${workerId}`);
+    return workerOrders;
 };
 
-const getOrdersByWorker = async (workerId) => {
-    const [rows] = await db.query(
-        'SELECT id, description, completed_at FROM ishop.orders WHERE worker_id = ?',
-        [workerId]
-    );
-    return rows;
-};
 
 export default {
     getAllWorkers,
-    assignOrderToWorker,
-    getOrdersByWorker
+    getOrdersByWorkerId
 };

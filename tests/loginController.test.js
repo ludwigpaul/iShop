@@ -1,8 +1,8 @@
 import request from 'supertest';
 import app from '../app.js'; // Import the Express app
-import { db } from '../config/dbConfig.js'; // Mock the database
+import { db } from '../config/db.config.js'; // Mock the database
 
-jest.mock('../config/dbConfig.js', () => ({
+jest.mock('../config/db.config.js', () => ({
     db: { query: jest.fn() }
 })); // Mock the database connection
 

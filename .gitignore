@@ -1,4 +1,4 @@
-config/dbConfig.js
+config/db.config.js
 .env
 node_modules
 logs

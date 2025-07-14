@@ -153,7 +153,7 @@ CREATE TABLE Categories (
 ```
 ishop/
 ├── config/
-├── ├── dbConfig.js
+├── ├── db.config.js
 ├── models/
 ├── ├── schema.sql  
 ├── app.js

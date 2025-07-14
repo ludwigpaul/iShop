@@ -1,24 +1,34 @@
 // repositories/orderRepository.js
-import {db} from '../config/dbConfig.js';
+import db from '../models/index.js';
+import logger from "../logger/logger.js";
+
+const Orders = db.Orders;
 
 // Get all orders
 export const getAllOrders = async (page = 1, limit = 10) => {
     const offset = (page - 1) * limit;
-    const [orders] = await db.query(
-        `SELECT o.*, w.name as worker_name
-         FROM ishop.orders o
-         LEFT JOIN ishop.workers w ON o.worker_id = w.id
-         LIMIT ? OFFSET ?`,
-        [Number(limit), Number(offset)]
-    );
-    const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM ishop.orders');
+    const orders = await Orders.findAll({
+        offset: offset,
+        limit: limit,
+        include: [{
+            model: db.Products,
+            as: 'product',
+            attributes: ['id', 'name', 'price']
+        }, {
+            model: db.Users,
+            as: 'user',
+            attributes: ['id', 'username', 'email']
+        }]
+    });
+    const total = await Orders.count();
     return { orders, total };
 };
 
 // Get an order by ID
 const getOrderById = async (id) => {
-    const [rows] = await db.query('SELECT * FROM ishop.orders WHERE id = ?', [id]);
-    return rows[0];
+    const order = await Orders.findByPk(id);
+    logger.info(`Getting order with ID: ${id}`);
+    return order;
 };
 
 // Create a new order
@@ -37,68 +47,119 @@ const createOrder = async ({ userId, status, estimatedArrival, items }) => {
 // Update an order by ID
 const updateOrder = async (id, order) => {
     const {product_id, quantity} = order;
-    await db.query('UPDATE ishop.orders SET product_id = ?, quantity = ? WHERE id = ?', [product_id, quantity, id]);
-    return {id, product_id, quantity};
+    const updatedOrder = await Orders.update(
+        { product_id, quantity },
+        {
+            where: { id: id },
+            returning: true,
+            plain: true
+        }
+    );
+    logger.info(`Updating order with ID: ${id}`);
+    return updatedOrder[1];
 };
 
 // Delete an order by ID
 const deleteOrder = async (id) => {
-    await db.query('DELETE FROM ishop.orders WHERE id = ?', [id]);
-    return {message: 'Order deleted successfully'};
+    const count = await Orders.destroy({ where: { id: id } });
+    logger.info(`Deleting order with ID: ${id}`);
+    return count > 0 ? { message: 'Order deleted successfully' } : { message: 'Order not found' };
 };
 
 // Get orders by worker ID
 const getOrdersByWorkerId = async (workerId) => {
-    const [rows] = await db.query(
-        `SELECT o.*, p.name AS product_name
-         FROM ishop.orders o
-         JOIN ishop.products p ON o.product_id = p.id
-         WHERE o.worker_id = ?`,
-        [workerId]
-    );
-    return rows;
+    const order = await Orders.findAll({
+        where: { worker_id: workerId },
+        include: [{
+            model: db.Products,
+            as: 'product',
+            attributes: ['id', 'name', 'price']
+        }, {
+            model: db.Users,
+            as: 'user',
+            attributes: ['id', 'username', 'email']
+        }]
+    });
+    logger.info(`Getting orders for worker with ID: ${workerId}`);
+    return order;
 };
 
 export const getAllOrdersWithWorker = async () => {
-    const [rows] = await db.query(`
-        SELECT o.*, w.name AS worker_name
-        FROM ishop.orders o
-        LEFT JOIN ishop.workers w ON o.worker_id = w.id
-    `);
-    return rows;
+    const ordersWithWorker = await Orders.findAll({
+        include: [{
+            model: db.Workers,
+            as: 'worker',
+            attributes: ['id', 'name']
+        }, {
+            model: db.Products,
+            as: 'product',
+            attributes: ['id', 'name', 'price']
+        }, {
+            model: db.Users,
+            as: 'user',
+            attributes: ['id', 'username', 'email']
+        }]
+    });
+    logger.info(`Getting all orders with worker information. Total orders: ${ordersWithWorker.length}`);
+    return ordersWithWorker;
 };
 
 // Complete an order
 export const completeOrder = async (orderId) => {
-    await db.query(
-        'UPDATE ishop.orders SET status = "completed", completed_at = NOW() WHERE id = ?',
-        [orderId]
+    // await db.query(
+    //     'UPDATE ishop.orders SET status = "completed", completed_at = NOW() WHERE id = ?',
+    //     [orderId]
+    // );
+    // const [[order]] = await db.query('SELECT * FROM ishop.orders WHERE id = ?', [orderId]);
+    // const [[user]] = await db.query('SELECT email FROM ishop.users WHERE id = ?', [order.user_id]);
+    // await db.query(
+    //     'UPDATE ishop.products SET stockQuantity = stockQuantity - ? WHERE id = ?',
+    //     [order.quantity, order.product_id]
+    // );
+
+    const updatedOrder = await Orders.update(
+        { status: 'completed', completed_at: new Date() },
+        { where: { id: orderId }, returning: true, plain: true }
     );
-    const [[order]] = await db.query('SELECT * FROM ishop.orders WHERE id = ?', [orderId]);
-    const [[user]] = await db.query('SELECT email FROM ishop.users WHERE id = ?', [order.user_id]);
-    await db.query(
-        'UPDATE ishop.products SET stockQuantity = stockQuantity - ? WHERE id = ?',
-        [order.quantity, order.product_id]
+    if (updatedOrder[0] === 0) {
+        logger.warn(`No order found with ID: ${orderId}`);
+        throw new Error('Order not found');
+    }
+
+    const updateStock = await db.Products.update(
+        { stockQuantity: db.Sequelize.literal(`stockQuantity - ${updatedOrder[1].quantity}`) },
+        { where: { id: updatedOrder[1].product_id } }
     );
-    return { order, user };
+    if (updateStock[0] === 0) {
+        logger.warn(`No product found with ID: ${updatedOrder[1].product_id}`);
+        throw new Error('Product not found');
+    }
+
+    const order = await Orders.findByPk(orderId, {
+        include: [{
+            model: db.Users,
+            as: 'user',
+            attributes: ['id', 'email']
+        }]
+    });
+
+    return { order };
 };
 
-export const getOrdersByWorker = async (workerId, page = 1, limit = 10) => {
-    const offset = (page - 1) * limit;
-    const [orders] = await db.query(
-        `SELECT o.*, w.name as worker_name
-         FROM ishop.orders o
-         LEFT JOIN ishop.workers w ON o.worker_id = w.id
-         WHERE o.worker_id = ?
-         LIMIT ? OFFSET ?`,
-        [workerId, Number(limit), Number(offset)]
+
+
+const assignOrderToWorker = async (orderId, workerId) => {
+    const result = Orders.update(
+        { worker_id: workerId },
+        { where: { id: orderId }, returning: true, plain: true }
     );
-    const [[{ total }]] = await db.query(
-        'SELECT COUNT(*) as total FROM ishop.orders WHERE worker_id = ?',
-        [workerId]
-    );
-    return { orders, total };
+    if (result[0] === 0) {
+        logger.warn(`No order found with ID: ${orderId}`);
+        throw new Error('Order not found');
+    }
+    logger.info(`Assigning order with ID: ${orderId} to worker with ID: ${workerId}`);
 };
+
 
 export default {
     getAllOrders,
@@ -109,5 +170,5 @@ export default {
     getOrdersByWorkerId,
     getAllOrdersWithWorker,
     completeOrder,
-    getOrdersByWorker
+    assignOrderToWorker
 };
