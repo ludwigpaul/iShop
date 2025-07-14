@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.use(verifyToken);
 
+// TODO: Implement verifyToken and requireRole middleware for authentication
+//  and authorization
 router.get("/", getAllOrders);
 router.get("/id/:id", getOrderById);
 router.get("/user/:userId", createOrder);
