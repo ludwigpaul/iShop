@@ -2,4 +2,5 @@ config/dbConfig.js
 .env
 node_modules
 logs
+.idea
 
