@@ -5,6 +5,8 @@ const router = express.Router();
 // CRUD operations for orders
 // This file defines the routes for managing orders in the iShop application.
 
+// TODO: Implement verifyToken and requireRole middleware for authentication
+//  and authorization
 router.get("/", getAllOrders);
 router.get("/id/:id", getOrderById);
 router.get("/user/:userId", createOrder);

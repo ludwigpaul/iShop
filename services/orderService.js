@@ -23,11 +23,18 @@ const deleteOrder = async (id) => {
     return await orderRepository.deleteOrder(id);
 }
 
+// Gets orders by worker ID
+// TODO: Implement pagination and filtering
+const getOrdersByWorkerId = async (workerId) => {
+    return await orderRepository.getOrdersByWorkerId(workerId);
+}
+
 
 export default {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    getOrdersByWorkerId
 };

@@ -5,7 +5,8 @@ import logger from "../logger/logger.js";
 
 // The purpose of this controller is to handle HTTP requests related to categories.
 
-
+// Retrieves all categories
+// TODO: Implement pagination and sorting (This can be done if you expect a large number of categories)
 const getAllCategories = async (req, res) => {
     try {
         logger.info('Getting all categories');

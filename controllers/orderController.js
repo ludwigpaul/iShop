@@ -7,6 +7,9 @@ import orderRepository from "../repositories/orderRepository.js";
 // The controller for managing orders in the ishop database.
 // The purpose of this controller is to handle HTTP requests related to orders.
 // The controller layer is responsible for handling HTTP requests, validating input, and calling the service layer to perform business logic.
+
+// TODO: Move email configuration to a separate file or environment variables for better security and maintainability
+// There is emailService.js for handling email sending
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -16,6 +19,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// TODO: Implement pagination and filtering for orders
 export const getAllOrders = async (req, res) => {
     try {
         logger.info('Getting all orders');
@@ -49,6 +53,7 @@ export const createOrder = async (req, res) => {
             return res.status(400).json({ error: 'Invalid or missing userId' });
         }
 
+        // TODO - remove db query and use orderService to validate user existence
         // Validate user existence
         const [[user]] = await db.query('SELECT id FROM ishop.users WHERE id = ?', [userId]);
         if (!user) {
@@ -56,6 +61,7 @@ export const createOrder = async (req, res) => {
         }
 
         const estimatedArrival = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+        // TODO - move this logic to orderService
         const orderId = await orderRepository.createOrder({
             userId,
             status: 'pending',
@@ -93,6 +99,7 @@ export const completeOrder = async (req, res) => {
         const { orderId } = req.params;
         const { order, user } = await orderRepository.completeOrder(orderId);
 
+        //TODO - use emailService to send email
         await transporter.sendMail({
             to: user.email,
             subject: 'Your package is on the way!',
@@ -125,6 +132,21 @@ export const checkoutOrder = async (req, res) => {
     res.status(200).json({ orderId: 123 }); // Example response
 };
 
+export const getOrdersByWorkerId = async (req, res) => {
+    try {
+        const { workerId } = req.params;
+        logger.info(`Getting orders for worker with ID: ${workerId}`);
+        const orders = await orderService.getOrdersByWorkerId(workerId);
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this worker' });
+        }
+        res.status(200).json(orders);
+    } catch (error) {
+        logger.error('Error retrieving worker orders', error);
+        res.status(500).json({ message: 'Error retrieving worker orders', error });
+    }
+}
+
 // Export the controller functions
 export default {
     getAllOrders,
@@ -133,5 +155,6 @@ export default {
     updateOrder,
     completeOrder,
     checkoutOrder,
-    deleteOrder
+    deleteOrder,
+    getOrdersByWorkerId
 };
