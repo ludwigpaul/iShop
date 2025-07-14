@@ -6,8 +6,8 @@ import bcrypt from 'bcryptjs';
 // The purpose of this repository is to provide functions for CRUD operations on users.
 
 // Function to get all users (only IDS, username, and email)
-export const getAllUsers = async (page = 1, limit = 10) => {
-    const offset = (page - 1) * limit;
+export const getAllUsers = async (offset = 1, limit = 10) => {
+    logger.info('Fetching all users with pagination', {offset, limit});
     const [users] = await db.query(
         'SELECT * FROM ishop.users LIMIT ? OFFSET ?',
         [Number(limit), Number(offset)]
