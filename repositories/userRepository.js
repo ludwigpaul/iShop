@@ -6,9 +6,14 @@ import bcrypt from 'bcryptjs';
 // The purpose of this repository is to provide functions for CRUD operations on users.
 
 // Function to get all users (only IDS, username, and email)
-const getAllUsers = async () => {
-    const [rows] = await db.query('SELECT id, username, email, verified FROM ishop.users');
-    return rows;
+export const getAllUsers = async (page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    const [users] = await db.query(
+        'SELECT * FROM ishop.users LIMIT ? OFFSET ?',
+        [Number(limit), Number(offset)]
+    );
+    const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM ishop.users');
+    return { users, total };
 };
 
 // Function to get a user by ID
@@ -39,7 +44,6 @@ const createUser = async (user) => {
         verificationToken
     };
 };
-
 
 // Function to get user by email
 const getUserByEmail = async (email) => {
@@ -77,8 +81,10 @@ const deleteUser = async (id) => {
 };
 
 // Function to find users by username or email
-const findUsers = async (emailOrUserName) => {
-    const [rows] = await db.query('SELECT * FROM ishop.users WHERE username = ? OR email = ?', [emailOrUserName, emailOrUserName]);
+const findUsers = async (searchTerm, offset = 0, limit = 10) => {
+    const query = 'SELECT * FROM users WHERE name LIKE ? OR email LIKE ? LIMIT ? OFFSET ?';
+    const likeTerm = `%${searchTerm}%`;
+    const [rows] = await db.execute(query, [likeTerm, likeTerm, limit, offset]);
     return rows;
 };
 
@@ -114,26 +120,6 @@ const verifyUser = async (id, verification_date) => {
         ' verification_token = NULL, verification_date = ? WHERE id = ?', [verification_date, id]);
 };
 
-const getAllWorkers = async () => {
-    const [rows] = await db.query('SELECT id, username, email FROM ishop.users WHERE UPPER(role) = "WORKER"');
-    return rows;
-};
-
-const assignOrderToWorker = async (orderId, workerId) => {
-    logger.info(`Assigning order ${orderId} to worker ${workerId}`);
-    await db.query('UPDATE ishop.orders SET worker_id = ? WHERE id = ?', [workerId, orderId]);
-    logger.info(`Assigned order ${orderId} to worker ${workerId}`);
-};
-
-const getOrdersByWorker = async (workerId) => {
-    const [rows] = await db.query(
-        'SELECT id, description, completed_at FROM ishop.orders WHERE worker_id = ?',
-        [workerId]
-    );
-    return rows;
-};
-
-
 // Export the repository functions
 export default {
     getAllUsers,
@@ -148,9 +134,6 @@ export default {
     comparePassword,
     findByVerificationToken,
     verifyUser,
-    getAllWorkers,
-    assignOrderToWorker,
-    getOrdersByWorker,
     getAdminByUsername,
     insertVerificationToken
 };

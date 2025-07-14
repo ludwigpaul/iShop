@@ -1,35 +1,32 @@
-import productRepository from "../repositories/productRepository.js";
+import productRepository from '../repositories/productRepository.js';
 
-// The service for managing products in the ishop database.
-// The purpose of this service is to provide functions for CRUD operations on products
+export const getAllProducts = async (page = 1, limit = 10) => {
+    return await productRepository.getAllProducts(page, limit);
+};
 
-const getAllProducts = async () => {
-    return await productRepository.getAllProducts();
-}
-
-const getProductById = async (id) => {
+export const getProductById = async (id) => {
     return await productRepository.getProductById(id);
-}
+};
 
-const getProductsWithCategory = async () => {
+export const getProductsWithCategory = async () => {
     return await productRepository.getProductsWithCategory();
-}
+};
 
-const createProduct = async (product) => {
+export const createProduct = async (product) => {
     return await productRepository.createProduct(product);
-}
+};
 
-const updateProduct = async (id, product) => {
+export const updateProduct = async (id, product) => {
     return await productRepository.updateProduct(id, product);
-}
+};
 
-const deleteProduct = async (id) => {
+export const deleteProduct = async (id) => {
     return await productRepository.deleteProduct(id);
-}
+};
 
-const findProducts = async (searchTerm) => {
+export const findProducts = async (searchTerm) => {
     return await productRepository.findProducts(searchTerm);
-}
+};
 
 export default {
     getAllProducts,
@@ -39,4 +36,4 @@ export default {
     updateProduct,
     deleteProduct,
     findProducts
-}
+};

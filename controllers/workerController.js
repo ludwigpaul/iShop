@@ -1,5 +1,12 @@
 import orderRepository from '../repositories/orderRepository.js';
 
+export const getAllWorkers = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const { workers, total } = await workerRepo.getAllWorkers(page, limit);
+    res.json({ workers, total, page, limit });
+};
+
 // Complete a worker's assigned order (no email)
 export const completeWorkerOrder = async (req, res) => {
     const { workerId, orderId } = req.params;

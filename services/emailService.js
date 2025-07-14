@@ -4,9 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import logger from "../logger/logger.js";
 
-
 // Create transporter once at startup
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     auth: {
@@ -48,3 +47,5 @@ export const sendEmail = async (email, verificationToken) => {
         throw new Error(`Failed to send email: ${error.message}`);
     }
 }
+
+export default transporter;

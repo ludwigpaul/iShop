@@ -1,40 +1,37 @@
+// services/orderService.js
 import orderRepository from "../repositories/orderRepository.js";
+import userRepository from "../repositories/userRepository.js";
 
-// The service for managing orders in the ishop database.
-// The purpose of this service is to provide functions for CRUD operations on orders.
+export const getAllOrders = (page, limit) => orderRepository.getAllOrders(page, limit);
 
-const getAllOrders = async () => {
-    return await orderRepository.getAllOrders();
-}
+export const getOrderById = (id) => orderRepository.getOrderById(id);
 
-const getOrderById = async (id) => {
-    return await orderRepository.getOrderById(id);
-}
+export const createOrder = async ({ userId, items }) => {
+    const user = await userRepository.getUserById(userId);
+    if (!user) throw new Error("User not found");
+    return orderRepository.createOrder({ userId, items });
+};
 
-const createOrder = async (order) => {
-    return await orderRepository.createOrder(order);
-}
+export const updateOrder = (id, order) => orderRepository.updateOrder(id, order);
 
-const updateOrder = async (id, order) => {
-    return await orderRepository.updateOrder(id, order);
-}
+export const completeOrder = async (orderId) => {
+    // Mark order as complete and get user info
+    return orderRepository.completeOrder(orderId);
+};
 
-const deleteOrder = async (id) => {
-    return await orderRepository.deleteOrder(id);
-}
+export const deleteOrder = (id) => orderRepository.deleteOrder(id);
 
-// Gets orders by worker ID
-// TODO: Implement pagination and filtering
-const getOrdersByWorkerId = async (workerId) => {
-    return await orderRepository.getOrdersByWorkerId(workerId);
-}
+export const getOrdersByWorkerId = (workerId) => orderRepository.getOrdersByWorkerId(workerId);
 
+export const getOrdersByWorker = (workerId, page, limit) => orderRepository.getOrdersByWorker(workerId, page, limit);
 
 export default {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrder,
+    completeOrder,
     deleteOrder,
-    getOrdersByWorkerId
+    getOrdersByWorkerId,
+    getOrdersByWorker
 };

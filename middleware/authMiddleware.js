@@ -1,8 +1,11 @@
 import jwt from 'jsonwebtoken';
 import logger from "../logger/logger.js";
+import dotenv from 'dotenv';
 // Middleware to authenticate JWT tokens
 
 // In terms of authorization, the Frontend should send the JWT token in the Authorization header as a Bearer token.
+
+dotenv.config();
 
 export const verifyToken = (req, res, next) => {
 
