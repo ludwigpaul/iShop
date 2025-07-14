@@ -1,37 +1,75 @@
--- Creates the database for the iShop application
+-- Create the iShop database
 CREATE DATABASE IF NOT EXISTS ishop;
-
 USE ishop;
 
--- Create the Categories table
+-- =========================
+-- Categories Table
+-- =========================
 CREATE TABLE IF NOT EXISTS Categories (
-     id INT PRIMARY KEY AUTO_INCREMENT,
-     name VARCHAR(255) NOT NULL UNIQUE
+                                          id INT PRIMARY KEY AUTO_INCREMENT,
+                                          name VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE Products (
-     id INT PRIMARY KEY AUTO_INCREMENT,
-     name VARCHAR(255) NOT NULL,
-     description TEXT,
-     price DECIMAL(10, 2) NOT NULL,
-     stockQuantity INT DEFAULT 0,
-     category_id INT,
-     FOREIGN KEY (category_id) REFERENCES Categories(id)
+-- =========================
+-- Products Table
+-- =========================
+CREATE TABLE IF NOT EXISTS Products (
+                                        id INT PRIMARY KEY AUTO_INCREMENT,
+                                        name VARCHAR(255) NOT NULL,
+                                        description TEXT,
+                                        price DECIMAL(10, 2) NOT NULL,
+                                        stockQuantity INT DEFAULT 0,
+                                        category_id INT NOT NULL,
+                                        FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
 
-CREATE TABLE Orders (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(10) DEFAULT 'PENDING',
-    status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES Products(id)
+-- =========================
+-- Users Table
+-- =========================
+CREATE TABLE IF NOT EXISTS Users (
+                                     id INT PRIMARY KEY AUTO_INCREMENT,
+                                     username VARCHAR(50) NOT NULL UNIQUE,
+                                     password VARCHAR(255) NOT NULL,
+                                     email VARCHAR(100) NOT NULL UNIQUE,
+                                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                     role ENUM('USER', 'ADMIN', 'WORKER') DEFAULT 'USER',
+                                     verified BOOLEAN DEFAULT FALSE,
+                                     verificationToken VARCHAR(255)
 );
 
-ALTER TABLE Products MODIFY category_id INT NOT NULL;
+-- =========================
+-- Workers Table
+-- =========================
+CREATE TABLE IF NOT EXISTS Workers (
+                                       id INT PRIMARY KEY AUTO_INCREMENT,
+                                       name VARCHAR(100) NOT NULL,
+                                       email VARCHAR(100) UNIQUE
+);
 
--- create trigger to prevent updating the product_id and quantity on Orders table
+-- =========================
+-- Orders Table
+-- =========================
+CREATE TABLE IF NOT EXISTS Orders (
+                                      id INT PRIMARY KEY AUTO_INCREMENT,
+                                      user_id INT NOT NULL,
+                                      product_id INT NOT NULL,
+                                      quantity INT NOT NULL,
+                                      order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                      status VARCHAR(10) DEFAULT 'PENDING',
+                                      status_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                      completed_at DATETIME NULL,
+                                      estimated_arrival DATETIME NULL,
+                                      worker_id INT,
+                                      FOREIGN KEY (user_id) REFERENCES Users(id),
+                                      FOREIGN KEY (product_id) REFERENCES Products(id),
+                                      FOREIGN KEY (worker_id) REFERENCES Workers(id)
+);
+
+-- =========================
+-- Triggers
+-- =========================
+DELIMITER $$
 CREATE TRIGGER prevent_order_update
     BEFORE UPDATE ON Orders
     FOR EACH ROW
@@ -40,6 +78,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Updating product_id and quantity is not allowed';
     END IF;
+<<<<<<< Updated upstream
 END;
 
 -- create the Users table
@@ -107,3 +146,7 @@ ALTER TABLE ishop.users ADD COLUMN `verification_token` VARCHAR(255);
 ALTER TABLE ishop.users ADD COLUMN `verification_expiry` DATETIME;
 
 ALTER TABLE ishop.users ADD COLUMN `verification_date` DATETIME;
+=======
+END$$
+DELIMITER ;
+>>>>>>> Stashed changes
