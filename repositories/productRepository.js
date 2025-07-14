@@ -3,10 +3,17 @@ import {db} from '../config/dbConfig.js';
 // The repository for managing products in the ishop database.
 // The purpose of this repository is to provide functions for CRUD operations on products.
 
-// Function to get all products
-const getAllProducts = async () => {
-    const [rows] = await db.query('SELECT * FROM ishop.Products');
-    return rows;
+// Get all products with pagination
+export const getAllProducts = async (page = 1, limit = 10) => {
+    page = Math.max(1, parseInt(page) || 1);
+    limit = Math.max(1, parseInt(limit) || 10);
+    const offset = (page - 1) * limit;
+    const [products] = await db.query(
+        'SELECT * FROM ishop.products LIMIT ? OFFSET ?',
+        [limit, offset]
+    );
+    const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM ishop.products');
+    return { products, total };
 };
 
 // Function to get products with category name

@@ -1,10 +1,21 @@
 // controllers/adminController.js
-import userRepository from '../repositories/userRepositories.js';
+import userRepository from '../repositories/userRepository.js';
+import orderRepository from '../repositories/orderRepository.js';
+import workerRepository from '../repositories/workerRepository.js';
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService.js';
 import logger from "../logger/logger.js";
 
 // Admin login
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await userRepository.getAllUsers();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: 'Database error' });
+    }
+};
+
 export async function loginAdmin(req, res) {
     try {
         const { username, password } = req.body;
@@ -42,15 +53,16 @@ export async function assignOrder(req, res) {
 }
 
 // Get all workers
-export async function getWorkers(req, res) {
+export const getWorkers = async (req, res) => {
     try {
-        const workers = await userService.getAllWorkers();
-        res.json(workers);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const { workers, total } = await workerRepository.getAllWorkers(page, limit);
+        res.json({ workers, total, page, limit });
     } catch (err) {
-        logger.error('Get workers error:', err);
-        res.status(500).json({ error: 'Failed to fetch workers' });
+        res.status(500).json({ error: err.message });
     }
-}
+};
 
 // Get orders assigned to a worker
 export async function getWorkerOrders(req, res) {
@@ -63,3 +75,12 @@ export async function getWorkerOrders(req, res) {
         res.status(500).json({ error: 'Failed to fetch worker orders' });
     }
 }
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await orderRepository.getAllOrdersWithWorker();
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ error: 'Database error' });
+    }
+};

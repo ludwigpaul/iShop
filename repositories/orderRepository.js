@@ -2,9 +2,17 @@
 import {db} from '../config/dbConfig.js';
 
 // Get all orders
-const getAllOrders = async () => {
-    const [rows] = await db.query('SELECT * FROM ishop.orders');
-    return rows;
+export const getAllOrders = async (page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    const [orders] = await db.query(
+        `SELECT o.*, w.name as worker_name
+         FROM ishop.orders o
+         LEFT JOIN ishop.workers w ON o.worker_id = w.id
+         LIMIT ? OFFSET ?`,
+        [Number(limit), Number(offset)]
+    );
+    const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM ishop.orders');
+    return { orders, total };
 };
 
 // Get an order by ID
@@ -75,6 +83,23 @@ export const completeOrder = async (orderId) => {
     return { order, user };
 };
 
+export const getOrdersByWorker = async (workerId, page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    const [orders] = await db.query(
+        `SELECT o.*, w.name as worker_name
+         FROM ishop.orders o
+         LEFT JOIN ishop.workers w ON o.worker_id = w.id
+         WHERE o.worker_id = ?
+         LIMIT ? OFFSET ?`,
+        [workerId, Number(limit), Number(offset)]
+    );
+    const [[{ total }]] = await db.query(
+        'SELECT COUNT(*) as total FROM ishop.orders WHERE worker_id = ?',
+        [workerId]
+    );
+    return { orders, total };
+};
+
 export default {
     getAllOrders,
     getOrderById,
@@ -83,5 +108,6 @@ export default {
     deleteOrder,
     getOrdersByWorkerId,
     getAllOrdersWithWorker,
-    completeOrder
+    completeOrder,
+    getOrdersByWorker
 };

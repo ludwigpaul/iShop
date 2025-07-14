@@ -1,80 +1,47 @@
-import userRepositories from "../repositories/userRepositories.js";
+// services/userService.js
+import userRepositories from '../repositories/userRepository.js';
 
-// The service for managing users in the ishop database.
-// The purpose of this service is to provide functions for CRUD operations on users.
-
-const getAllUsers = async () => {
-    return await userRepositories.getAllUsers();
-}
+const getAllUsers = async (page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    return await userRepositories.getAllUsers(offset, limit);
+};
 
 const getUserById = async (id) => {
     return await userRepositories.getUserById(id);
-}
-
-const createUser = async (user) => {
-    return await userRepositories.createUser(user);
-}
-
-const loginUser = async (username, password) => {
-    return await userRepositories.getUserByUserName(username, password);
-}
-
-//Gets user by username
-const getUserByUserName = async (username) => {
-    return await userRepositories.getUserByUserName(username);
-}
+};
 
 const getUserByEmail = async (email) => {
     return await userRepositories.getUserByEmail(email);
-}
+};
+
+const getUserByUserName = async (username) => {
+    return await userRepositories.getUserByUserName(username);
+};
+
+const createUser = async (user) => {
+    return await userRepositories.createUser(user);
+};
 
 const updateUser = async (id, user) => {
     return await userRepositories.updateUser(id, user);
-}
+};
 
 const deleteUser = async (id) => {
     return await userRepositories.deleteUser(id);
-}
-
-const findUsers = async (searchTerm) => {
-    return await userRepositories.findUsers(searchTerm);
-}
-
-const findByVerificationToken = async (token) => {
-    return await userRepositories.findByVerificationToken(token);
 };
 
-const verifyUser = async (id) => {
-    return await userRepositories.verifyUser(id);
-};
-
-const getAllWorkers = async () => {
-    return await userRepositories.getAllWorkers();
-};
-
-const assignOrderToWorker = async (orderId, workerId) => {
-    return await userRepositories.assignOrderToWorker(orderId, workerId);
-};
-
-const getOrdersByWorker = async (workerId) => {
-    return await userRepositories.getOrdersByWorker(workerId);
+const findUsers = async (searchTerm, page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    return await userRepositories.findUsers(searchTerm, offset, limit);
 };
 
 export default {
     getAllUsers,
     getUserById,
     createUser,
-    loginUser,
-    getUserByUserName,
-    getUserByEmail,
     updateUser,
     deleteUser,
     findUsers,
-    findByVerificationToken,
-    verifyUser,
-    getAllWorkers,
-    assignOrderToWorker,
-    getOrdersByWorker
+    getUserByEmail,
+    getUserByUserName
 };
-
-
