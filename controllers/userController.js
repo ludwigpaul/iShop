@@ -1,9 +1,11 @@
 import userService from '../services/userService.js';
+import logger from '../logger/logger.js';
 
 export const getAllUsers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
+        logger.info('Getting all users with pagination', {page, limit});
         const users = await userService.getAllUsers(page, limit);
         res.json({ users, page, limit });
     } catch (err) {
