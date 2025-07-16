@@ -1,9 +1,10 @@
 import orderRepository from '../repositories/orderRepository.js';
+import workerRepository from '../repositories/workerRepository.js';
 
 export const getAllWorkers = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-    const { workers, total } = await workerRepo.getAllWorkers(page, limit);
+    const { workers, total } = await workerRepository.getAllWorkers(page, limit);
     res.json({ workers, total, page, limit });
 };
 
