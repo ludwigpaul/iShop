@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const generateJWT = (user) => {
-    if (!user || !user.id || !user.email) {
-        throw new Error("User object with id and email is required to generate JWT");
+    if (!user || !user.id || !user.email || !user.role) {
+        throw new Error("User object with id, role and email is required to generate JWT");
     }
 
     return jwt.sign(
@@ -16,8 +16,8 @@ export const generateJWT = (user) => {
 };
 
 export const generateJWTForAdmin = (user) => {
-    if (!user || !user.id || !user.email) {
-        throw new Error("User object with id and email is required to generate JWT for admin");
+    if (!user || !user.id || !user.email || !user.role) {
+        throw new Error("User object with id, role and email is required to generate JWT for admin");
     }
 
     return jwt.sign(

@@ -3,4 +3,5 @@ config/db.config.js
 node_modules
 logs
 .idea
+coverage
 

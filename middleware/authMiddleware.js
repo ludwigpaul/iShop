@@ -17,7 +17,14 @@ export const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: 'Authorization header is required' });
     }
 
-    const token = authHeader.split(' ')[1]; // Extract the token from the header
+    const bearerToken = authHeader.split(' ');
+
+    if(bearerToken.length !== 2 || bearerToken[0] !== 'Bearer') {
+        logger.error(`Invalid or malformed authorization header`);
+        return res.status(401).json({message: 'Invalid or malformed authorization header'});
+    }
+
+    const token = bearerToken[1]; // Extract the token from the header
     logger.info(`Extracted token: ${token}`);
 
     try {
@@ -33,7 +40,7 @@ export const verifyToken = (req, res, next) => {
 
 export const requireRole = (role) => {
     return (req, res, next) => {
-        if (req.user && req.user.role.toUpperCase() === role.toUpperCase()) {
+        if (req.user && req.user.role && req.user.role.toUpperCase() === role.toUpperCase()) {
             next(); // User has the required role
         } else {
             res.status(403).json({ message: 'Forbidden: You do not have the required permissions' });
