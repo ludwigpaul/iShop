@@ -1,69 +1,58 @@
 import {DataTypes} from 'sequelize';
-
 export default (sequelize, DataTypes) => {
-    return sequelize.define('Orders', {
+    return sequelize.define('orders', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        productId: {
+        product_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Products',
+                model: 'products',
                 key: 'id'
-            },
-            field: 'product_id'
+            }
         },
-        userId: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users',
+                model: 'users',
                 key: 'id'
-            },
-            field: 'user_id'
+            }
         },
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
         status: {
-            type: DataTypes.ENUM('PENDING', 'COMPLETED', 'CANCELLED'),
+            type: DataTypes.ENUM('PENDING', 'COMPLETED'),
             defaultValue: 'PENDING'
         },
-        orderDate: {
+        order_date: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            field: 'order_date'
+            defaultValue: DataTypes.NOW
         },
-        statusDate: {
+        status_date: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            field: 'status_date'
+            defaultValue: DataTypes.NOW
         },
-        completedAt: {
+        completed_at: {
             type: DataTypes.DATE,
-            allowNull: true,
-            field: 'completed_at'
+            allowNull: true
         },
-        estimatedArrival: {
+        estimated_arrival: {
             type: DataTypes.DATE,
-            allowNull: true,
-            field: 'estimated_arrival'
+            allowNull: true
         },
-        workerId: {
+        worker_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            references: {
-                model: 'Workers',
-                key: 'id'
-            },
             field: 'worker_id'
         }
     }, {
-        tableName: 'Orders',
+        tableName: 'orders',
         timestamps: false
-    })
-}
+    });
+};
