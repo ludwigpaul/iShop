@@ -1,27 +1,29 @@
-// repositories/orderRepository.js
 import db from '../models/index.js';
 import logger from "../logger/logger.js";
 
 const Orders = db.Orders;
 
-// Get all orders
-export const getAllOrders = async (page = 1, limit = 10) => {
+const getAllOrders = async (page = 1, limit = 10) => {
+    page = Math.max(1, parseInt(page) || 1);
+    limit = Math.max(1, parseInt(limit) || 10);
     const offset = (page - 1) * limit;
-    const orders = await Orders.findAll({
+
+    logger.info(`Getting all orders with pagination. Page: ${page}, Limit: ${limit}`);
+    const { count, rows } = await Orders.findAndCountAll({
         offset: offset,
         limit: limit,
         include: [{
             model: db.Products,
-            as: 'product',
+            as: 'Product', // Capital P
             attributes: ['id', 'name', 'price']
         }, {
             model: db.Users,
-            as: 'user',
+            as: 'User', // Capital U if your association uses 'User'
             attributes: ['id', 'username', 'email']
         }]
     });
-    const total = await Orders.count();
-    return { orders, total };
+    logger.info(`Total orders: ${count}, Page: ${page}, Limit: ${limit}`);
+    return { items: rows, total: count, page, limit };
 };
 
 // Get an order by ID
@@ -145,7 +147,6 @@ export const completeOrder = async (orderId) => {
 
     return { order };
 };
-
 
 
 const assignOrderToWorker = async (orderId, workerId) => {

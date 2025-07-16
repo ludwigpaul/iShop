@@ -12,6 +12,8 @@ import WorkersModel from './workers.model.js';
 // Initialize Sequelize with the database configuration
 const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, null, {
     host: dbConfig.HOST,
+    username: dbConfig.USER,
+    password: dbConfig.PASSWORD,
     port: dbConfig.PORT,
     dialect: dbConfig.dialect,
     pool: {
@@ -37,13 +39,14 @@ db.Workers = WorkersModel(sequelize, Sequelize);
 db.Categories.hasMany(db.Products, {as: 'products', foreignKey: 'category_id'});
 db.Products.belongsTo(db.Categories, {as: 'category', foreignKey: 'category_id'});
 
-db.Users.hasMany(db.Orders, { foreignKey: 'userId' });
-db.Orders.belongsTo(db.Users, { foreignKey: 'userId' });
+db.Users.hasMany(db.Orders, { foreignKey: 'user_id' });
+db.Orders.belongsTo(db.Users, { foreignKey: 'user_id' });
 
-db.Workers.hasMany(db.Orders, { foreignKey: 'workerId' });
-db.Orders.belongsTo(db.Workers, { foreignKey: 'workerId' });
+db.Workers.hasMany(db.Orders, { foreignKey: 'worker_id' });
+db.Orders.belongsTo(db.Workers, { foreignKey: 'worker_id' });
 
-db.Orders.belongsTo(db.Products, { foreignKey: 'productId' });
-db.Products.hasMany(db.Orders, { foreignKey: 'productId' });
+db.Orders.belongsTo(db.Products, { foreignKey: 'product_id' });
+db.Products.hasMany(db.Orders, { foreignKey: 'product_id' });
+
 
 export default db;
