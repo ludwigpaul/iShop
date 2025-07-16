@@ -1,7 +1,7 @@
 import {DataTypes} from 'sequelize';
 
 export default (sequelize, DataTypes) => {
-    return sequelize.define('Workers', {
+    return sequelize.define('workers', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -15,14 +15,6 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
-        },
-        workerId: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            references: {
-                model: 'Users',
-                key: 'id'
-            }
         },
     }, {
         tableName: 'workers',
