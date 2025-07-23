@@ -14,11 +14,11 @@ const getAllOrders = async (page = 1, limit = 10) => {
         limit: limit,
         include: [{
             model: db.Products,
-            as: 'Product', // Capital P
+            as: 'Product',
             attributes: ['id', 'name', 'price']
         }, {
             model: db.Users,
-            as: 'User', // Capital U if your association uses 'User'
+            as: 'User',
             attributes: ['id', 'username', 'email']
         }]
     });
@@ -26,17 +26,25 @@ const getAllOrders = async (page = 1, limit = 10) => {
     return { items: rows, total: count, page, limit };
 };
 
-// Get an order by ID
 const getOrderById = async (id) => {
+    if (!id) {
+        logger.warn('No order ID provided');
+        return undefined;
+    }
     const order = await Orders.findByPk(id);
     logger.info(`Getting order with ID: ${id}`);
     return order;
 };
 
-// Create a new order
 const createOrder = async ({ userId, status, estimatedArrival, items }) => {
+    if (!userId || !status || !estimatedArrival || !Array.isArray(items) || items.length === 0) {
+        throw new Error('Invalid order data');
+    }
     const results = [];
     for (const item of items) {
+        if (!item.productId || !item.quantity) {
+            throw new Error('Invalid item data');
+        }
         const [result] = await db.query(
             'INSERT INTO ishop.orders (user_id, product_id, quantity, status, estimated_arrival) VALUES (?, ?, ?, ?, ?)',
             [userId, item.productId, item.quantity, status, estimatedArrival]
@@ -46,9 +54,12 @@ const createOrder = async ({ userId, status, estimatedArrival, items }) => {
     return results;
 };
 
-// Update an order by ID
 const updateOrder = async (id, order) => {
-    const {product_id, quantity} = order;
+    if (!id || !order) {
+        logger.warn('Missing id or order data for update');
+        return undefined;
+    }
+    const { product_id, quantity } = order;
     const updatedOrder = await Orders.update(
         { product_id, quantity },
         {
@@ -61,15 +72,21 @@ const updateOrder = async (id, order) => {
     return updatedOrder[1];
 };
 
-// Delete an order by ID
 const deleteOrder = async (id) => {
+    if (!id) {
+        logger.warn('No order ID provided for delete');
+        return { message: 'Order not found' };
+    }
     const count = await Orders.destroy({ where: { id: id } });
     logger.info(`Deleting order with ID: ${id}`);
     return count > 0 ? { message: 'Order deleted successfully' } : { message: 'Order not found' };
 };
 
-// Get orders by worker ID
 const getOrdersByWorkerId = async (workerId) => {
+    if (!workerId) {
+        logger.warn('No worker ID provided');
+        return [];
+    }
     const order = await Orders.findAll({
         where: { worker_id: workerId },
         include: [{
@@ -106,19 +123,11 @@ export const getAllOrdersWithWorker = async () => {
     return ordersWithWorker;
 };
 
-// Complete an order
 export const completeOrder = async (orderId) => {
-    // await db.query(
-    //     'UPDATE ishop.orders SET status = "completed", completed_at = NOW() WHERE id = ?',
-    //     [orderId]
-    // );
-    // const [[order]] = await db.query('SELECT * FROM ishop.orders WHERE id = ?', [orderId]);
-    // const [[user]] = await db.query('SELECT email FROM ishop.users WHERE id = ?', [order.user_id]);
-    // await db.query(
-    //     'UPDATE ishop.products SET stockQuantity = stockQuantity - ? WHERE id = ?',
-    //     [order.quantity, order.product_id]
-    // );
-
+    if (!orderId) {
+        logger.warn('No order ID provided for completion');
+        throw new Error('Order not found');
+    }
     const updatedOrder = await Orders.update(
         { status: 'completed', completed_at: new Date() },
         { where: { id: orderId }, returning: true, plain: true }
@@ -148,19 +157,21 @@ export const completeOrder = async (orderId) => {
     return { order };
 };
 
-
-const assignOrderToWorker = async (orderId, workerId) => {
-    const result = Orders.update(
+export async function assignOrderToWorker(orderId, workerId) {
+    if (!orderId || !workerId) {
+        logger.warn('Missing orderId or workerId for assignment');
+        throw new Error('Order not found');
+    }
+    const [updated] = await db.Orders.update(
         { worker_id: workerId },
-        { where: { id: orderId }, returning: true, plain: true }
+        { where: { id: orderId } }
     );
-    if (result[0] === 0) {
+    if (!updated) {
         logger.warn(`No order found with ID: ${orderId}`);
         throw new Error('Order not found');
     }
-    logger.info(`Assigning order with ID: ${orderId} to worker with ID: ${workerId}`);
-};
-
+    logger.info(`Order ${orderId} assigned to worker ${workerId}`);
+}
 
 export default {
     getAllOrders,

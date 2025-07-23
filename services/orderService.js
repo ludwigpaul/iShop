@@ -15,7 +15,6 @@ export const createOrder = async ({ userId, items }) => {
 export const updateOrder = (id, order) => orderRepository.updateOrder(id, order);
 
 export const completeOrder = async (orderId) => {
-    // Mark order as complete and get user info
     return orderRepository.completeOrder(orderId);
 };
 

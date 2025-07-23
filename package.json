@@ -14,6 +14,7 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.48.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@jest/globals": "^30.0.4",
@@ -44,6 +45,7 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
     "jest": "^30.0.4",
+    "sqlite3": "^5.1.7",
     "supertest": "^7.1.3"
   }
 }
