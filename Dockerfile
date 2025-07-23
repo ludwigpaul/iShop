@@ -4,6 +4,10 @@ FROM node:23-alpine
 LABEL authors="Ludwig Paul"
 LABEL description="Node.js base image for running applications in production"
 
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
+
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -22,6 +26,10 @@ EXPOSE 3000
 # Add health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
 
 # Define the command to run the application
 CMD ["npm", "start"]
