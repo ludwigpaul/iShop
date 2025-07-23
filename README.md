@@ -93,6 +93,7 @@ CREATE TABLE Users (
     role ENUM('USER', 'ADMIN', 'WORKER') DEFAULT 'USER',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
 ### Workers
 ```sql
@@ -100,7 +101,7 @@ CREATE TABLE Workers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 );
-
+```
 ### Products
 ```sql
 
@@ -113,7 +114,7 @@ CREATE TABLE Products (
                         category_id INT,
                         FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
-
+```
 ### Orders
 ```sql
 CREATE TABLE Orders (
@@ -130,7 +131,7 @@ CREATE TABLE Orders (
     FOREIGN KEY (product_id) REFERENCES Products(id),
     FOREIGN KEY (worker_id) REFERENCES Workers(id)
 );
-
+```
 ### Categories
 ```sql
 CREATE TABLE Categories (
@@ -138,7 +139,7 @@ CREATE TABLE Categories (
                           name VARCHAR(255) NOT NULL UNIQUE,
                           description TEXT
 );
-
+```
 ## TECH STACK
 - **Frontend**: React.js, HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js

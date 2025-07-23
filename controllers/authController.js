@@ -9,6 +9,7 @@ import JWTProvider from '../security/JWTProvider.js';
 
 dotenv.config();
 
+
 export const registerUser = async (req, res) => {
     try {
         logger.info('Registering new user');
