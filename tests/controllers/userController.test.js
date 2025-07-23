@@ -170,7 +170,7 @@ describe('userController', () => {
     describe('deleteUser', () => {
         it('should delete user', async () => {
             req.params = { id: 1 };
-            userService.deleteUser.mockResolvedValue();
+            userService.deleteUser.mockResolvedValue(true); // <-- Fix here
             await userController.deleteUser(req, res);
             expect(res.status).toHaveBeenCalledWith(204);
             expect(res.send).toHaveBeenCalled();

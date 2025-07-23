@@ -1,5 +1,6 @@
 import * as authController from '../../controllers/authController.js';
 import { jest } from '@jest/globals';
+import * as emailServiceModule from '../../services/emailService.js';
 
 jest.mock('../../logger/logger.js');
 jest.mock('../../services/userService.js');
@@ -11,7 +12,6 @@ jest.mock('../../security/JWTProvider.js');
 import logger from '../../logger/logger.js';
 import userService from '../../services/userService.js';
 import passwordUtil from '../../security/passwordUtil.js';
-import emailService from '../../services/emailService.js';
 import TokenGenerator from '../../security/TokenGenerator.js';
 import JWTProvider from '../../security/JWTProvider.js';
 
@@ -19,13 +19,16 @@ describe('authController', () => {
     let req, res;
 
     beforeEach(() => {
-        jest.clearAllMocks(); // <-- Move this to the top
+        jest.clearAllMocks();
         req = { body: {}, query: {}, params: {} };
         res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
             send: jest.fn()
         };
+
+        jest.spyOn(emailServiceModule, 'sendEmail').mockImplementation(jest.fn());
+
         logger.info = jest.fn();
         logger.warn = jest.fn();
         logger.error = jest.fn();
@@ -37,7 +40,6 @@ describe('authController', () => {
         userService.verifyUser = jest.fn();
         passwordUtil.hashPassword = jest.fn();
         passwordUtil.comparePasswords = jest.fn();
-        emailService.sendEmail = jest.fn();
         TokenGenerator.generateToken = jest.fn();
         JWTProvider.generateJWT = jest.fn();
     });
@@ -50,7 +52,7 @@ describe('authController', () => {
             passwordUtil.hashPassword.mockResolvedValue('hashed');
             userService.createUser.mockResolvedValue({ id: 1, email: 'test@test.com', username: 'user', role: 'USER' });
             TokenGenerator.generateToken.mockReturnValue('token123');
-            emailService.sendEmail.mockResolvedValue(undefined);
+            emailServiceModule.sendEmail.mockResolvedValue(undefined);
             userService.insertVerificationToken.mockResolvedValue(undefined);
 
             await authController.registerUser(req, res);
@@ -111,7 +113,7 @@ describe('authController', () => {
             passwordUtil.hashPassword.mockResolvedValue('hashed');
             userService.createUser.mockResolvedValue({ id: 1, email: 'test@test.com', username: 'user', role: 'USER' });
             TokenGenerator.generateToken.mockReturnValue('token123');
-            emailService.sendEmail.mockRejectedValue(new Error('fail'));
+            emailServiceModule.sendEmail.mockRejectedValue(new Error('fail'));
             await authController.registerUser(req, res);
             expect(logger.error).toHaveBeenCalled();
             expect(res.status).toHaveBeenCalledWith(500);
@@ -125,7 +127,7 @@ describe('authController', () => {
             passwordUtil.hashPassword.mockResolvedValue('hashed');
             userService.createUser.mockResolvedValue({ id: 1, email: 'test@test.com', username: 'user', role: 'USER' });
             TokenGenerator.generateToken.mockReturnValue('token123');
-            emailService.sendEmail.mockResolvedValue();
+            emailServiceModule.sendEmail.mockResolvedValue();
             userService.insertVerificationToken.mockRejectedValue(new Error('fail'));
             await authController.registerUser(req, res);
             expect(logger.error).toHaveBeenCalled();
