@@ -52,6 +52,11 @@ app.get('/', (req, res) => {
    res.status(200).send('Welcome to the iShop API!');
 });
 
+// Add this health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
 const PORT = parseInt(process.env.PORT) || 3001;
 const APP_NAME = process.env.APP_NAME;
 
