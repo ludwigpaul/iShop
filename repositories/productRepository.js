@@ -40,6 +40,10 @@ const getProductsWithCategory = async () => {
 
 // Function to get a product by ID
 const getProductById = async (id) => {
+    if (!id) {
+        logger.warn('No product ID provided');
+        return undefined;
+    }
     const product = await Products.findByPk(id);
     logger.info(`Getting product with ID: ${id}`);
     return product;

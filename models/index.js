@@ -9,7 +9,6 @@ import WorkersModel from './workers.model.js';
 
 
 
-// Initialize Sequelize with the database configuration
 const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, null, {
     host: dbConfig.HOST,
     username: dbConfig.USER,

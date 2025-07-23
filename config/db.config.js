@@ -6,7 +6,8 @@ dotenv.config();
 export const dbConfig = {
     HOST: process.env.DB_HOST,
     PORT: parseInt(process.env.DB_PORT) || 3306, // Default MySQL port is 3306
-    USER: 'root',
+    USER: process.env.DB_USER,
+    PASSWORD: process.env.DB_PASSWORD,
     DATABASE: process.env.DB_NAME,
     dialect: 'mysql',
     pool: {

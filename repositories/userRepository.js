@@ -2,7 +2,6 @@ import db from "../models/index.js";
 import logger from "../logger/logger.js";
 import bcrypt from 'bcryptjs';
 
-
 const Users = db.Users;
 // The repository for managing users in the ishop database.
 // The purpose of this repository is to provide functions for CRUD operations on users.

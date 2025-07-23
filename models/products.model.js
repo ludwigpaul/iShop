@@ -1,6 +1,5 @@
 import {DataTypes} from 'sequelize';
 
-
 export default (sequelize, DataTypes) => {
     return sequelize.define('Products', {
         id: {
@@ -19,12 +18,18 @@ export default (sequelize, DataTypes) => {
         },
         price: {
             type: DataTypes.DECIMAL(10, 2),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                min: 0
+            }
         },
         stockQuantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 0
+            defaultValue: 0,
+            validate: {
+                min: 0
+            }
         },
         categoryId: {
             type: DataTypes.INTEGER,

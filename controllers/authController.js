@@ -1,24 +1,22 @@
-import logger from "../logger/logger.js";
-import userService from "../services/userService.js";
+// controllers/authController.js
+import logger from '../logger/logger.js';
+import userService from '../services/userService.js';
 import dotenv from 'dotenv';
-import passwordUtil from "../security/passwordUtil.js";
-import {sendEmail} from "../services/emailService.js";
-import {generateToken} from "../security/TokenGenerator.js";
-import JWTProvider from "../security/JWTProvider.js";
-
+import passwordUtil from '../security/passwordUtil.js';
+import { sendEmail } from '../services/emailService.js';
+import { generateToken } from '../security/TokenGenerator.js';
+import JWTProvider from '../security/JWTProvider.js';
 
 dotenv.config();
 
-// Registers a new user
 export const registerUser = async (req, res) => {
     try {
-        logger.info("Registering new user");
-        const {username, email, password, role} = req.body;
+        logger.info('Registering new user');
+        const { username, email, password, role } = req.body;
         if (!username || !email || !password) {
-            return res.status(400).json({message: "Username, email, and password are required"});
+            return res.status(400).json({ message: 'Username, email, and password are required' });
         }
 
-        // Use promise all to ensure both username and email checks are done concurrently
         const [userByUsername, userByEmail] = await Promise.all([
             userService.getUserByUserName(username),
             userService.getUserByEmail(email)
@@ -26,17 +24,15 @@ export const registerUser = async (req, res) => {
 
         if (userByUsername && userByEmail) {
             logger.warn(`User with username: ${username} and email: ${email} already exists`);
-            return res.status(409).json({message: "Username and email already exist"});
+            return res.status(409).json({ message: 'Username and email already exist' });
         }
-
         if (userByUsername) {
             logger.warn(`User with username: ${username} already exists`);
-            return res.status(409).json({message: "Username already exists"});
+            return res.status(409).json({ message: 'Username already exists' });
         }
-
         if (userByEmail) {
             logger.warn(`User with email: ${email} already exists`);
-            return res.status(409).json({message: "Email already exists"});
+            return res.status(409).json({ message: 'Email already exists' });
         }
 
         logger.info(`No existing user found with username: ${username} or email: ${email}`);
@@ -56,40 +52,31 @@ export const registerUser = async (req, res) => {
 
         // Send email verification
         logger.info(`Sending verification email to: ${email}`);
-        await sendEmail(user.email, verificationToken)
-            .then(() => {
-                logger.info(`Verification email sent to: ${email}`);
+        await sendEmail(user.email, verificationToken);
+        logger.info(`Verification email sent to: ${email}`);
 
-                // Store the verification token in the database
-                const now = new Date();
-                const expirationTime = Number(process.env.VERIFICATION_TOKEN_EXPIRATION) * 60 * 1000; // 15 minutes
-                const tokenExpiration = new Date(now.getTime() + expirationTime); // Token valid for 24 hours
-                logger.info(`Verification token generated at: ${now}`);
-                logger.info(`Verification token expiration time: ${tokenExpiration}`);
-                userService.insertVerificationToken(user.id, verificationToken, tokenExpiration);
-            })
-            .then(() => {
-                logger.info(`Verification token stored in database`);
-                res.status(201).json({message: "User registered. Please verify your email."});
-            });
+        // Store the verification token in the database
+        const now = new Date();
+        const expirationTime = Number(process.env.VERIFICATION_TOKEN_EXPIRATION || 10) * 60 * 1000;
+        const tokenExpiration = new Date(now.getTime() + expirationTime);
+        logger.info(`Verification token generated at: ${now}`);
+        logger.info(`Verification token expiration time: ${tokenExpiration}`);
+        await userService.insertVerificationToken(user.id, verificationToken, tokenExpiration);
 
+        logger.info('Verification token stored in database');
+        return res.status(201).json({ message: 'User registered. Please verify your email.' });
     } catch (error) {
-        logger.error("Error registering user", error);
-
-        if (error.errno === 1265) {
-            return res.status(401).json({message: "Bad request"});
+        logger.error('Error registering user', error);
+        if (error && error.errno === 1265) {
+            return res.status(401).json({ message: 'Bad request' });
         }
-
-        res.status(500).json({error: "Registration failed"});
+        return res.status(500).json({ error: 'Registration failed' });
     }
 };
 
-// Logs in a user with username and password
 export const loginUser = async (req, res) => {
     try {
-        const {username, email, password} = req.body;
-
-        // Log the received data (without password)
+        const { username, email, password } = req.body;
         logger.info('Login attempt:', {
             hasUsername: !!username,
             hasEmail: !!email,
@@ -97,30 +84,22 @@ export const loginUser = async (req, res) => {
         });
 
         if (!username && !email) {
-            return res.status(400).json({message: "Username or email is required"});
+            return res.status(400).json({ message: 'Username or email is required' });
+        }
+        if (!password || typeof password !== 'string') {
+            return res.status(400).json({ error: 'Password is required.' });
         }
 
-        if (!password) {
-            // Handle error, e.g. return a response or throw
-            return res.status(400).json({error: 'Password is required.'});
-        }
-
-        if (typeof password !== 'string') {
-            // Handle error, e.g. return a response or throw
-            return res.status(400).json({error: 'Password is required.'});
-        }
-
-        const decodedEmail = (email) ? Buffer.from(email, 'base64').toString('utf-8') : null;
-        const decodedUsername = (username) ? Buffer.from(username, 'base64').toString('utf-8') : null;
+        const decodedEmail = email ? Buffer.from(email, 'base64').toString('utf-8') : null;
+        const decodedUsername = username ? Buffer.from(username, 'base64').toString('utf-8') : null;
         const decodedPassword = Buffer.from(password, 'base64').toString('utf-8');
         logger.info('Username:' + decodedUsername);
         logger.info('Email:' + decodedEmail);
         logger.info('Password:' + decodedPassword);
 
         if (!decodedPassword) {
-            return res.status(400).json({message: "Password is required"});
+            return res.status(400).json({ message: 'Password is required' });
         }
-
 
         let user;
         if (decodedUsername) {
@@ -130,61 +109,52 @@ export const loginUser = async (req, res) => {
         }
 
         if (!user) {
-            return res.status(401).json({message: "Invalid credentials"});
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         const passwordMatch = await passwordUtil.comparePasswords(decodedPassword, user.password);
         if (!passwordMatch) {
-            return res.status(401).json({message: "Invalid credentials"});
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         const token = JWTProvider.generateJWT(user);
-
-        res.status(200).json({
-            accessToken: token
-        });
+        return res.status(200).json({ accessToken: token });
     } catch (error) {
         logger.error('Login error:', error);
-        res.status(500).json({error: "Login failed"});
+        return res.status(500).json({ error: 'Login failed' });
     }
 };
 
-// Logs out a user
-// Invalidate the JWT token on the client side
 export const logoutUser = async (req, res) => {
-    logger.info(`Logging out user`);
-    // Invalidate the JWT token on the client side
-    res.status(200).json({message: "User logged out successfully"});
+    logger.info('Logging out user');
+    return res.status(200).json({ message: 'User logged out successfully' });
 };
 
-// Verifies a user's email using a token
 export const verifyEmail = async (req, res) => {
     try {
-        const {token} = req.query;
+        const { token } = req.query;
         const expiry = new Date();
         const user = await userService.findByVerificationToken(token, expiry);
         if (!user) {
-            return res.status(400).json({message: 'Invalid or expired token'});
+            return res.status(400).json({ message: 'Invalid or expired token' });
         }
         const verification_date = new Date();
         await userService.verifyUser(user.id, verification_date);
-        res.status(200).send('Email verified successfully!');
+        return res.status(200).send('Email verified successfully!');
     } catch (error) {
-        res.status(500).json({message: 'Error verifying email', error});
+        logger.error('Error verifying email', error);
+        return res.status(500).json({ message: 'Error verifying email', error });
     }
 };
 
-//TODO: Use the same logic as loginUser for worker login and admin login
 export const loginWorker = async (req, res) => {
     try {
-        const {username, email, password} = req.body;
-
+        const { username, email, password } = req.body;
         if (!password || typeof password !== 'string') {
-            return res.status(400).json({error: 'Password is required.'});
+            return res.status(400).json({ error: 'Password is required.' });
         }
-
-        if(!username && !email) {
-            return res.status(400).json({message: "Username or email is required"});
+        if (!username && !email) {
+            return res.status(400).json({ message: 'Username or email is required' });
         }
 
         const decodedUsername = username ? Buffer.from(username, 'base64').toString('utf-8') : null;
@@ -199,21 +169,19 @@ export const loginWorker = async (req, res) => {
         }
 
         if (!user) {
-            return res.status(401).json({message: "Invalid credentials"});
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
         if (!user.role || user.role.toUpperCase() !== 'WORKER') {
-            return res.status(401).json({message: "Not a worker account"});
+            return res.status(401).json({ message: 'Not a worker account' });
         }
         const passwordMatch = await passwordUtil.comparePasswords(decodedPassword, user.password);
         if (!passwordMatch) {
-            return res.status(401).json({message: "Invalid credentials"});
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
         const token = JWTProvider.generateJWT(user);
-        res.status(200).json({
-            accessToken: token
-        });
+        return res.status(200).json({ accessToken: token });
     } catch (error) {
         logger.error('Worker login error:', error);
-        res.status(500).json({error: "Login failed"});
+        return res.status(500).json({ error: 'Login failed' });
     }
 };

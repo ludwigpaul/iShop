@@ -50,14 +50,14 @@ export const updateProduct = async (req, res) => {
     }
 };
 
-export const deleteProduct = async (req, res) => {
+export async function deleteProduct(req, res) {
     try {
-        await productService.deleteProduct(req.params.id);
-        res.status(204).send();
+        const result = await productService.deleteProduct(req.params.id);
+        res.send({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-};
+}
 
 export const findProducts = async (req, res) => {
     try {
