@@ -20,6 +20,8 @@ RUN npm ci --only=production && npm cache clean --force
 # Copy the rest of the application code
 COPY . .
 
+RUN mkdir -p logs
+
 # Expose the port the app runs on
 EXPOSE 3000
 

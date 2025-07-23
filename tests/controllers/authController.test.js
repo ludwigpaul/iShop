@@ -1,5 +1,5 @@
 import * as authController from '../../controllers/authController.js';
-import { jest } from '@jest/globals';
+import {beforeAll, jest} from '@jest/globals';
 import * as emailServiceModule from '../../services/emailService.js';
 
 jest.mock('../../logger/logger.js');

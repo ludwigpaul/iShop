@@ -43,7 +43,7 @@ const createUser = async (user) => {
         email,
         password,
         verified,
-        verification_token: verificationToken
+        verificationToken
     });
     logger.info('Created new user: %o', {id: newUser.id, username, email});
     return {

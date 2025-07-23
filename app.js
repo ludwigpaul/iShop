@@ -57,14 +57,16 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-const PORT = parseInt(process.env.PORT) || 3001;
-const APP_NAME = process.env.APP_NAME;
+const PORT = parseInt(process.env.PORT) || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
+const APP_NAME = process.env.APP_NAME || 'iShop API';
 
 // Sync database and start the server
 db.sequelize.sync({force: false})
     .then(() => {
         logger.info(`Database connection is successful!`);
-        app.listen(PORT, () => logger.info(`${APP_NAME} Server is running on port ${PORT}`));
+        app.listen(PORT, HOST, () => logger.info(`${APP_NAME} Server is running on ${HOST}:${PORT}`));
+        logger.info(`Health check available at http://${HOST}:${PORT}/health`);
     });
 
 export default app;

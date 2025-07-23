@@ -39,10 +39,10 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        verification_token: {
+        verificationToken: {
             type: DataTypes.STRING,
             allowNull: true,
-            field: 'verification_token'
+            field: 'verificationToken'
         },
         verificationExpiry: {
             type: DataTypes.DATE,
@@ -55,7 +55,7 @@ export default (sequelize, DataTypes) => {
             field: 'verification_date'
         }
     }, {
-        tableName: 'users',
+        tableName: 'Users',
         timestamps: true
     });
 }

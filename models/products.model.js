@@ -33,10 +33,6 @@ export default (sequelize, DataTypes) => {
         },
         categoryId: {
             type: DataTypes.INTEGER,
-            references: {
-                model: 'Categories',
-                key: 'id'
-            },
             field: 'category_id'
         }
     }, {

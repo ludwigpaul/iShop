@@ -86,6 +86,17 @@ const findUsers = async (searchTerm, page = 1, limit = 10) => {
     }
 };
 
+const insertVerificationToken = async (userId, token, expiration) => {
+    if (!userId || !token || !expiration) {
+        throw new Error('User ID, token, and expiration are required');
+    }
+    try {
+        return await userRepositories.insertVerificationToken(userId, token, expiration);
+    } catch (err) {
+        throw new Error(getErrorMessage(err));
+    }
+}
+
 export default {
     getAllUsers,
     getUserById,
@@ -94,5 +105,6 @@ export default {
     deleteUser,
     findUsers,
     getUserByEmail,
-    getUserByUserName
+    getUserByUserName,
+    insertVerificationToken
 };

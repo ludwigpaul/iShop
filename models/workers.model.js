@@ -1,7 +1,7 @@
 import {DataTypes} from 'sequelize';
 
 export default (sequelize, DataTypes) => {
-    return sequelize.define('workers', {
+    return sequelize.define('Workers', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
             unique: true
         },
     }, {
-        tableName: 'workers',
+        tableName: 'Workers',
         timestamps: false
     });
 }
