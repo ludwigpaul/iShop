@@ -44,6 +44,8 @@ describe('authController', () => {
         JWTProvider.generateJWT = jest.fn();
     });
 
+    const invalidBase64 = '%%%';
+
     describe('registerUser', () => {
         it('should register user and send verification email', async () => {
             req.body = { username: 'user', email: 'test@test.com', password: 'pass', role: 'USER' };
@@ -226,6 +228,34 @@ describe('authController', () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({ accessToken: 'jwt-token' });
         });
+
+        it('should handle invalid base64 in username', async () => {
+            req.body = {
+                username: invalidBase64,
+                password: Buffer.from('pass').toString('base64')
+            };
+            await authController.loginUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+
+        it('should handle invalid base64 in email', async () => {
+            req.body = {
+                email: invalidBase64,
+                password: Buffer.from('pass').toString('base64')
+            };
+            await authController.loginUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+
+        it('should handle invalid base64 in password', async () => {
+            req.body = {
+                username: Buffer.from('user').toString('base64'),
+                password: invalidBase64
+            };
+            await authController.loginUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.json).toHaveBeenCalledWith({ message: "Password is required" });
+        });
     });
 
     describe('logoutUser', () => {
@@ -258,6 +288,16 @@ describe('authController', () => {
             userService.findByVerificationToken.mockRejectedValue(new Error('fail'));
             await authController.verifyEmail(req, res);
             expect(res.status).toHaveBeenCalledWith(500);
+        });
+
+        it('should handle error thrown by verifyUser', async () => {
+            req.query = { token: 'token123' };
+            userService.findByVerificationToken.mockResolvedValue({ id: 1 });
+            userService.verifyUser.mockRejectedValue(new Error('fail'));
+            await authController.verifyEmail(req, res);
+            expect(logger.error).toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: 'Error verifying email' }));
         });
     });
 
@@ -340,6 +380,33 @@ describe('authController', () => {
             await authController.loginWorker(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({ accessToken: 'jwt-token' });
+        });
+
+        it('should handle invalid base64 in username', async () => {
+            req.body = {
+                username: invalidBase64,
+                password: Buffer.from('pass').toString('base64')
+            };
+            await authController.loginWorker(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+
+        it('should handle invalid base64 in email', async () => {
+            req.body = {
+                email: invalidBase64,
+                password: Buffer.from('pass').toString('base64')
+            };
+            await authController.loginWorker(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+
+        it('should handle invalid base64 in password', async () => {
+            req.body = {
+                username: Buffer.from('worker').toString('base64'),
+                password: invalidBase64
+            };
+            await authController.loginWorker(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
         });
     });
 });
