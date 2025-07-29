@@ -35,3 +35,6 @@ ENTRYPOINT ["dumb-init", "--"]
 
 # Define the command to run the application
 CMD ["npm", "start"]
+
+# Ensure `jest` is installed in your Docker image by adding it to your `package.json` and making sure your Dockerfile runs `npm install` (or `npm ci`).
+RUN npm install jest

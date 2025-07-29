@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS Users (
                                      role ENUM('USER', 'ADMIN', 'WORKER') DEFAULT 'USER',
                                      verified BOOLEAN DEFAULT FALSE,
                                      verificationToken VARCHAR(255),
-                                     verification_token VARCHAR(255),
                                      verification_expiry DATETIME,
                                      verification_date DATETIME
 );

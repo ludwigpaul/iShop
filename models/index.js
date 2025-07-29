@@ -21,7 +21,25 @@ const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, null, {
         min: dbConfig.pool.min,
         acquire: dbConfig.pool.acquire,
         idle: dbConfig.pool.idle
-    }
+    },
+    retry: {
+        match: [
+            /ECONNRESET/,
+            /ENOTFOUND/,
+            /ECONNREFUSED/,
+            /ETIMEDOUT/,
+            /EHOSTUNREACH/,
+            /EAI_AGAIN/
+        ],
+        max: 3
+    },
+    dialectOptions: {
+        connectTimeout: 30000,    // Connection timeout
+        acquireTimeout: 30000,    // Acquire timeout
+        timeout: 30000,           // Query timeout
+        multipleStatements: false
+    },
+    logging: console.log // Enable logging to debug connection
 });
 
 const db = {};

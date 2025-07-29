@@ -62,6 +62,7 @@ export const registerUser = async (req, res) => {
         const tokenExpiration = new Date(now.getTime() + expirationTime);
         logger.info(`Verification token generated at: ${now}`);
         logger.info(`Verification token expiration time: ${tokenExpiration}`);
+        logger.info(`User ID: ${user.id}, Verification Token: ${verificationToken}`);
         await userService.insertVerificationToken(user.id, verificationToken, tokenExpiration);
 
         logger.info('Verification token stored in database');

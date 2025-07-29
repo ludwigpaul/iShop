@@ -43,7 +43,7 @@ const createUser = async (user) => {
         email,
         password,
         verified,
-        verificationToken
+        verificationToken: verificationToken
     });
     logger.info('Created new user: %o', {id: newUser.id, username, email});
     return {
@@ -139,7 +139,7 @@ const comparePassword = async (plain, hash) => {
 const findByVerificationToken = async (token, expiry) => {
     const user = await Users.findOne({
         where: {
-            verification_token: token,
+            verificationToken: token,
             verification_expiry: {
                 [db.Sequelize.Op.gte]: expiry // Ensure the token has not expired
             }
@@ -153,7 +153,7 @@ const insertVerificationToken = async (id, token, timeStamp) => {
 
     logger.info('Inserted verification token for user ID: %d', id);
     const result = await Users.update(
-        { verification_token: token, verification_expiry: timeStamp },
+        { verificationToken: token, verification_expiry: timeStamp },
         { where: { id } }
     );
     if (result[0] === 0) {

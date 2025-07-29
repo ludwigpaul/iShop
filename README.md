@@ -242,6 +242,23 @@ ishop-frontend/
 4. Create a `.env` file in the root directory and configure your database connection settings.
 5. Run `npm start dev` to start the server.
 
+## Running Integration Tests
+
+1. Make sure Docker is running.
+2. In your project directory, run:
+   ```
+   docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
+   ```
+   This will:
+   - Start a MySQL test database container.
+   - Build and run your app container, which will execute the integration tests.
+   - Stop all containers when tests finish.
+
+3. To clean up containers and volumes after the test run:
+   ```
+   docker-compose -f docker-compose.test.yml down -v
+   ```
+
 ## Conclusion
 The iShop e-commerce system is designed to provide a comprehensive online shopping experience.
 It includes features for product management, order processing, and user interaction.
@@ -258,7 +275,3 @@ The system is built with scalability and maintainability in mind.
 - **Promotions and Discounts**: Implement a system for managing promotions, discounts, and coupons.
 - **Customer Support**: Integrate a customer support system for handling inquiries and issues.
 - **Multi-language Support**: Add support for multiple languages to cater to a global audience.
-
-
-
-
