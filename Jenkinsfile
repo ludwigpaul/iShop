@@ -77,50 +77,74 @@ pipeline {
                         }
                     }
 
-                    stage('Environment Info') {
-                                steps {
-                                    sh '''
-                                        whoami
-                                        id
-                                        echo "Node version: $(node --version)"
-                                        echo "NPM version: $(npm --version)"
-                                        echo "Docker version: $(docker --version)"
-                                        echo "Build Number: ${BUILD_NUMBER}"
-                                        echo "Branch: ${GIT_BRANCH}"
-                                    '''
-                                }
+        stage('Environment Info') {
+                    steps {
+                        sh '''
+                            whoami
+                            id
+                            echo "Node version: $(node --version)"
+                            echo "NPM version: $(npm --version)"
+                            echo "Docker version: $(docker --version)"
+                            echo "Build Number: ${BUILD_NUMBER}"
+                            echo "Branch: ${GIT_BRANCH}"
+                        '''
                     }
+        }
 
-                    stage('Install dependencies') {
-                                steps {
-                                    script {
-                                        // Install Node.js dependencies
-                                        sh '''
-                                            echo "Installing dependencies..."
-                                            npm install --unsafe-perm
-                                            echo "Installing dev dependencies for build..."
-                                            # Fix permissions for node_modules binaries
-                                            chmod +x node_modules/.bin/* || echo "No binaries to make executable"
-                                        '''
-                                    }
-                                }
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install Node.js dependencies
+                    sh 'npm install'
+
+
+                }
+
+            }
+        }
+
+        stage('Run Tests') {
+                    steps {
+                        script {
+                            // Run tests
+                            sh '''
+                                echo "Running tests..."
+                                npm run test || echo "Tests completed with warnings or errors"
+                                echo "Tests completed successfully."
+
+                            '''
+                        }
+                    }
+                }
+
+        stage('Build Docker Image') {
+                    steps {
+                        script {
+                            // Build Docker image
+                            sh '''
+                                echo "Building Docker image..."
+                                docker build -t ${DOCKER_LATEST} -t ${DOCKER_VERSIONED} .
+                                echo "Docker image built successfully."
+                            '''
+                            env.DOCKER_IMAGE_ID = "${DOCKER_IMAGE}:${DOCKER_TAG}"
+                            echo "Docker image ID: ${env.DOCKER_IMAGE_ID}"
+                        }
+                    }
+                }
+
+        stage('Push to Registry') {
+                    steps {
+                        script {
+                            docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
+                                                    // Push versioned image
+                                                    sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+
+                                                    // Push latest tag
+                                                    sh "docker push ${DOCKER_IMAGE}:latest"
                             }
-
-                    stage('Run Tests') {
-                                steps {
-                                    script {
-                                        // Run tests
-                                        sh '''
-                                            echo "Running tests..."
-                                            npm run test || echo "Tests completed with warnings or errors"
-                                            echo "Tests completed successfully."
-
-                                        '''
-                                    }
-                                }
-                            }
+                        }
+                    }
+                }// end of push to registry
 
     }
-
-
 }
