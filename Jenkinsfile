@@ -111,6 +111,8 @@ pipeline {
                                             echo "Running tests..."
                                             npm run test || echo "Tests completed with warnings or errors"
                                             echo "Tests completed successfully."
+                                            # Fix permissions for node_modules binaries
+                                            chmod +x node_modules/.bin/* || echo "No binaries to make executable"
                                         '''
                                     }
                                 }
