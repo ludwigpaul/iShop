@@ -132,19 +132,19 @@ pipeline {
                     }
                 }
 
-        stage('Push to Registry') {
-                    steps {
-                        script {
-                            docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                                                    // Push versioned image
-                                                    sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
-
-                                                    // Push latest tag
-                                                    sh "docker push ${DOCKER_IMAGE}:latest"
-                            }
-                        }
-                    }
-                }// end of push to registry
+       stage('Push to Registry') {
+           agent any
+           steps {
+               script {
+                   node {
+                       docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
+                           sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                           sh "docker push ${DOCKER_IMAGE}:latest"
+                       }
+                   }
+               }
+           }
+       }
 
     }
 }
