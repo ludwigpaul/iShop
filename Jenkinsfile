@@ -91,17 +91,20 @@ pipeline {
                                 }
                     }
 
-                    stage('Install Dependencies') {
-                        steps {
-                            script {
-                                // Install Node.js dependencies
-                                sh 'npm install'
-
-
+                    stage('Install dependencies') {
+                                steps {
+                                    script {
+                                        // Install Node.js dependencies
+                                        sh '''
+                                            echo "Installing dependencies..."
+                                            npm install --unsafe-perm
+                                            echo "Installing dev dependencies for build..."
+                                            # Fix permissions for node_modules binaries
+                                            chmod +x node_modules/.bin/* || echo "No binaries to make executable"
+                                        '''
+                                    }
+                                }
                             }
-
-                        }
-                    }
 
                     stage('Run Tests') {
                                 steps {
@@ -111,8 +114,7 @@ pipeline {
                                             echo "Running tests..."
                                             npm run test || echo "Tests completed with warnings or errors"
                                             echo "Tests completed successfully."
-                                            # Fix permissions for node_modules binaries
-                                            chmod +x node_modules/.bin/* || echo "No binaries to make executable"
+
                                         '''
                                     }
                                 }
