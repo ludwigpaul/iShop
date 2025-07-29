@@ -56,41 +56,42 @@ pipeline {
             }
         }
 
-    }
+        stage('Verify Checkout') {
+                        steps {
+                            script {
+                                // Verify the checkout by listing files
+                                sh 'ls -la'
 
-    stage('Verify Checkout') {
-                steps {
-                    script {
-                        // Verify the checkout by listing files
-                        sh 'ls -la'
+                                sh 'git branch -a || echo "No branches found"'
+                                sh 'git log -1 || echo "No commits found"'
+                                sh 'git status || echo "No status available"'
+                                sh 'git remote -v || echo "No remotes found"'
 
-                        sh 'git branch -a || echo "No branches found"'
-                        sh 'git log -1 || echo "No commits found"'
-                        sh 'git status || echo "No status available"'
-                        sh 'git remote -v || echo "No remotes found"'
-
-                        // Check if package.json exists
-                        if (!fileExists('package.json')) {
-                            error "❌ package.json not found in the repository. Checkout failed."
-                        } else {
-                            echo "✅ package.json found. Checkout successful."
+                                // Check if package.json exists
+                                if (!fileExists('package.json')) {
+                                    error "❌ package.json not found in the repository. Checkout failed."
+                                } else {
+                                    echo "✅ package.json found. Checkout successful."
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-            stage('Environment Info') {
-                        steps {
-                            sh '''
-                                whoami
-                                id
-                                echo "Node version: $(node --version)"
-                                echo "NPM version: $(npm --version)"
-                                echo "Docker version: $(docker --version)"
-                                echo "Build Number: ${BUILD_NUMBER}"
-                                echo "Branch: ${GIT_BRANCH}"
-                            '''
-                        }
-            }
+                    stage('Environment Info') {
+                                steps {
+                                    sh '''
+                                        whoami
+                                        id
+                                        echo "Node version: $(node --version)"
+                                        echo "NPM version: $(npm --version)"
+                                        echo "Docker version: $(docker --version)"
+                                        echo "Build Number: ${BUILD_NUMBER}"
+                                        echo "Branch: ${GIT_BRANCH}"
+                                    '''
+                                }
+                    }
+
+    }
+
 
 }
