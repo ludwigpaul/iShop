@@ -3,15 +3,30 @@ pipeline {
  agent any
 
     environment {
-    DOCKER_IMAGE = 'ludwigpaul/ishop'
-    DOCKER_TAG = "${BUILD_NUMBER}"
-    DOCKER_LATEST = "${DOCKER_IMAGE}:latest"
-    DOCKER_VERSIONED = "${DOCKER_IMAGE}:${DOCKER_TAG}"
-    DOCKER_REGISTRY = 'https://index.docker.io/v1/'
-    DOCKER_CREDENTIALS_ID = 'dockerhub-creds-for-local-jenkins' // Jenkins credentials ID
-    NODE_VERSION = '18'
-    GIT_CREDENTIALS_ID = 'gitHubCredentials'
-    GIT_REPO_SSH = 'git@github.com:ludwigpaul/iShop.git'
+        // Docker Configuration
+        DOCKER_TAG = "${BUILD_NUMBER}"
+        DOCKER_LATEST = "${DOCKER_IMAGE}:latest"
+        DOCKER_VERSIONED = "${DOCKER_IMAGE}:${DOCKER_TAG}"
+
+        // Docker Registry Configuration
+        DOCKER_IMAGE = 'ludwigpaul/ishop'
+        DOCKER_REGISTRY = 'https://index.docker.io/v1/'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-creds-for-local-jenkins' // Jenkins credentials ID
+
+        // Node Configuration
+        NODE_VERSION = '18'
+
+        //GitHub Configuration
+        GIT_CREDENTIALS_ID = 'gitHubCredentials'
+        GIT_REPO_SSH = 'git@github.com:ludwigpaul/iShop.git'
+
+        //GCP Configuration
+        GCP_PROJECT_ID = 'calvary-revival-ministries'
+        GCP_ZONE = 'us-central1-c'
+        GCP_INSTANCE = 'instance-20250801-145732'
+
+        //GCP Credentials
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('calvary-revival-ministries-f4be12e8905e.json')
     }
 
     stages {
@@ -57,29 +72,30 @@ pipeline {
         }
 
         stage('Verify Checkout') {
-                        steps {
-                            script {
-                                // Verify the checkout by listing files
-                                sh 'ls -la'
+                steps {
+                    script {
+                        // Verify the checkout by listing files
+                        sh 'ls -la'
 
-                                sh 'git branch -a || echo "No branches found"'
-                                sh 'git log -1 || echo "No commits found"'
-                                sh 'git status || echo "No status available"'
-                                sh 'git remote -v || echo "No remotes found"'
+                        sh 'git branch -a || echo "No branches found"'
+                        sh 'git log -1 || echo "No commits found"'
+                        sh 'git status || echo "No status available"'
+                        sh 'git remote -v || echo "No remotes found"'
 
-                                // Check if package.json exists
-                                if (!fileExists('package.json')) {
-                                    error "❌ package.json not found in the repository. Checkout failed."
-                                } else {
-                                    echo "✅ package.json found. Checkout successful."
-                                }
-                            }
+                        // Check if package.json exists
+                        if (!fileExists('package.json')) {
+                            error "❌ package.json not found in the repository. Checkout failed."
+                        } else {
+                            echo "✅ package.json found. Checkout successful."
                         }
                     }
+                }
+        }
 
-        stage('Environment Info') {
+        stage('Environment Setup') {
                     steps {
                         sh '''
+                            echo "🔧 Setting up environment..."
                             whoami
                             id
                             echo "Node version: $(node --version)"
@@ -87,6 +103,19 @@ pipeline {
                             echo "Docker version: $(docker --version)"
                             echo "Build Number: ${BUILD_NUMBER}"
                             echo "Branch: ${GIT_BRANCH}"
+
+                            # Install or update gcloud CLI if needed
+                            if ! command -v gcloud &> /dev/null; then
+                                echo "Installing Google Cloud SDK..."
+                                curl https://sdk.cloud.google.com | bash
+                                source $HOME/google-cloud-sdk/path.bash.inc
+                            fi
+
+                            gcloud --version
+
+                            # Authenticate with GCP
+                            gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                            gcloud config set project ${GCP_PROJECT_ID}
                         '''
                     }
         }
@@ -95,9 +124,10 @@ pipeline {
             steps {
                 script {
                     // Install Node.js dependencies
-                    sh 'npm install'
-
-
+                     sh '''
+                            echo "📦 Installing dependencies..."
+                            npm install
+                        '''
                 }
 
             }
@@ -111,7 +141,6 @@ pipeline {
                                 echo "Running tests..."
                                 npm run test || echo "Tests completed with warnings or errors"
                                 echo "Tests completed successfully."
-
                             '''
                         }
                     }
@@ -122,9 +151,10 @@ pipeline {
                         script {
                             // Build Docker image
                             sh '''
-                                echo "Building Docker image..."
+                                echo "🏗️ Building Docker image..."
                                 docker build -t ${DOCKER_LATEST} -t ${DOCKER_VERSIONED} .
                                 echo "Docker image built successfully."
+                                docker images | grep ishop
                             '''
                             env.DOCKER_IMAGE_ID = "${DOCKER_IMAGE}:${DOCKER_TAG}"
                             echo "Docker image ID: ${env.DOCKER_IMAGE_ID}"
@@ -136,19 +166,100 @@ pipeline {
                    steps {
                        script {
                           sh '''
-                                          echo "Logging into Docker registry..."
-                                          echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+                                  echo "Logging into Docker registry..."
+                                  echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
 
-                                          echo "Pushing Docker images..."
-                                          docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                                          docker push ${DOCKER_IMAGE}:latest
+                                  echo "Pushing Docker images..."
+                                  docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                                  docker push ${DOCKER_IMAGE}:latest
 
-                                          echo "Docker images pushed successfully."
+                                  echo "Docker images pushed successfully."
                                       '''
 
                        }
                    }
-               }// end of push to registry
+       }// end of push to registry
 
-    }
+       stage('Deploy to GCP Compute Engine') {
+                   steps {
+                       sh '''
+                           echo "🚀 Deploying to GCP Compute Engine..."
+
+                           # Make scripts executable
+                           chmod +x scripts/deploy-to-gcp.sh
+                           chmod +x scripts/health-check.sh
+                           chmod +x scripts/rollback.sh
+
+                           # Deploy application
+                           ./scripts/deploy-to-gcp.sh
+                       '''
+                   }
+       }// end of deploy to GCP stage
+
+        stage('Health Check') {
+                   steps {
+                       sh '''
+                           echo "🏥 Performing application health check..."
+                           ./scripts/health-check.sh
+                       '''
+                   }
+        } // end of health check stage
+
+       stage('Cleanup Local Images') {
+               steps {
+                   sh '''
+                       echo "🧹 Cleaning up local Docker images..."
+                       docker rmi ${DOCKER_VERSIONED} || true
+                       docker rmi ${DOCKER_LATEST} || true
+                       docker system prune -f
+                   '''
+               }
+       }// end of Cleanup Local Images stage
+
+    }// end of stages
+
+    post {
+            always {
+                sh '''
+                    echo "📊 Build Summary:"
+                    echo "Project: ${GCP_PROJECT_ID}"
+                    echo "Build Number: ${BUILD_NUMBER}"
+                    echo "Image: ${IMAGE_NAME}:${BUILD_NUMBER}"
+                '''
+            }
+
+            success {
+                script {
+                    sh '''
+                        EXTERNAL_IP=$(gcloud compute instances describe ${GCP_INSTANCE} \
+                            --zone=${GCP_ZONE} \
+                            --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+
+                        echo "✅ Deployment successful!"
+                        echo "🌐 Application URL: http://${EXTERNAL_IP}:3000"
+                        echo "🏥 Health Check: http://${EXTERNAL_IP}:3000/health"
+                        echo "📦 Docker Image: ${IMAGE_NAME}:${BUILD_NUMBER}"
+                    '''
+                }
+            }
+
+            failure {
+                script {
+                    sh '''
+                        echo "❌ Deployment failed!"
+                        echo "🔄 To rollback manually, run:"
+                        echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
+
+                        # Optional: Auto-rollback to previous successful build
+                        # PREVIOUS_BUILD=$((BUILD_NUMBER - 1))
+                        # if [ $PREVIOUS_BUILD -gt 0 ]; then
+                        #     echo "🔄 Auto-rollback to build ${PREVIOUS_BUILD}..."
+                        #     chmod +x scripts/rollback.sh
+                        #     ./scripts/rollback.sh ${PREVIOUS_BUILD}
+                        # fi
+                    '''
+                }
+            }
+        }
+
 }
