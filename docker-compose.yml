@@ -1,16 +1,51 @@
 version: '3.8'
 
 services:
+  # Docker-in-Docker service
+  docker:
+    image: docker:24-dind
+    container_name: jenkins-docker
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - jenkins-network
+    environment:
+      - DOCKER_TLS_CERTDIR=
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - docker-data:/var/lib/docker
+    ports:
+      - "2375:2375"
+    command: ["dockerd", "--host=0.0.0.0:2375", "--host=unix:///var/run/docker.sock", "--tls=false"]
+
+  # Jenkins with all dependencies pre-installed
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: Jenkins.Dockerfile
     container_name: jenkins
+    restart: unless-stopped
+    networks:
+      - jenkins-network
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins-data:/var/jenkins_home
+    environment:
+      - DOCKER_HOST=tcp://docker:2375
+      - JENKINS_OPTS=--httpPort=8080
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false -Djava.awt.headless=true -Xmx2g -Xms1g
     user: root
+    depends_on:
+      - docker
 
 volumes:
-  jenkins_home:
+  jenkins-data:
+    driver: local
+  docker-data:
+    driver: local
+
+networks:
+  jenkins-network:
+    driver: bridge
