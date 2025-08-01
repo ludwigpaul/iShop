@@ -9,6 +9,10 @@ ENV NODE_VERSION=18
 ENV DOCKER_VERSION=24.0.7
 ENV GCLOUD_VERSION=latest
 
+ENV JENKINS_USER=admin
+ENV JENKINS_PASS=admin123
+
+
 # Update package list and install basic utilities
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
@@ -124,6 +128,10 @@ USER jenkins
 # Set Jenkins environment variables
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Djava.awt.headless=true"
 ENV JENKINS_OPTS="--httpPort=8080"
+
+# Create admin user automatically
+COPY --chown=jenkins:jenkins init.groovy.d/ /usr/share/jenkins/ref/init.groovy.d/
+
 
 # Copy any custom Jenkins configuration (optional)
 # COPY jenkins.yaml /var/jenkins_home/casc_configs/jenkins.yaml
