@@ -17,6 +17,11 @@ services:
     ports:
       - "2375:2375"
     command: ["dockerd", "--host=0.0.0.0:2375", "--host=unix:///var/run/docker.sock", "--tls=false"]
+    healthcheck:
+      test: ["CMD", "docker", "info"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   # Jenkins with all dependencies pre-installed
   jenkins:
@@ -35,10 +40,19 @@ services:
     environment:
       - DOCKER_HOST=tcp://docker:2375
       - JENKINS_OPTS=--httpPort=8080
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false -Djava.awt.headless=true -Xmx2g -Xms1g
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true -Djava.awt.headless=true
+        -Xmx2g -Xms1g
+      # Don't override PATH - let Jenkins handle it
     user: root
     depends_on:
-      - docker
+      docker:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
 
 volumes:
   jenkins-data:
