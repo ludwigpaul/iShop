@@ -95,28 +95,46 @@ pipeline {
         stage('Environment Setup') {
                     steps {
                         sh '''
-                            echo "🔧 Setting up environment..."
-                            whoami
-                            id
-                            echo "Node version: $(node --version)"
-                            echo "NPM version: $(npm --version)"
-                            echo "Docker version: $(docker --version)"
-                            echo "Build Number: ${BUILD_NUMBER}"
-                            echo "Branch: ${GIT_BRANCH}"
+                                    echo "🔧 Setting up environment..."
+                                    whoami
+                                    echo "Node version: $(node --version)"
+                                    echo "NPM version: $(npm --version)"
+                                    echo "Docker version: $(docker --version)"
+                                    echo "Build Number: ${BUILD_NUMBER}"
+                                    echo "Branch: ${GIT_BRANCH}"
 
-                            # Install or update gcloud CLI if needed
-                            if ! command -v gcloud &> /dev/null; then
-                                echo "Installing Google Cloud SDK..."
-                                curl https://sdk.cloud.google.com | bash
-                                source $HOME/google-cloud-sdk/path.bash.inc
-                            fi
+                                    # Check if gcloud is already available
+                                    if command -v gcloud &> /dev/null; then
+                                        echo "✅ Google Cloud SDK already installed"
+                                        gcloud --version
+                                    else
+                                        echo "📦 Installing Google Cloud SDK..."
 
-                            gcloud --version
+                                        # Download and install gcloud
+                                        cd /var/jenkins_home
+                                        if [ ! -d "google-cloud-sdk" ]; then
+                                            curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir=/var/jenkins_home
+                                        fi
 
-                            # Authenticate with GCP
-                            gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-                            gcloud config set project ${GCP_PROJECT_ID}
-                        '''
+                                        # Source the path file if it exists
+                                        if [ -f "/var/jenkins_home/google-cloud-sdk/path.bash.inc" ]; then
+                                            source /var/jenkins_home/google-cloud-sdk/path.bash.inc
+                                        fi
+
+                                        # Add to PATH manually if sourcing fails
+                                        export PATH="/var/jenkins_home/google-cloud-sdk/bin:$PATH"
+
+                                        echo "✅ Google Cloud SDK installed"
+                                        gcloud --version
+                                    fi
+
+                                    # Authenticate with GCP
+                                    echo "🔐 Authenticating with GCP..."
+                                    gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                                    gcloud config set project ${GCP_PROJECT_ID}
+
+                                    echo "✅ GCP authentication completed"
+                                '''
                     }
         }
 
