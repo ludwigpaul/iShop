@@ -27,9 +27,7 @@ pipeline {
 
         //GCP Credentials
         GOOGLE_APPLICATION_CREDENTIALS = credentials('calvary-revival-ministries-f4be12e8905e.json')
-    }
-
-    stages {
+    }// end of environment
 
         stages {
                 stage('System Check') {
@@ -315,8 +313,7 @@ pipeline {
                         #     ./scripts/rollback.sh ${PREVIOUS_BUILD}
                         # fi
                     '''
-                }
-            }
-        }
-}
-}
+                }// end of scriot
+            }// end of failure
+        }// end of post
+} // end of pipeline
