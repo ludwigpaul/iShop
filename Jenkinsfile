@@ -31,184 +31,174 @@ pipeline {
 
     stages {
 
-        stage('Checkout GitHub Code') {
-            steps {
-                script {
-                    // Clean workspace first
-                    deleteDir()
-
-                    // Checkout code with proper configuration
-                    def scmVars = checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: '*/ci-cd-pipeline']], // or '*/master' if that's your default branch
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [
-                            [$class: 'CleanCheckout'],
-                            [$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true]
-                        ],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [[
-                            credentialsId: "${GIT_CREDENTIALS_ID}", // Add this credential in Jenkins
-                            url: "${GIT_REPO_SSH}"
-                        ]]
-                    ])
-
-                   // Set Git environment variables manually
-                   env.GIT_COMMIT = scmVars.GIT_COMMIT
-                   env.GIT_BRANCH = scmVars.GIT_BRANCH
-                   env.GIT_URL = scmVars.GIT_URL
-
-                   // Extract branch name from GIT_BRANCH (removes origin/ prefix)
-                   if (env.GIT_BRANCH) {
-                       env.BRANCH_NAME = env.GIT_BRANCH.replaceAll(/^origin\//, '')
-                   }
-
-                   echo "✅ Git variables set:"
-                   echo "GIT_COMMIT: ${env.GIT_COMMIT}"
-                   echo "GIT_BRANCH: ${env.GIT_BRANCH}"
-                   echo "BRANCH_NAME: ${env.BRANCH_NAME}"
-                }
-            }
-        }
-
-        stage('Verify Checkout') {
-                steps {
-                    script {
-                        // Verify the checkout by listing files
-                        sh 'ls -la'
-
-                        sh 'git branch -a || echo "No branches found"'
-                        sh 'git log -1 || echo "No commits found"'
-                        sh 'git status || echo "No status available"'
-                        sh 'git remote -v || echo "No remotes found"'
-
-                        // Check if package.json exists
-                        if (!fileExists('package.json')) {
-                            error "❌ package.json not found in the repository. Checkout failed."
-                        } else {
-                            echo "✅ package.json found. Checkout successful."
-                        }
-                    }
-                }
-        }
-
-        stage('Environment Setup') {
+        stages {
+                stage('System Check') {
                     steps {
                         sh '''
-                                    echo "🔧 Setting up environment..."
-                                    whoami
-                                    echo "Node version: $(node --version)"
-                                    echo "NPM version: $(npm --version)"
-                                    echo "Docker version: $(docker --version)"
-                                    echo "Build Number: ${BUILD_NUMBER}"
-                                    echo "Branch: ${GIT_BRANCH}"
-
-                                    # Check if gcloud is already available
-                                    if command -v gcloud &> /dev/null; then
-                                        echo "✅ Google Cloud SDK already installed"
-                                        gcloud --version
-                                    else
-                                        echo "📦 Installing Google Cloud SDK..."
-
-                                        # Download and install gcloud
-                                        cd /var/jenkins_home
-                                        if [ ! -d "google-cloud-sdk" ]; then
-                                            curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir=/var/jenkins_home
-                                        fi
-
-                                        # Source the path file if it exists
-                                        if [ -f "/var/jenkins_home/google-cloud-sdk/path.bash.inc" ]; then
-                                            source /var/jenkins_home/google-cloud-sdk/path.bash.inc
-                                        fi
-
-                                        # Add to PATH manually if sourcing fails
-                                        export PATH="/var/jenkins_home/google-cloud-sdk/bin:$PATH"
-
-                                        echo "✅ Google Cloud SDK installed"
-                                        gcloud --version
-                                    fi
-
-                                    # Authenticate with GCP
-                                    echo "🔐 Authenticating with GCP..."
-                                    gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-                                    gcloud config set project ${GCP_PROJECT_ID}
-
-                                    echo "✅ GCP authentication completed"
-                                '''
-                    }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Install Node.js dependencies
-                     sh '''
-                            echo "📦 Installing dependencies..."
-                            npm install
+                            echo "🔍 System Information:"
+                            whoami
+                            id
+                            uname -a
+                            echo "Current directory: $(pwd)"
+                            echo "Environment variables:"
+                            env | grep -E "(DOCKER|JENKINS|BUILD)" | sort
                         '''
+                    }
                 }
 
-            }
-        }
-
-        stage('Run Tests') {
+                stage('Checkout GitHub Code') {
                     steps {
                         script {
-                            // Run tests
-                            sh '''
-                                echo "Running tests..."
-                                npm run test || echo "Tests completed with warnings or errors"
-                                echo "Tests completed successfully."
-                            '''
+                            deleteDir()
+
+                            def scmVars = checkout([
+                                $class: 'GitSCM',
+                                branches: [[name: '*/ci-cd-pipeline']],
+                                doGenerateSubmoduleConfigurations: false,
+                                extensions: [
+                                    [$class: 'CleanCheckout'],
+                                    [$class: 'CloneOption', depth: 1, noTags: false, reference: '', shallow: true]
+                                ],
+                                submoduleCfg: [],
+                                userRemoteConfigs: [[
+                                    credentialsId: "${GIT_CREDENTIALS_ID}",
+                                    url: "${GIT_REPO_SSH}"
+                                ]]
+                            ])
+
+                            env.GIT_COMMIT = scmVars.GIT_COMMIT
+                            env.GIT_BRANCH = scmVars.GIT_BRANCH
+                            env.GIT_URL = scmVars.GIT_URL
+
+                            if (env.GIT_BRANCH) {
+                                env.BRANCH_NAME = env.GIT_BRANCH.replaceAll(/^origin\//, '')
+                            }
+
+                            echo "✅ Git variables set:"
+                            echo "GIT_COMMIT: ${env.GIT_COMMIT}"
+                            echo "GIT_BRANCH: ${env.GIT_BRANCH}"
+                            echo "BRANCH_NAME: ${env.BRANCH_NAME}"
                         }
                     }
                 }
 
-        stage('Install Docker CLI') {
-            steps {
-                sh '''
-                    echo "🐳 Installing Docker CLI..."
+                stage('Verify Checkout') {
+                    steps {
+                        sh '''
+                            echo "📁 Repository contents:"
+                            ls -la
 
-                    # Check if docker is already installed
-                    if command -v docker >/dev/null 2>&1; then
-                        echo "✅ Docker CLI already installed"
-                        docker --version
-                    else
-                        echo "📦 Installing Docker CLI..."
+                            if [ ! -f "package.json" ]; then
+                                echo "❌ package.json not found"
+                                exit 1
+                            else
+                                echo "✅ package.json found"
+                                cat package.json | head -20
+                            fi
+                        '''
+                    }
+                }
 
-                        # Update package list
-                        sudo apt-get update
+                stage('Install System Dependencies') {
+                    steps {
+                        sh '''
+                            echo "🔧 Installing system dependencies..."
 
-                        # Install prerequisites
-                        sudo apt-get install -y \
-                            apt-transport-https \
-                            ca-certificates \
-                            curl \
-                            gnupg \
-                            lsb-release
+                            # Update package list first
+                            echo "Updating package list..."
+                            apt-get update
 
-                        # Add Docker GPG key
-                        curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+                            # Install basic utilities
+                            apt-get install -y curl wget gnupg lsb-release
 
-                        # Add Docker repository
-                        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+                            # Install Docker CLI if not present
+                            if ! command -v docker >/dev/null 2>&1; then
+                                echo "📦 Installing Docker CLI..."
 
-                        # Install Docker CLI
-                        sudo apt-get update
-                        sudo apt-get install -y docker-ce-cli
+                                # Install Docker prerequisites
+                                apt-get install -y \
+                                    apt-transport-https \
+                                    ca-certificates
 
-                         # Add current user to docker group
-                         sudo usermod -aG docker $USER
+                                # Add Docker GPG key
+                                curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-                        echo "✅ Docker CLI installed successfully"
-                    fi
+                                # Add Docker repository
+                                echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-                    # Verify installation
-                    docker --version
-                '''
-            }
-        }// end of Install Docker CLI stage
+                                # Update and install Docker CLI
+                                apt-get update
+                                apt-get install -y docker-ce-cli
 
+                                echo "✅ Docker CLI installed"
+                            else
+                                echo "✅ Docker CLI already available"
+                            fi
+
+                            # Install Google Cloud SDK if not present
+                            if ! command -v gcloud >/dev/null 2>&1; then
+                                echo "📦 Installing Google Cloud SDK..."
+
+                                # Add Google Cloud GPG key and repository
+                                curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+                                echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+                                # Update and install
+                                apt-get update
+                                apt-get install -y google-cloud-cli
+
+                                echo "✅ Google Cloud SDK installed"
+                            else
+                                echo "✅ Google Cloud SDK already available"
+                            fi
+
+                            # Verify installations
+                            echo "🔍 Verifying installations:"
+                            docker --version
+                            gcloud --version
+                            node --version
+                            npm --version
+                        '''
+                    }
+                }
+
+                stage('Environment Setup') {
+                    steps {
+                        sh '''
+                            echo "🔧 Setting up GCP authentication..."
+
+                            # Authenticate with GCP
+                            gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+                            gcloud config set project ${GCP_PROJECT_ID}
+
+                            echo "✅ GCP authentication completed"
+
+                            # Verify Docker socket access
+                            echo "🐳 Testing Docker access:"
+                            docker info > /dev/null 2>&1 && echo "✅ Docker daemon accessible" || echo "⚠️ Docker daemon may not be accessible"
+                        '''
+                    }
+                }
+
+                stage('Install Dependencies') {
+                    steps {
+                        sh '''
+                            echo "📦 Installing Node.js dependencies..."
+                            npm ci
+                            echo "✅ Dependencies installed"
+                        '''
+                    }
+                }
+
+                stage('Run Tests') {
+                    steps {
+                        sh '''
+                            echo "🧪 Running tests..."
+                            npm run test || echo "Tests completed with warnings or errors"
+                            echo "✅ Tests stage completed"
+                        '''
+                    }
+                }
 
         stage('Build Docker Image') {
                     steps {
@@ -233,11 +223,13 @@ pipeline {
                                   echo "Logging into Docker registry..."
                                   echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
 
-                                  echo "Pushing Docker images..."
+                                  echo "🚀 Pushing Docker images..."
                                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
                                   docker push ${DOCKER_IMAGE}:latest
 
-                                  echo "Docker images pushed successfully."
+                                  echo "✅ Images pushed successfully!"
+                                  # Logout
+                                  docker logout
                                       '''
 
                        }
@@ -251,8 +243,6 @@ pipeline {
 
                            # Make scripts executable
                            chmod +x scripts/deploy-to-gcp.sh
-                           chmod +x scripts/health-check.sh
-                           chmod +x scripts/rollback.sh
 
                            # Deploy application
                            ./scripts/deploy-to-gcp.sh
@@ -264,6 +254,7 @@ pipeline {
                    steps {
                        sh '''
                            echo "🏥 Performing application health check..."
+                            chmod +x scripts/health-check.sh
                            ./scripts/health-check.sh
                        '''
                    }
@@ -276,6 +267,7 @@ pipeline {
                        docker rmi ${DOCKER_VERSIONED} || true
                        docker rmi ${DOCKER_LATEST} || true
                        docker system prune -f
+                       echo "✅ Cleanup completed"
                    '''
                }
        }// end of Cleanup Local Images stage
@@ -312,6 +304,7 @@ pipeline {
                     sh '''
                         echo "❌ Deployment failed!"
                         echo "🔄 To rollback manually, run:"
+                        chmod +x scripts/rollback.sh
                         echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
 
                         # Optional: Auto-rollback to previous successful build
