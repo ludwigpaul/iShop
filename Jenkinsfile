@@ -133,18 +133,22 @@ pipeline {
                 }
 
        stage('Push to Registry') {
-           agent any
-           steps {
-               script {
-                   node {
-                       docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                           sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                           sh "docker push ${DOCKER_IMAGE}:latest"
+                   steps {
+                       script {
+                          sh '''
+                                          echo "Logging into Docker registry..."
+                                          echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+
+                                          echo "Pushing Docker images..."
+                                          docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                                          docker push ${DOCKER_IMAGE}:latest
+
+                                          echo "Docker images pushed successfully."
+                                      '''
+
                        }
                    }
-               }
-           }
-       }
+               }// end of push to registry
 
     }
 }
