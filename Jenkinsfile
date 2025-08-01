@@ -198,6 +198,41 @@ pipeline {
                     }
                 }
 
+                stage('Fix Docker Access') {
+                            steps {
+                                sh '''
+                                    echo "🔧 Configuring Docker access..."
+
+                                    # Check Docker socket
+                                    if [ -S /var/run/docker.sock ]; then
+                                        echo "✅ Docker socket found"
+                                        ls -la /var/run/docker.sock
+
+                                        # Fix socket permissions
+                                        chmod 666 /var/run/docker.sock
+
+                                        echo "✅ Docker socket permissions updated"
+                                        ls -la /var/run/docker.sock
+                                    else
+                                        echo "❌ Docker socket not found at /var/run/docker.sock"
+                                        echo "Available sockets:"
+                                        find /var/run -name "*docker*" -o -name "*sock*" 2>/dev/null || echo "No Docker sockets found"
+                                    fi
+
+                                    # Test Docker connection
+                                    echo "🐳 Testing Docker connection..."
+                                    docker version || echo "Docker version command failed"
+                                    docker info > /dev/null 2>&1 && echo "✅ Docker daemon is accessible" || {
+                                        echo "❌ Cannot connect to Docker daemon"
+                                        echo "DOCKER_HOST: $DOCKER_HOST"
+                                        echo "Checking for Docker service..."
+                                        ps aux | grep docker || echo "No Docker processes found"
+                                    }
+                                '''
+                            }
+                        }
+
+
         stage('Build Docker Image') {
                     steps {
                         script {
