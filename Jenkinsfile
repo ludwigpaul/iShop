@@ -26,7 +26,7 @@ pipeline {
         GCP_INSTANCE = 'instance-20250801-145732'
 
         //GCP Credentials
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('calvary-revival-ministries-f4be12e8905e.json')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-service-account-key')
     }// end of environment
 
         stages {
