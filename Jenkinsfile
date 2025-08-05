@@ -11,7 +11,7 @@ pipeline {
         // Docker Registry Configuration
         DOCKER_IMAGE = 'ludwigpaul/ishop'
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-creds-for-local-jenkins' // Jenkins credentials ID
+        DOCKER_CREDENTIALS_ID = credentials('dockerhub-creds-for-local-jenkins') // Jenkins credentials ID
 
         // Node Configuration
         NODE_VERSION = '18'
