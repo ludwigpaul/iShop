@@ -218,19 +218,16 @@ pipeline {
        stage('Push to Registry') {
                    steps {
                        script {
-                          sh '''
-                                  echo "Logging into Docker registry..."
-                                  echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+                          docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
 
-                                  echo "🚀 Pushing Docker images..."
-                                  docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                                  docker push ${DOCKER_IMAGE}:latest
+                                                 sh 'echo "🚀 Pushing Docker images..."'
+                                                  // Push versioned image
+                                                  sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
 
-                                  echo "✅ Images pushed successfully!"
-                                  # Logout
-                                  docker logout
-                                      '''
+                                                  // Push latest tag
+                                                  sh "docker push ${DOCKER_IMAGE}:latest"
 
+                                                  sh 'echo "✅ Images pushed successfully!"'                                     
                        }
                    }
        }// end of push to registry
