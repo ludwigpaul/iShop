@@ -9,6 +9,8 @@ pipeline {
         DOCKER_VERSIONED = "${DOCKER_IMAGE}:${DOCKER_TAG}"
 
         // Docker Registry Configuration
+        DOCKER_USERNAME = credentials('dockerhub-username') // Jenkins secret ID
+        DOCKER_PASSWORD = credentials('dockerhub-password') // Jenkins secret ID
         DOCKER_IMAGE = 'ludwigpaul/ishop'
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds-for-local-jenkins' // Jenkins credentials ID
@@ -220,7 +222,7 @@ pipeline {
                        script {
                           sh '''
                                   echo "Logging into Docker registry..."
-                                  echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+                                  echo $DOCKER_PASSWORD | docker login ${DOCKER_REGISTRY} -u $DOCKER_USERNAME --password-stdin
 
                                   echo "🚀 Pushing Docker images..."
                                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
