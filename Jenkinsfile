@@ -220,14 +220,15 @@ pipeline {
                        script {
                           docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
 
-                                                 sh 'echo "🚀 Pushing Docker images..."'
-                                                  // Push versioned image
-                                                  sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                          sh 'echo "🚀 Pushing Docker images..."'
+                          // Push versioned image
+                          sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
 
-                                                  // Push latest tag
-                                                  sh "docker push ${DOCKER_IMAGE}:latest"
+                          // Push latest tag
+                          sh "docker push ${DOCKER_IMAGE}:latest"
 
-                                                  sh 'echo "✅ Images pushed successfully!"'                                     
+                          sh 'echo "✅ Images pushed successfully!"'
+                          }
                        }
                    }
        }// end of push to registry
