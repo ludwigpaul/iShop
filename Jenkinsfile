@@ -218,8 +218,10 @@ pipeline {
        stage('Push to Registry') {
            steps {
                sh 'echo "Preparing to push Docker images to registry..."'
+               echo "Docker username: $DOCKER_CREDENTIALS_ID_USR"
+               echo "Docker registry: $DOCKER_REGISTRY"
                sh '''
-                   echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+                   echo $DOCKER_CREDENTIALS_ID_PSW | docker login $DOCKER_REGISTRY -u $DOCKER_CREDENTIALS_ID_USR --password-stdin
                    echo "🚀 Pushing Docker images..."
                    docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
                    docker push ${DOCKER_IMAGE}:latest
