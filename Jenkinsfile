@@ -275,46 +275,53 @@ pipeline {
 
     post {
             always {
-                sh '''
-                    echo "📊 Build Summary:"
-                    echo "Project: ${GCP_PROJECT_ID}"
-                    echo "Build Number: ${BUILD_NUMBER}"
-                    echo "Image: ${IMAGE_NAME}:${BUILD_NUMBER}"
-                '''
-            }
+                    script {
+                        if (getContext(hudson.FilePath)) {
+                            sh '''
+                                echo "📊 Build Summary:"
+                                echo "Project: ${GCP_PROJECT_ID}"
+                                echo "Build Number: ${BUILD_NUMBER}"
+                                echo "Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                            '''
+                        } else {
+                            echo "⚠️ Workspace not available. Skipping build summary."
+                        }
+                    }
+                }
+
 
             success {
-                script {
-                    sh '''
-                        EXTERNAL_IP=$(gcloud compute instances describe ${GCP_INSTANCE} \
-                            --zone=${GCP_ZONE} \
-                            --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+                    script {
+                        if (getContext(hudson.FilePath)) {
+                            sh '''
+                                EXTERNAL_IP=$(gcloud compute instances describe ${GCP_INSTANCE} \
+                                    --zone=${GCP_ZONE} \
+                                    --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
 
-                        echo "✅ Deployment successful!"
-                        echo "🌐 Application URL: http://${EXTERNAL_IP}:3000"
-                        echo "🏥 Health Check: http://${EXTERNAL_IP}:3000/health"
-                        echo "📦 Docker Image: ${IMAGE_NAME}:${BUILD_NUMBER}"
-                    '''
+                                echo "✅ Deployment successful!"
+                                echo "🌐 Application URL: http://${EXTERNAL_IP}:3000"
+                                echo "🏥 Health Check: http://${EXTERNAL_IP}:3000/health"
+                                echo "📦 Docker Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                            '''
+                        } else {
+                            echo "⚠️ Workspace not available. Skipping success summary."
+                        }
+                    }
                 }
-            }
+
 
             failure {
-                script {
-                    sh '''
-                        echo "❌ Deployment failed!"
-                        echo "🔄 To rollback manually, run:"
-                        chmod +x scripts/rollback.sh
-                        echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
-
-                        # Optional: Auto-rollback to previous successful build
-                        # PREVIOUS_BUILD=$((BUILD_NUMBER - 1))
-                        # if [ $PREVIOUS_BUILD -gt 0 ]; then
-                        #     echo "🔄 Auto-rollback to build ${PREVIOUS_BUILD}..."
-                        #     chmod +x scripts/rollback.sh
-                        #     ./scripts/rollback.sh ${PREVIOUS_BUILD}
-                        # fi
-                    '''
-                }// end of scriot
-            }// end of failure
-        }// end of post
-} // end of pipeline
+                    script {
+                        if (getContext(hudson.FilePath)) {
+                            sh '''
+                                echo "❌ Deployment failed!"
+                                echo "🔄 To rollback manually, run:"
+                                chmod +x scripts/rollback.sh
+                                echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
+                            '''
+                        } else {
+                            echo "⚠️ Workspace not available. Skipping failure summary."
+                        }
+                    }
+                }
+            }
