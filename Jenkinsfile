@@ -275,53 +275,52 @@ pipeline {
 
     post {
             always {
-                    script {
-                        if (getContext(hudson.FilePath)) {
-                            sh '''
-                                echo "📊 Build Summary:"
-                                echo "Project: ${GCP_PROJECT_ID}"
-                                echo "Build Number: ${BUILD_NUMBER}"
-                                echo "Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                            '''
-                        } else {
-                            echo "⚠️ Workspace not available. Skipping build summary."
-                        }
-                    }
-                }
-
-
-            success {
-                    script {
-                        if (getContext(hudson.FilePath)) {
-                            sh '''
-                                EXTERNAL_IP=$(gcloud compute instances describe ${GCP_INSTANCE} \
-                                    --zone=${GCP_ZONE} \
-                                    --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
-
-                                echo "✅ Deployment successful!"
-                                echo "🌐 Application URL: http://${EXTERNAL_IP}:3000"
-                                echo "🏥 Health Check: http://${EXTERNAL_IP}:3000/health"
-                                echo "📦 Docker Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                            '''
-                        } else {
-                            echo "⚠️ Workspace not available. Skipping success summary."
-                        }
-                    }
-                }
-
-
-            failure {
-                    script {
-                        if (getContext(hudson.FilePath)) {
-                            sh '''
-                                echo "❌ Deployment failed!"
-                                echo "🔄 To rollback manually, run:"
-                                chmod +x scripts/rollback.sh
-                                echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
-                            '''
-                        } else {
-                            echo "⚠️ Workspace not available. Skipping failure summary."
-                        }
+                script {
+                    if (getContext(hudson.FilePath)) {
+                        sh '''
+                            echo "📊 Build Summary:"
+                            echo "Project: ${GCP_PROJECT_ID}"
+                            echo "Build Number: ${BUILD_NUMBER}"
+                            echo "Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                        '''
+                    } else {
+                        echo "⚠️ Workspace not available. Skipping build summary."
                     }
                 }
             }
+
+            success {
+                script {
+                    if (getContext(hudson.FilePath)) {
+                        sh '''
+                            EXTERNAL_IP=$(gcloud compute instances describe ${GCP_INSTANCE} \
+                                --zone=${GCP_ZONE} \
+                                --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+
+                            echo "✅ Deployment successful!"
+                            echo "🌐 Application URL: http://${EXTERNAL_IP}:3000"
+                            echo "🏥 Health Check: http://${EXTERNAL_IP}:3000/health"
+                            echo "📦 Docker Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                        '''
+                    } else {
+                        echo "⚠️ Workspace not available. Skipping success summary."
+                    }
+                }
+            }
+
+            failure {
+                script {
+                    if (getContext(hudson.FilePath)) {
+                        sh '''
+                            echo "❌ Deployment failed!"
+                            echo "🔄 To rollback manually, run:"
+                            chmod +x scripts/rollback.sh
+                            echo "   ./scripts/rollback.sh [PREVIOUS_BUILD_NUMBER]"
+                        '''
+                    } else {
+                        echo "⚠️ Workspace not available. Skipping failure summary."
+                    }
+                }
+            }
+        }
+    }
