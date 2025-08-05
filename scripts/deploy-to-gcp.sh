@@ -19,6 +19,7 @@ gcloud config set project ${PROJECT_ID}
 
 echo "📦 Deploying application to Compute Engine instance..."
 
+gcloud compute instances add-metadata instance-20250801-145732 --zone=us-central1-c --metadata-from-file ssh-keys=<(echo "USERNAME:$(cat ~/root/.ssh/google_compute_engine.pub)")
 # Deploy to Compute Engine
 gcloud compute ssh ${INSTANCE_NAME} \
     --zone=${ZONE} \
