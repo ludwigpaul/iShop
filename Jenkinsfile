@@ -216,20 +216,18 @@ pipeline {
                 }
 
        stage('Push to Registry') {
-                   stage('Push to Registry') {
-                       steps {
-                           sh 'echo "Preparing to push Docker images to registry..."'
-                           sh '''
-                               echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_USR --password-stdin
-                               echo "🚀 Pushing Docker images..."
-                               docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                               docker push ${DOCKER_IMAGE}:latest
-                               echo "✅ Images pushed successfully!"
-                               docker logout
-                           '''
-                       }
-                   }
-       }// end of push to registry
+           steps {
+               sh 'echo "Preparing to push Docker images to registry..."'
+               sh '''
+                   echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_USR --password-stdin
+                   echo "🚀 Pushing Docker images..."
+                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                   docker push ${DOCKER_IMAGE}:latest
+                   echo "✅ Images pushed successfully!"
+                   docker logout
+               '''
+           }
+       }
 
        stage('Deploy to GCP Compute Engine') {
                    steps {
