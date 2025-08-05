@@ -4,6 +4,10 @@ FROM node:23-alpine
 LABEL authors="Ludwig Paul"
 LABEL description="Node.js base image for running applications in production"
 
+RUN apt-get update && apt-get install -y \
+    mysql-server \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -24,4 +28,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
 
 # Define the command to run the application
-CMD ["npm", "start"]
+CMD ["mysqld_safe --user=mysql &", "npm", "start"]
