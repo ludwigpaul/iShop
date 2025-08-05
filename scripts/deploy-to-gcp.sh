@@ -19,7 +19,22 @@ gcloud config set project ${PROJECT_ID}
 
 echo "📦 Deploying application to Compute Engine instance..."
 
-gcloud compute instances add-metadata instance-20250801-145732 --zone=us-central1-c --metadata-from-file ssh-keys=<(echo "USERNAME:$(cat ~/.ssh/google_compute_engine.pub)")
+# Ensure firewall rule for SSH exists
+if ! gcloud compute firewall-rules list --filter='name=allow-ssh' --format='value(name)' | grep -q 'allow-ssh'; then
+  echo "🔒 Creating firewall rule to allow SSH (tcp:22)..."
+  gcloud compute firewall-rules create allow-ssh \
+    --allow tcp:22 \
+    --source-ranges=0.0.0.0/0 \
+    --target-tags=ssh-access \
+    --description="Allow SSH access"
+fi
+
+# Add ssh-access tag to the instance
+echo "🏷️  Adding 'ssh-access' tag to the instance..."
+gcloud compute instances add-tags ${INSTANCE_NAME} \
+  --zone=${ZONE} \
+  --tags=ssh-access
+
 # Deploy to Compute Engine
 gcloud compute ssh ${INSTANCE_NAME} \
     --zone=${ZONE} \
