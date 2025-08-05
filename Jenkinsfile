@@ -220,7 +220,7 @@ pipeline {
                        script {
                           sh '''
                                   echo "Logging into Docker registry..."
-                                  echo $DOCKER_CREDENTIALS_PSW | docker login ${DOCKER_REGISTRY} -u $DOCKER_CREDENTIALS_ID --password-stdin
+                                  echo "$DOCKER_PASSWORD" | docker login https://index.docker.io/v1/ -u "$DOCKER_USERNAME" --password-stdin
 
                                   echo "🚀 Pushing Docker images..."
                                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
