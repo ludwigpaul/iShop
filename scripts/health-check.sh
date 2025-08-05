@@ -18,7 +18,7 @@ echo "⏳ Waiting for application to start..."
 sleep 45
 
 # Perform health check with retries
-MAX_RETRIES=15
+MAX_RETRIES=3
 RETRY_COUNT=0
 
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
@@ -42,7 +42,7 @@ echo "❌ Health check failed after ${MAX_RETRIES} attempts"
 
 # Debug information
 echo "🔍 Debug Information:"
-gcloud compute ssh ${INSTANCE_NAME} --zone=${ZONE} --command="
+gcloud compute ssh sa_105782201469785741507@${INSTANCE_NAME} --zone=${ZONE} --command="
     echo 'Container status:'
     sudo docker ps -a | grep ishop-app || echo 'No ishop-app container found'
 

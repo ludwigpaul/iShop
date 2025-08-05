@@ -42,5 +42,20 @@
 
 ---
 
+## 4. Health Check SSH Failure
+
+- **Symptom:**
+  Health check script failed to SSH into the instance for debugging, showing `Permission denied (publickey)`.
+
+- **Root Causes:**
+    - The health check or debug step used the wrong SSH username or did not match a key in project metadata.
+    - The SSH command may have defaulted to `root` or another user not present in the `ssh-keys` metadata.
+
+- **Resolution:**
+    - Ensure all SSH commands (including health checks) use a username present in the `ssh-keys` metadata (e.g., `sa_105782201469785741507`).
+    - Update scripts to consistently specify the correct SSH username.
+
+---
+
 **Summary:**  
 The main issues were related to SSH authentication (username mismatch and metadata configuration) and Docker image access (repository or authentication problems). These were resolved by updating the deployment script and verifying Docker credentials.
