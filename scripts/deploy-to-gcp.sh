@@ -36,7 +36,7 @@ gcloud compute instances add-tags ${INSTANCE_NAME} \
   --tags=ssh-access
 
 # Deploy to Compute Engine
-gcloud compute ssh ${INSTANCE_NAME} \
+gcloud compute ssh sa_105782201469785741507@${INSTANCE_NAME} \
     --zone=${ZONE} \
     --command="
         set -e
