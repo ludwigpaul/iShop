@@ -254,15 +254,15 @@ pipeline {
            }
        }// end of deploy to GCP stage
 
-// //         stage('Health Check') {
-// //            steps {
-// //                sh '''
-// //                    echo "🏥 Performing application health check..."
-// //                     chmod +x scripts/health-check.sh
-// //                    ./scripts/health-check.sh
-// //                '''
-// //            }
-//         } // end of health check stage
+        stage('Health Check') {
+           steps {
+               sh '''
+                   echo "🏥 Performing application health check..."
+                    chmod +x scripts/health-check.sh
+                   ./scripts/health-check.sh
+               '''
+           }
+        } // end of health check stage
 
        stage('Cleanup Local Images') {
            steps {

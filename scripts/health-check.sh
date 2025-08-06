@@ -3,6 +3,7 @@
 PROJECT_ID="calvary-revival-ministries"
 ZONE="us-central1-c"
 INSTANCE_NAME="instance-20250801-145732"
+USERNAME="ludwigpaul48"
 
 echo "🏥 Performing health check..."
 
@@ -42,7 +43,7 @@ echo "❌ Health check failed after ${MAX_RETRIES} attempts"
 
 # Debug information
 echo "🔍 Debug Information:"
-gcloud compute ssh sa_105782201469785741507@${INSTANCE_NAME} --zone=${ZONE} --command="
+gcloud compute ssh ${USERNAME}@${INSTANCE_NAME} --zone=${ZONE} --command="
     echo 'Container status:'
     sudo docker ps -a | grep ishop-app || echo 'No ishop-app container found'
 
