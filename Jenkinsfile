@@ -207,87 +207,87 @@ pipeline {
                     }
                 }
 
-        stages {
-            stage('Test MySQL Connection') {
-              steps {
-                sh '''
-                  echo "Testing MySQL connection..."
-                  mysql --host=${MYSQL_HOST} --user=${MYSQL_USER} --password=${MYSQL_PWD} -e "SHOW DATABASES;"
-                '''
-              }
-            }
-        }
-
-        stage('Build Docker Image') {
-                    steps {
-                        script {
-                            // Build Docker image
-                            sh '''
-                                echo "🏗️ Building Docker image..."
-                                docker build -t ${DOCKER_LATEST} -t ${DOCKER_VERSIONED} .
-                                echo "Docker image built successfully."
-                                docker images | grep ishop
-                            '''
-                            env.DOCKER_IMAGE_ID = "${DOCKER_IMAGE}:${DOCKER_TAG}"
-                            echo "Docker image ID: ${env.DOCKER_IMAGE_ID}"
-                        }
+                stages {
+                    stage('Test MySQL Connection') {
+                      steps {
+                        sh '''
+                          echo "Testing MySQL connection..."
+                          mysql --host=${MYSQL_HOST} --user=${MYSQL_USER} --password=${MYSQL_PWD} -e "SHOW DATABASES;"
+                        '''
+                      }
                     }
                 }
 
-       stage('Push to Registry') {
-           steps {
-               sh 'echo "Preparing to push Docker images to registry..."'
+                stage('Build Docker Image') {
+                            steps {
+                                script {
+                                    // Build Docker image
+                                    sh '''
+                                        echo "🏗️ Building Docker image..."
+                                        docker build -t ${DOCKER_LATEST} -t ${DOCKER_VERSIONED} .
+                                        echo "Docker image built successfully."
+                                        docker images | grep ishop
+                                    '''
+                                    env.DOCKER_IMAGE_ID = "${DOCKER_IMAGE}:${DOCKER_TAG}"
+                                    echo "Docker image ID: ${env.DOCKER_IMAGE_ID}"
+                                }
+                            }
+                        }
 
-               sh '''
-                   echo "Docker username: $DOCKER_CREDENTIALS_ID_USR"
-                   echo "Docker registry: $DOCKER_REGISTRY"
-                   echo $DOCKER_CREDENTIALS_ID_PSW | docker login $DOCKER_REGISTRY -u $DOCKER_CREDENTIALS_ID_USR --password-stdin
-                   echo "🚀 Pushing Docker images..."
-                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                   docker push ${DOCKER_IMAGE}:latest
-                   echo "✅ Images pushed successfully!"
-                   docker logout
-               '''
-           }
-       }
+               stage('Push to Registry') {
+                   steps {
+                       sh 'echo "Preparing to push Docker images to registry..."'
 
-       stage('Deploy to GCP Compute Engine') {
-           steps {
-               sh '''
-                   echo "🚀 Deploying to GCP Compute Engine..."
+                       sh '''
+                           echo "Docker username: $DOCKER_CREDENTIALS_ID_USR"
+                           echo "Docker registry: $DOCKER_REGISTRY"
+                           echo $DOCKER_CREDENTIALS_ID_PSW | docker login $DOCKER_REGISTRY -u $DOCKER_CREDENTIALS_ID_USR --password-stdin
+                           echo "🚀 Pushing Docker images..."
+                           docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                           docker push ${DOCKER_IMAGE}:latest
+                           echo "✅ Images pushed successfully!"
+                           docker logout
+                       '''
+                   }
+               }
 
-                   # Make scripts executable
-                   chmod +x scripts/deploy-to-gcp.sh
+               stage('Deploy to GCP Compute Engine') {
+                   steps {
+                       sh '''
+                           echo "🚀 Deploying to GCP Compute Engine..."
 
-                   # Deploy application
-                   ./scripts/deploy-to-gcp.sh
-               '''
-           }
-       }// end of deploy to GCP stage
+                           # Make scripts executable
+                           chmod +x scripts/deploy-to-gcp.sh
 
-        stage('Health Check') {
-           steps {
-               sh '''
-                   echo "🏥 Performing application health check..."
-                    chmod +x scripts/health-check.sh
-                   ./scripts/health-check.sh
-               '''
-           }
-        } // end of health check stage
+                           # Deploy application
+                           ./scripts/deploy-to-gcp.sh
+                       '''
+                   }
+               }// end of deploy to GCP stage
 
-       stage('Cleanup Local Images') {
-           steps {
-               sh '''
-                   echo "🧹 Cleaning up local Docker images..."
-                   docker rmi ${DOCKER_VERSIONED} || true
-                   docker rmi ${DOCKER_LATEST} || true
-                   docker system prune -f
-                   echo "✅ Cleanup completed"
-               '''
-           }
-       }// end of Cleanup Local Images stage
+                stage('Health Check') {
+                   steps {
+                       sh '''
+                           echo "🏥 Performing application health check..."
+                            chmod +x scripts/health-check.sh
+                           ./scripts/health-check.sh
+                       '''
+                   }
+                } // end of health check stage
 
-    }// end of stages
+               stage('Cleanup Local Images') {
+                   steps {
+                       sh '''
+                           echo "🧹 Cleaning up local Docker images..."
+                           docker rmi ${DOCKER_VERSIONED} || true
+                           docker rmi ${DOCKER_LATEST} || true
+                           docker system prune -f
+                           echo "✅ Cleanup completed"
+                       '''
+                   }
+               }// end of Cleanup Local Images stage
+
+            }// end of stages
 
     post {
             always {
