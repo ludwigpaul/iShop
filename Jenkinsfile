@@ -233,39 +233,39 @@ pipeline {
        }
 
        stage('Deploy to GCP Compute Engine') {
-                   steps {
-                       sh '''
-                           echo "🚀 Deploying to GCP Compute Engine..."
+           steps {
+               sh '''
+                   echo "🚀 Deploying to GCP Compute Engine..."
 
-                           # Make scripts executable
-                           chmod +x scripts/deploy-to-gcp.sh
+                   # Make scripts executable
+                   chmod +x scripts/deploy-to-gcp.sh
 
-                           # Deploy application
-                           ./scripts/deploy-to-gcp.sh
-                       '''
-                   }
+                   # Deploy application
+                   ./scripts/deploy-to-gcp.sh
+               '''
+           }
        }// end of deploy to GCP stage
 
-//         stage('Health Check') {
-//                    steps {
-//                        sh '''
-//                            echo "🏥 Performing application health check..."
-//                             chmod +x scripts/health-check.sh
-//                            ./scripts/health-check.sh
-//                        '''
-//                    }
-//         } // end of health check stage
+        stage('Health Check') {
+           steps {
+               sh '''
+                   echo "🏥 Performing application health check..."
+                    chmod +x scripts/health-check.sh
+                   ./scripts/health-check.sh
+               '''
+           }
+        } // end of health check stage
 
        stage('Cleanup Local Images') {
-               steps {
-                   sh '''
-                       echo "🧹 Cleaning up local Docker images..."
-                       docker rmi ${DOCKER_VERSIONED} || true
-                       docker rmi ${DOCKER_LATEST} || true
-                       docker system prune -f
-                       echo "✅ Cleanup completed"
-                   '''
-               }
+           steps {
+               sh '''
+                   echo "🧹 Cleaning up local Docker images..."
+                   docker rmi ${DOCKER_VERSIONED} || true
+                   docker rmi ${DOCKER_LATEST} || true
+                   docker system prune -f
+                   echo "✅ Cleanup completed"
+               '''
+           }
        }// end of Cleanup Local Images stage
 
     }// end of stages

@@ -18,7 +18,7 @@ echo "⏳ Waiting for application to start..."
 sleep 45
 
 # Perform health check with retries
-MAX_RETRIES=3
+MAX_RETRIES=1
 RETRY_COUNT=0
 
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
