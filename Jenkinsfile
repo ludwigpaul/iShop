@@ -207,7 +207,7 @@ pipeline {
                     }
                 }
 
-                stages {
+                stage {
                     stage('Test MySQL Connection') {
                       steps {
                         sh '''
