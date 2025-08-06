@@ -168,16 +168,6 @@ pipeline {
 //                         '''
 //                     }
 //                 }
-                stages {
-                    stage('Test MySQL Connection') {
-                      steps {
-                        sh '''
-                          echo "Testing MySQL connection..."
-                          mysql --host=${MYSQL_HOST} --user=${MYSQL_USER} --password=${MYSQL_PWD} -e "SHOW DATABASES;"
-                        '''
-                      }
-                    }
-                }
 
                 stage('Environment Setup') {
                     steps {
@@ -217,6 +207,16 @@ pipeline {
                     }
                 }
 
+        stages {
+            stage('Test MySQL Connection') {
+              steps {
+                sh '''
+                  echo "Testing MySQL connection..."
+                  mysql --host=${MYSQL_HOST} --user=${MYSQL_USER} --password=${MYSQL_PWD} -e "SHOW DATABASES;"
+                '''
+              }
+            }
+        }
 
         stage('Build Docker Image') {
                     steps {
