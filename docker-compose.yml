@@ -70,26 +70,6 @@ services:
       timeout: 10s
       retries: 5
 
-  backend:
-    # Build the image locally on your GCP instance using the Dockerfile in the current directory
-    build: .
-    container_name: ishop-app
-    restart: unless-stopped
-    networks:
-      - jenkins-network
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mysql
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DB_HOST=jenkins-mysql
-      - DB_PORT=3306
-      - DB_DATABASE=ishop
-      - DB_USER=root
-      - DB_PASSWORD=J0n454848((
-
 volumes:
   jenkins-data:
     driver: local

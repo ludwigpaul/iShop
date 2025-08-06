@@ -27,6 +27,14 @@ pipeline {
 
         //GCP Credentials
         GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-service-account-key')
+
+        // This injects MYSQL_USER and MYSQL_PWD environment variables with the username and password
+        MYSQL_CREDS = credentials('mysql-ishop-creds')
+        MYSQL_USER = "${MYSQL_CREDS_USR}"
+        MYSQL_PWD = "${MYSQL_CREDS_PSW}"
+        MYSQL_HOST = 'ludwigpaul/ishop' // or the container/network name if needed
+        MYSQL_DATABASE = 'ishop'
+
     }// end of environment
 
         stages {
@@ -159,6 +167,16 @@ pipeline {
 //                         '''
 //                     }
 //                 }
+                stages {
+                    stage('Test MySQL Connection') {
+                      steps {
+                        sh '''
+                          echo "Testing MySQL connection..."
+                          mysql --host=${MYSQL_HOST} --user=${MYSQL_USER} --password=${MYSQL_PWD} -e "SHOW DATABASES;"
+                        '''
+                      }
+                    }
+                  }
 
                 stage('Environment Setup') {
                     steps {
