@@ -24,5 +24,3 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
 
-# Define the command to run the application
-CMD ["mysqld_safe --user=root --password=J0n454848((( &", "npm", "start"]
