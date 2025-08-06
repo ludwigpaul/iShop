@@ -26,7 +26,7 @@ pipeline {
         GCP_INSTANCE = 'instance-20250801-145732'
 
         //GCP Credentials
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-service-account-key')
+        GCP_SERVICE_ACCOUNT_KEY = credentials('gcp-service-account-key')
 
         // This injects MYSQL_USER and MYSQL_PWD environment variables with the username and password
         MYSQL_CREDS = credentials('mysql-ishop-creds')
