@@ -54,11 +54,33 @@ services:
       retries: 5
       start_period: 120s
 
+    # MySQL service for Jenkins
+  mysql:
+    image: mysql:8.0
+    container_name: jenkins-mysql
+    restart: unless-stopped
+    networks:
+      - jenkins-network
+    environment:
+      MYSQL_ROOT_PASSWORD: J0n454848(((
+      MYSQL_DATABASE: ishop
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 volumes:
   jenkins-data:
     driver: local
   docker-data:
     driver: local
+  mysql-data: {}
+
 
 networks:
   jenkins-network:

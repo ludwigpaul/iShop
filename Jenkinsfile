@@ -180,11 +180,14 @@ pipeline {
 
                 stage('Install Dependencies') {
                     steps {
-                        sh '''
-                            echo "📦 Installing Node.js dependencies..."
-                            npm ci
-                            echo "✅ Dependencies installed"
-                        '''
+                        // Run npm commands inside a Node.js container
+                        docker.image('node:23-alpine').inside {
+                            sh '''
+                                echo "📦 Installing Node.js dependencies..."
+                                npm ci
+                                echo "✅ Dependencies installed"
+                            '''
+                        }
                     }
                 }
 
