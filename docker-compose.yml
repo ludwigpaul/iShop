@@ -23,7 +23,6 @@ services:
       timeout: 10s
       retries: 5
 
-  # Jenkins with all dependencies pre-installed
   jenkins:
     build:
       context: .
@@ -40,9 +39,7 @@ services:
     environment:
       - DOCKER_HOST=tcp://docker:2375
       - JENKINS_OPTS=--httpPort=8080
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true -Djava.awt.headless=true
-        -Xmx2g -Xms1g
-      # Don't override PATH - let Jenkins handle it
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true -Djava.awt.headless=true -Xmx2g -Xms1g
     user: root
     depends_on:
       docker:
@@ -54,7 +51,6 @@ services:
       retries: 5
       start_period: 120s
 
-    # MySQL service for Jenkins
   mysql:
     image: mysql:8.0
     container_name: jenkins-mysql
@@ -62,25 +58,43 @@ services:
     networks:
       - jenkins-network
     environment:
-      MYSQL_ROOT_PASSWORD: J0n454848(((
+      MYSQL_ROOT_PASSWORD: J0n454848((
       MYSQL_DATABASE: ishop
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
       timeout: 10s
       retries: 5
 
+  backend:
+    build: .
+    container_name: ishop-app
+    restart: unless-stopped
+    networks:
+      - jenkins-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_HOST=jenkins-mysql
+      - DB_PORT=3306
+      - DB_DATABASE=ishop
+      - DB_USER=root
+      - DB_PASSWORD=J0n454848((
+      
 volumes:
   jenkins-data:
     driver: local
   docker-data:
     driver: local
   mysql-data: {}
-
 
 networks:
   jenkins-network:
