@@ -52,6 +52,7 @@ pipeline {
                     }
                 }
 
+
                 stage('Checkout GitHub Code') {
                     steps {
                         script {
@@ -176,7 +177,7 @@ pipeline {
                         '''
                       }
                     }
-                  }
+                }
 
                 stage('Environment Setup') {
                     steps {
