@@ -5,7 +5,7 @@ export const getAllProducts = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const products = await productService.getAllProducts(page, limit);
-        res.json({ products});
+        res.status(200).json({ products});
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
