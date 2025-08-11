@@ -42,7 +42,7 @@ export default (sequelize, DataTypes) => {
         verification_token: {
             type: DataTypes.STRING,
             allowNull: true,
-            field: 'verification_token'
+            field: 'verificationToken'
         },
         verificationExpiry: {
             type: DataTypes.DATE,
