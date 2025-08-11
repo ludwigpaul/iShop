@@ -1,5 +1,5 @@
 import * as userService from '../services/userService.js';
-import logger from '../logger/logger.js';
+import {logger} from '../logger/logger.js';
 
 function getErrorMessage(err) {
     return err && err.message ? err.message : String(err);
@@ -7,6 +7,7 @@ function getErrorMessage(err) {
 
 export async function getAllUsers(req, res) {
     try {
+        logger.info('Fetching all users');
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const users = await userService.getAllUsers();
@@ -18,6 +19,7 @@ export async function getAllUsers(req, res) {
 
 export async function getUserById(req, res) {
     try {
+        logger.info(`Fetching user with ID: ${req.params.id}`);
         if (!req.params.id) {
             return res.status(400).json({ message: 'User ID is required' });
         }
@@ -33,6 +35,7 @@ export async function getUserById(req, res) {
 
 export async function getUserByEmail(req, res) {
     try {
+        logger.info(`Fetching user with email: ${req.params.email}`);
         const user = await userService.getUserByEmail(req.params.email);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });

@@ -2,7 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
-import logger from "./logger/logger.js";
+import {logger, stream} from "./logger/logger.js";
+import { httpLogger } from './middleware/httpLogger.js';
 import categoryRouter from './routes/categoryRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
@@ -19,23 +20,26 @@ dotenv.config();
 
 const app = express();
 
+// Set trust proxy to get real IP addresses
+app.set('trust proxy', true);
+
+
 app.use(cors({
     origin: 'http://localhost:3002', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-
-const logRequest = (req, res, next) => {
-    logger.info(`${req.method} - ${req.url} = ${new Date().toISOString()}`);
-    next();
-};
-
 app.use(express.json()); // This middleware parses JSON request bodies
 app.use(express.text()); // This middleware parses text request bodies
 app.use(express.urlencoded({ extended: true })); // This middleware parses URL-encoded request bodies
-app.use(morgan('dev')); // Use morgan for logging HTTP requests
-app.use(logRequest); // Custom logging middleware
+
+// Use our enhanced HTTP logger instead of just morgan
+app.use(httpLogger);
+
+
+app.use(morgan('combined', { stream })); // Use morgan for logging HTTP requests
+
 
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/products', productRouter);
@@ -57,7 +61,7 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-const PORT = parseInt(process.env.PORT) || 3001;
+const PORT = parseInt(process.env.PORT) || 3000;
 const APP_NAME = process.env.APP_NAME;
 
 // Sync database and start the server

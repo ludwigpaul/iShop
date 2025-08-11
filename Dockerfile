@@ -1,5 +1,6 @@
 # Use the official Node.js runtime as the base image
-FROM node:23-alpine
+FROM node:22-alpine
+
 
 LABEL authors="Ludwig Paul"
 LABEL description="Node.js base image for running applications in production"
@@ -23,4 +24,7 @@ EXPOSE 3000
 # Add health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
+
+# Start the application
+CMD ["node", "app.js"]
 

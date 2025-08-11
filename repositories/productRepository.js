@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import logger from '../logger/logger.js';
+import {logger} from '../logger/logger.js';
 
 const Products = db.Products;
 // The repository for managing products in the ishop database.

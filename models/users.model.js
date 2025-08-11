@@ -55,7 +55,7 @@ export default (sequelize, DataTypes) => {
             field: 'verification_date'
         }
     }, {
-        tableName: 'users',
+        tableName: 'Users',
         timestamps: true
     });
 }

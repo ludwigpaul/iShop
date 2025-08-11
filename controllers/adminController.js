@@ -4,7 +4,7 @@ import orderRepository from '../repositories/orderRepository.js';
 import workerRepository from '../repositories/workerRepository.js';
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService.js';
-import logger from "../logger/logger.js";
+import {logger} from "../logger/logger.js";
 
 // Admin login
 export const getAllUsers = async (req, res) => {

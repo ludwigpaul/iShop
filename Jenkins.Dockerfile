@@ -36,8 +36,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 
-
-
 # Install Docker CLI
 RUN curl -fsSL https://get.docker.com | sh
 
