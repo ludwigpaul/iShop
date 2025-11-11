@@ -1,8 +1,10 @@
 # Use the official Node.js runtime as the base image
-FROM node:23-alpine
+FROM node:22-alpine
+
 
 LABEL authors="Ludwig Paul"
 LABEL description="Node.js base image for running applications in production"
+
 
 # Set the working directory in the container
 WORKDIR /app
@@ -23,5 +25,6 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node healthcheck.js || exit 1
 
-# Define the command to run the application
-CMD ["npm", "start"]
+# Start the application
+CMD ["node", "app.js"]
+

@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import logger from '../logger/logger.js';
+import {logger} from '../logger/logger.js';
 const Categories = db.Categories;
 
 // The repository for managing categories in the ishop database.

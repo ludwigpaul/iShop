@@ -1,6 +1,6 @@
 import {DataTypes} from 'sequelize';
 export default (sequelize, DataTypes) => {
-    return sequelize.define('orders', {
+    return sequelize.define('Orders', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'products',
+                model: 'Products',
                 key: 'id'
             }
         },
@@ -18,7 +18,7 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'users',
+                model: 'Users',
                 key: 'id'
             }
         },
@@ -52,7 +52,7 @@ export default (sequelize, DataTypes) => {
             field: 'worker_id'
         }
     }, {
-        tableName: 'orders',
+        tableName: 'Orders',
         timestamps: false
     });
 };

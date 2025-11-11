@@ -1,0 +1,89 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ishop-mysql
+    restart: unless-stopped
+    networks:
+      - ishop-network
+    environment:
+      MYSQL_ROOT_PASSWORD: J0n454848((
+      MYSQL_DATABASE: ishop
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Replace Splunk with Loki (log aggregation)
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    networks:
+      - ishop-network
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki-data:/loki
+
+  # Replace Splunk UI with Grafana (log visualization)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    networks:
+      - ishop-network
+    ports:
+      - "3001:3000"  # Changed to 3001 to avoid conflict with your API
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+  # Replace Splunk forwarder with Promtail (log shipper)
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    networks:
+      - ishop-network
+    volumes:
+      - ./logs:/var/log:ro
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
+  ishop-api:
+    build: .
+    container_name: ishop-api
+    networks:
+      - ishop-network
+    volumes:
+      - ./logs:/var/log
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: J0n454848((
+      DB_NAME: ishop
+      DB_PORT: 3306
+      PORT: 3000
+      APP_NAME: ishop-api
+      EMAIL_USER: ludwigpaul48@gmail.com
+      EMAIL_PASS: buwekcycenbzfegj
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_PORT: 587
+
+volumes:
+  mysql-data: {}
+  loki-data: {}
+  grafana-data: {}
+
+networks:
+  ishop-network:
+    driver: bridge
