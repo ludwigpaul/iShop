@@ -1,5 +1,5 @@
 // controllers/orderController.js
-import logger from "../logger/logger.js";
+import {logger} from "../logger/logger.js";
 import orderService from "../services/orderService.js";
 import emailService from "../services/emailService.js";
 

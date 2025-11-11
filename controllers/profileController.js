@@ -1,4 +1,4 @@
-import logger from "../logger/logger.js";
+import {logger} from "../logger/logger.js";
 import userService from "../services/userService.js";
 import passwordUtil from "../security/passwordUtil.js";
 

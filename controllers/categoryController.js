@@ -1,5 +1,5 @@
 import categoryService from "../services/categoryService.js";
-import logger from "../logger/logger.js";
+import {logger} from "../logger/logger.js";
 
 // The controller for managing categories in the ishop database.
 
